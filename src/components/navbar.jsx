@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
+
+    const [searchValue, setSearchValue] = useState("");
+
+
+    const handleSearchInputChange = (event) => {
+        setSearchValue(event.target.value)
+    }
+
     return (
         <>
             <div className="ms-2 me-2 mt-4">
@@ -37,10 +45,16 @@ const Navbar = () => {
                         
                             </ul>
                         
+                            <form className="d-flex me-4" role="search">
+                        
+                            <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={searchValue} onChange={handleSearchInputChange}/>
+                               <button className="btn btn-warning rounded-end" type="submit"><i className="fas fa-search"></i></button>
+                        
+                            </form>
 
                             <div className="buttons me-5">
                                 <NavLink className="btn btn-outline-light" to="/login">
-                                    <i className="fa fa-sign-in me-1"></i>
+                                    <i className="fas fa-sign-in-alt me-1"></i>
                                     &nbsp; Login
                                 </NavLink>
                                 <NavLink className="btn btn-outline-light ms-2" to="/register">
@@ -52,12 +66,6 @@ const Navbar = () => {
                                     &nbsp; Cart (0)
                                 </NavLink>
                             </div>
-                            {/* <form className="d-flex me-4" role="search">
-                        
-                                <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button className="btn btn-info" type="submit">Search</button>
-                        
-                            </form> */}
                         
                         </div>
             

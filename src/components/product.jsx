@@ -40,6 +40,14 @@ const Product = () => {
         );
     };
 
+    const formatCurrency = (currency) => {
+        return Intl.NumberFormat('ar-SA', {
+          style: 'currency',
+          currency: 'SAR',
+          minimumFractionDigits: 0,
+        }).format(currency);
+      }
+
     const ShowProduct = () => {
         return (
             <>
@@ -52,7 +60,7 @@ const Product = () => {
 
                     <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
                     <h1 className="display-6">{ product.title }</h1>
-                    <h3 className="fw-bold my-4 display-6">$ { product.price }</h3>
+                    <h3 className="fw-bold my-4 display-6">{ formatCurrency(product.price) }</h3>
                     <p className="lead">{ product.description }</p>
                     <button className="btn btn-outline-success px-4 py-2">Add To Cart</button>
                     <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>

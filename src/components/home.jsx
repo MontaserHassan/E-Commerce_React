@@ -6,12 +6,12 @@ const Home = () => {
         <div className='hero mt-1 ms-2 me-2'>
             
             <div className="card text-white">
-                <img src="assets/images/Montaser.jpg" className="card-img" alt="Background" height="550px"/>
+                <img src="assets/images/Home.jpg" className="card-img" alt="Background" height="550px"/>
                 <div className="card-img-overlay d-flex flex-column justify-content-center">
 
                     <div className="container">
                         
-                        <h5 className="card-title display-3 fw-bolder mb-0">NEW SEASON ARRIVALS</h5>
+                        <h5 className="card-title display-4 fw-bolder mb-0">NEW SEASON ARRIVALS</h5>
                         <p className="card-text lead fs-2">CHECK OUT ALL THE TRENDS</p>
 
                     </div>
