@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
+import Pagination from './Pagination';
 
 const Products = () => {
 
-    const [ data, setData ] = useState([]);
-    const [ filter, setFilter ] = useState(data);
+    const [ products, setProducts ] = useState([]);
+    const [ filter, setFilter ] = useState(products);
     const [ isLoading, setIsLoading ] = useState(false);
+    const [ currentPage, setCurrentPage ] = useState(1);
+
     let componentMounted = true;
+
 
     useEffect(() => {
         const getAllProducts = async () => {
             setIsLoading(true);
-            const response = await fetch('https://fakestoreapi.com/products');
+            const response = await fetch('http://localhost:3030/products');
             if(componentMounted){
-                setData(await response.clone().json());
+                setProducts(await response.clone().json());
                 setFilter(await response.json());
-                console.log(filter);
+                // console.log(filter);
                 setIsLoading(false);
             }
             return() => {
@@ -40,9 +44,16 @@ const Products = () => {
     };
 
     const filterProducts = (category) => {
-        const updatedList = data.filter( prod => prod.category === category );
+        const updatedList = products.filter( prod => prod.category === category );
         setFilter(updatedList);
     };
+
+    // Pagination
+    const productPerPage = 8;
+    const pages = Math.ceil(filter.length / productPerPage); // to round to the nearest whole number
+    const startIndex = ( currentPage - 1 ) * productPerPage; // 0
+    const endIndex = currentPage * productPerPage; // 3
+    const currentProducts = filter.slice(startIndex, endIndex); // [ 0, 1, 2 ]
 
     const formatCurrency = (currency) => {
         return Intl.NumberFormat('ar-SA', {
@@ -50,14 +61,18 @@ const Products = () => {
           currency: 'SAR',
           minimumFractionDigits: 0,
         }).format(currency);
-      }
+    }
 
+    const handleFilterProduct = () => {
+        setFilter(products);
+    }
+    
     const ShowProducts = () => {
         return (
             <>
                 <div className="buttons d-flex justify-content-center mb-5 pb-5">
 
-                    <button className="btn btn-outline-dark me-2" onClick={()=>{setFilter(data)}}>All</button>
+                    <button className="btn btn-outline-dark me-2" onClick={handleFilterProduct}>All</button>
                     <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts("men's clothing")}}>Men's Clothing</button>
                     <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts("women's clothing")}}>Women's Clothing</button>
                     <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts('jewelery')}}>Jewelery</button>
@@ -66,13 +81,13 @@ const Products = () => {
 
                 </div>
 
-                { filter.map((product) => {
+                { currentProducts.map((product) => {
                     return(
                         <>
                           
                             <div className="col-md-3 mb-4">
                                 <div className="card text-center h-100 p-4" key={product.id}>
-                                    <img className="card-img-top" src={product.image} alt={product.title} height="250px"/>
+                                    <img className="card-img-top" src={product.image} title={product.title} alt={product.title} height="350px"/>
                                     <div className="card-body">
                                         <h5 className="card-title  mb-0">{product.title.substring(0,12)}...</h5>
                                         <p className="card-text lead fw-bold">{ formatCurrency(product.price) }</p>
@@ -106,7 +121,8 @@ const Products = () => {
                 </div>
 
                 <div className="row justify-content-center mt-5">
-                    { isLoading ? <Loading/> :<ShowProducts/> }
+                    { isLoading ? <Loading/> : <ShowProducts/>  }
+                    { isLoading ? <Loading/> : <Pagination pages={ pages } currentPage={ currentPage } setCurrentPage={setCurrentPage} /> }
                 </div>
 
             </div>

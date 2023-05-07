@@ -13,7 +13,7 @@ const Product = () => {
     useEffect(() => {
         const getProduct = async () => {
             setIsLoading(true);
-            const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+            const response = await fetch(`http://localhost:3030/products/${id}`);
                 setProduct(await response.clone().json());
                 setIsLoading(false);
         }
