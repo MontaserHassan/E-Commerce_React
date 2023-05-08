@@ -1,6 +1,7 @@
 import React from 'react';
 import Carousel from './Carousel/Carousel';
 import Wishlists from './wishlists';
+import HomeFooter from './home-footer';
 
 const Home = () => {
     return (
@@ -29,7 +30,14 @@ const Home = () => {
                         <Carousel />
 
                     </div>
+                    
                 </div>
+            </div>
+
+            <div className="container-fluid">
+
+                <HomeFooter/>
+
             </div>
 
         </>

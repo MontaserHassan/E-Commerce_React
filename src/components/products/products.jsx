@@ -10,7 +10,7 @@ const Products = () => {
     const [ products, setProducts ] = useState([]);
     const [ filter, setFilter ] = useState(products);
     const [ isLoading, setIsLoading ] = useState(false);
-    const [activeCategory, setActiveCategory] = useState(null);
+    const [ activeCategory, setActiveCategory ] = useState(null);
     const [ currentPage, setCurrentPage ] = useState(1);
 
     let componentMounted = true;
@@ -73,11 +73,13 @@ const Products = () => {
     }
     
     const ShowProducts = () => {
+        console.log(activeCategory);
         return (
             <>
                 <div className="buttons d-flex justify-content-center mb-5 pb-5">
 
                     <button className="btn btn-outline-dark me-2" onClick={handleFilterProduct}>All</button>
+                    {/* <button className={classNames("btn btn-outline-dark me-2", {active: activeCategory === "all"})} onClick={handleFilterProduct}>All</button> */}
                     <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "men's clothing"})} onClick={()=>{filterProducts("men's clothing")}}>Men's Clothing</button>
                     <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "women's clothing"})} onClick={()=>{filterProducts("women's clothing")}}>Women's Clothing</button>
                     <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "jewelery"})} onClick={()=>{filterProducts('jewelery')}}>Jewelery</button>
@@ -86,10 +88,16 @@ const Products = () => {
 
                 </div>
 
+                {/* <div className="justify-content-center text-center mb-3">
+
+                    <h2 className="text-center fw-bold mb-5">{ activeCategory }</h2>
+                
+                </div> */}
+
                 { currentProducts.map((product) => {
                     return(
                         <>
-                          
+
                             <div className="col-md-3 mb-4">
                                 <div className="card text-center h-100 p-4" key={product.id}>
                                     <img className="card-img-top" src={product.image} title={product.title} alt={product.title} height="350px"/>
@@ -118,8 +126,9 @@ const Products = () => {
                     
                     <div className="col-12 mt-2">
 
-                        <h3 className="me-2 mt-4 text-center display-6 fw-bolder">Our Products</h3>
+                        <h3 className="me-2 mt-4 text-center display-6 fw-bolder">Check Our Products</h3>
                         <hr className="mt-5"/>
+                        <h4 className="me-3 ms-2 mt-3 text-center display-6 fw-bolder">The best choice for you is here</h4>
                     
                     </div>
                 

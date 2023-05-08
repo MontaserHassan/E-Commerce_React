@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import Navbar from './components/layout/navbar';
 import Home from './components/home/home';
-import About from './components/about/about';
+import About from './components/other/aboutUs';
 import Login from './components/client/login';
 import Register from './components/client/register';
 import Products from './components/products/products';

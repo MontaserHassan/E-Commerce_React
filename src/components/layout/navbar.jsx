@@ -8,7 +8,8 @@ const Navbar = () => {
 
     const handleSearchInputChange = (event) => {
         setSearchValue(event.target.value)
-    }
+    };
+    
 
     return (
         <>
@@ -18,7 +19,7 @@ const Navbar = () => {
                     
                     <div className="container-fluid">
                         
-                        <NavLink className="navbar-brand text-light fw-bolder fs-4 ms-3" to="/">Website</NavLink>
+                        <NavLink className="navbar-brand text-light fw-bolder fs-4 ms-3" to="/">Online Shopping</NavLink>
                         
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
