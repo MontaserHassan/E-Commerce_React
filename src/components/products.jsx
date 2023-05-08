@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import Pagination from './Pagination';
+import classNames from 'classnames';
+
 
 const Products = () => {
 
     const [ products, setProducts ] = useState([]);
     const [ filter, setFilter ] = useState(products);
     const [ isLoading, setIsLoading ] = useState(false);
+    const [activeCategory, setActiveCategory] = useState(null);
     const [ currentPage, setCurrentPage ] = useState(1);
 
     let componentMounted = true;
@@ -44,6 +47,7 @@ const Products = () => {
     };
 
     const filterProducts = (category) => {
+        setActiveCategory(category);
         const updatedList = products.filter( prod => prod.category === category );
         setFilter(updatedList);
     };
@@ -73,11 +77,11 @@ const Products = () => {
                 <div className="buttons d-flex justify-content-center mb-5 pb-5">
 
                     <button className="btn btn-outline-dark me-2" onClick={handleFilterProduct}>All</button>
-                    <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts("men's clothing")}}>Men's Clothing</button>
-                    <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts("women's clothing")}}>Women's Clothing</button>
-                    <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts('jewelery')}}>Jewelery</button>
-                    <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts('watches')}}>Watches</button>
-                    <button className="btn btn-outline-dark me-2" onClick={()=>{filterProducts('electronics')}}>Electronic</button>
+                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "men's clothing"})} onClick={()=>{filterProducts("men's clothing")}}>Men's Clothing</button>
+                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "women's clothing"})} onClick={()=>{filterProducts("women's clothing")}}>Women's Clothing</button>
+                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "jewelery"})} onClick={()=>{filterProducts('jewelery')}}>Jewelery</button>
+                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "watches"})} onClick={()=>{filterProducts('watches')}}>Watches</button>
+                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "electronics"})} onClick={()=>{filterProducts('electronics')}}>Electronic</button>
 
                 </div>
 
@@ -111,9 +115,9 @@ const Products = () => {
 
                 <div className="row">
                     
-                    <div className="col-12">
+                    <div className="col-12 mt-2">
 
-                        <h1 className="me-2 text-center display-6 fw-bolder">Our Products</h1>
+                        <h3 className="me-2 mt-4 text-center display-6 fw-bolder">Our Products</h3>
                         <hr className="mt-5"/>
                     
                     </div>

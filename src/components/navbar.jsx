@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="ms-2 me-2 mt-4">
+            <div className="ms-2 me-2 mt-3">
 
                 <nav className="navbar navbar-expand-lg bg-dark rounded-3 py-3 shadow-sm">
                     
