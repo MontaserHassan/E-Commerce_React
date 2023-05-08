@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import Pagination from './Pagination';
+import Pagination from './pagination';
 import classNames from 'classnames';
 
 
@@ -23,7 +23,6 @@ const Products = () => {
             if(componentMounted){
                 setProducts(await response.clone().json());
                 setFilter(await response.json());
-                // console.log(filter);
                 setIsLoading(false);
             }
             return() => {
@@ -38,8 +37,10 @@ const Products = () => {
             <>
 
                 <div className="col-md-3">
+                    
                     {/* <h4>Loading...</h4> */}
                     <Skeleton animation="wave" width={210} height={350}/>
+
                 </div>
             
             </>

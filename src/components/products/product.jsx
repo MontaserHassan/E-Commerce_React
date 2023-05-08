@@ -8,6 +8,9 @@ const Product = () => {
     const { id } = useParams();
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isWishlists, setIsWishlists] = useState(false);
+    const [wishlist, setWishlist] = useState([]);
+
 
 
     useEffect(() => {
@@ -40,6 +43,11 @@ const Product = () => {
         );
     };
 
+    const handleAddToWishlist = () => {
+        setIsWishlists(true);
+        setWishlist((prevState) => [...prevState, wishlist])
+      };
+
     const formatCurrency = (currency) => {
         return Intl.NumberFormat('ar-SA', {
           style: 'currency',
@@ -64,6 +72,16 @@ const Product = () => {
                     <p className="lead">{ product.description }</p>
                     <button className="btn btn-outline-success px-4 py-2">Add To Cart</button>
                     <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
+                    {!isWishlists && (
+                        <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={handleAddToWishlist}>
+                            Add To Wishlist
+                        </button>
+                    )}
+                    {isWishlists && (
+                        <button className="btn btn-primary px-4 py-2 ms-3" disabled>
+                            Added To Wishlist
+                        </button>
+                    )}
 
                 </div>
 
