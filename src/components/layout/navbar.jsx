@@ -1,17 +1,16 @@
 import React, { useState,Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
-import{addToCart} from "../features/cartSlice";
+import { NavLink,useNavigate } from 'react-router-dom';
+import{addToCart} from "../../features/cartSlice"
 import{useDispatch} from "react-redux"
-import {useHistory} from "react-router";
 const Navbar = () => {
-    const history =useHistory();
+    const navigate =useNavigate();
     const dispatch=useDispatch();
     const [searchValue, setSearchValue] = useState("");
     
     const handelAddToCart=(product) =>{
         dispatch(addToCart(product));
-        history.push("/cart")
-    }
+        navigate.push("/cart")
+    };
     const handleSearchInputChange = (event) => {
         setSearchValue(event.target.value)
     };
@@ -68,7 +67,7 @@ const Navbar = () => {
                                     <i className="fa fa-user-plus"></i>
                                     &nbsp; Register
                                 </NavLink>
-                                <NavLink className="btn btn-outline-light ms-2" to="/cart">
+                                <NavLink className="btn btn-outline-light ms-2" to="/cart" onChange={handelAddToCart}>
                                     <i className="fa fa-shopping-cart"></i>
                                     &nbsp; Cart (0)
                                 </NavLink>
