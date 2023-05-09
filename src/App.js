@@ -1,5 +1,6 @@
 import './App.css';
-import React from 'react';
+import "react-toastify/dist/ReactToastify.css";
+import {React,Fragment} from 'react';
 import Navbar from './components/layout/navbar';
 import Home from './components/home/home';
 import About from './components/other/aboutUs';
@@ -7,13 +8,15 @@ import Login from './components/client/login';
 import Register from './components/client/register';
 import Products from './components/products/products';
 import Product from './components/products/product';
-import Cart from './components/cart/cart';
+import Cart from './features/cartSlice';
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
+import{ ToastContainer}from "react-toastify";
 
 function App() {
   return (
-    <>
+    <Fragment>
+    <ToastContainer/>
       <Navbar/>
       
         <Routes>
@@ -30,7 +33,7 @@ function App() {
 
       <Footer/>
     
-    </>
+    </Fragment>
   );
 };
 

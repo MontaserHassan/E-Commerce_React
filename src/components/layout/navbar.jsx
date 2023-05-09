@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState,Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import{addToCart} from "../features/cartSlice";
+import{useDispatch} from "react-redux"
+import {useHistory} from "react-router";
 const Navbar = () => {
-
+    const history =useHistory();
+    const dispatch=useDispatch();
     const [searchValue, setSearchValue] = useState("");
-
-
+    
+    const handelAddToCart=(product) =>{
+        dispatch(addToCart(product));
+        history.push("/cart")
+    }
     const handleSearchInputChange = (event) => {
         setSearchValue(event.target.value)
     };
     
 
     return (
-        <>
+        <Fragment>
             <div className="ms-2 me-2 mt-3">
 
                 <nav className="navbar navbar-expand-lg bg-dark rounded-3 py-3 shadow-sm">
@@ -75,7 +81,7 @@ const Navbar = () => {
                 </nav>            
             
             </div>
-        </>
+        </Fragment>
     );
 };
 
