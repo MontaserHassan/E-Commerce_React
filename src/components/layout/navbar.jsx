@@ -2,7 +2,10 @@ import React, { useState,Fragment } from 'react';
 import { NavLink,useNavigate } from 'react-router-dom';
 import{addToCart} from "../../features/cartSlice"
 import{useDispatch} from "react-redux"
+import { useSelector } from 'react-redux';
 const Navbar = () => {
+    const{cartTotalQuantity}=useSelector(state=>state.cart)
+
     const navigate =useNavigate();
     const dispatch=useDispatch();
     const [searchValue, setSearchValue] = useState("");
@@ -67,9 +70,9 @@ const Navbar = () => {
                                     <i className="fa fa-user-plus"></i>
                                     &nbsp; Register
                                 </NavLink>
-                                <NavLink className="btn btn-outline-light ms-2" to="/cart" onChange={handelAddToCart}>
+                                <NavLink className="btn btn-outline-light ms-2" to="/cart">
                                     <i className="fa fa-shopping-cart"></i>
-                                    &nbsp; Cart (0)
+                                    &nbsp; Cart &nbsp; <span>{cartTotalQuantity}</span> 
                                 </NavLink>
                             </div>
                         

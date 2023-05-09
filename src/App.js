@@ -13,7 +13,6 @@ import Cart from './components/cart/Cart';
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import{ ToastContainer}from "react-toastify";
-
 function App() {
   return (
     <Fragment>

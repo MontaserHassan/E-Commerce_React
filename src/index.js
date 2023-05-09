@@ -9,7 +9,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import cartReducer from "./features/cartSlice"
+import cartReducer, { getTotal } from "./features/cartSlice"
 import productsReducer, { productsFetch } from './features/productsSlice';
 import { productApi } from './features/productsAPI';
 
@@ -25,6 +25,7 @@ const store= configureStore({
 })
 
 store.dispatch(productsFetch());
+store.dispatch(getTotal());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
