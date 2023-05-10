@@ -1,4 +1,4 @@
-import React from 'react';
+import{ React,Fragment }from 'react';
 import "./style/pagination.css";
 
 const Pagination = ({ pages, currentPage, setCurrentPage }) => {
@@ -9,7 +9,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
     };
 
     return (
-        <>
+        <Fragment>
         
             <div className="pagination">
                 
@@ -40,7 +40,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
 
             </div>
 
-        </>
+        </Fragment>
     );
 }
 

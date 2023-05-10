@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-
+import React, { useState,Fragment } from 'react';
+import { NavLink} from 'react-router-dom';
+// import{addToCart} from "../../features/cartSlice"
+// import{useDispatch} from "react-redux"
+import { useSelector } from 'react-redux';
 const Navbar = () => {
+    const{cartTotalQuantity}=useSelector(state=>state.cart)
 
+    // const navigate =useNavigate();
+    // const dispatch=useDispatch();
     const [searchValue, setSearchValue] = useState("");
-
-
+    
+    // const handelAddToCart=(product) =>{
+    //     dispatch(addToCart(product));
+    //     navigate.push("/cart")
+    // };
     const handleSearchInputChange = (event) => {
         setSearchValue(event.target.value)
     };
     
 
     return (
-        <>
+        <Fragment>
             <div className="ms-2 me-2 mt-3">
 
                 <nav className="navbar navbar-expand-lg bg-dark rounded-3 py-3 shadow-sm">
@@ -64,7 +72,7 @@ const Navbar = () => {
                                 </NavLink>
                                 <NavLink className="btn btn-outline-light ms-2" to="/cart">
                                     <i className="fa fa-shopping-cart"></i>
-                                    &nbsp; Cart (0)
+                                    &nbsp; Cart &nbsp; <span>{cartTotalQuantity}</span> 
                                 </NavLink>
                             </div>
                         
@@ -75,7 +83,7 @@ const Navbar = () => {
                 </nav>            
             
             </div>
-        </>
+        </Fragment>
     );
 };
 

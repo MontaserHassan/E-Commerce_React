@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import Pagination from './pagination';
 import classNames from 'classnames';
-
-
+// import { useGetAllProductsQuery } from '../../features/productsAPI';
+// import { useSelector } from 'react-redux';
 const Products = () => {
-
+    // const {items,status}=useSelector(state => state.products)
+    // const {data,error,isLoading}=useGetAllProductsQuery();
+      
     const [ products, setProducts ] = useState([]);
     const [ filter, setFilter ] = useState(products);
     const [ isLoading, setIsLoading ] = useState(false);
@@ -26,6 +28,7 @@ const Products = () => {
                 setIsLoading(false);
             }
             return() => {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 componentMounted = false;
             }
         }
@@ -34,7 +37,7 @@ const Products = () => {
 
     const Loading = () => {
         return (
-            <>
+            <Fragment>
 
                 <div className="col-md-3">
                     
@@ -43,7 +46,7 @@ const Products = () => {
 
                 </div>
             
-            </>
+            </Fragment>
         );
     };
 
@@ -75,7 +78,7 @@ const Products = () => {
     const ShowProducts = () => {
         console.log(activeCategory);
         return (
-            <>
+            <Fragment>
                 <div className="buttons d-flex justify-content-center mb-5 pb-5">
 
                     <button className="btn btn-outline-dark me-2" onClick={handleFilterProduct}>All</button>
@@ -96,7 +99,7 @@ const Products = () => {
 
                 { currentProducts.map((product) => {
                     return(
-                        <>
+                        <Fragment>
 
                             <div className="col-md-3 mb-4">
                                 <div className="card text-center h-100 p-4" key={product.id}>
@@ -109,15 +112,16 @@ const Products = () => {
                                 </div>
                             </div>
                         
-                        </>
+                        </Fragment>
                     )
                 }) }
-            </>
+            </Fragment>
         );
     };
 
 
     return (
+       
         <div>
 
             <div className="container mt-4">

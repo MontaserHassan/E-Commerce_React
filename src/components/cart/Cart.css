@@ -1,0 +1,40 @@
+
+@keyframes color-change {
+    0% {
+      color: rgb(141, 141, 206);
+    }
+    50% {
+      color: rgb(52, 52, 156);
+    }
+    100% {
+      color: rgb(88, 99, 215);
+    }
+  }
+  @keyframes move-text {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+ .container h2{
+    color: rgb(52, 52, 156);
+} 
+.on-hover:hover >span {
+    color: #fff;
+  }
+  a.text-decoration-none:hover {
+    color: white;
+  }
+  .Continue-Shopping {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+
+  
