@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';

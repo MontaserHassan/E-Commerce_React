@@ -28,4 +28,20 @@
     color: #fff;
   }
 
+  .aspect-ratio {
+    position: relative;
+    width: 130%;
+    height: 10%;
+    padding-bottom: 120%;
+  }
+
+  .aspect-ratio img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   

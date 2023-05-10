@@ -8,7 +8,7 @@ import Login from './components/client/login';
 import Register from './components/client/register';
 import Products from './components/products/products';
 import Product from './components/products/product';
-// import cartSlice from './features/cartSlice';
+import Payment from './components/payment/payment';
 import Cart from './components/cart/Cart';
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
@@ -18,9 +18,7 @@ function App() {
     <Fragment>
     <ToastContainer/>
       <Navbar/>
-      
         <Routes>
-
           <Route path="/" element={<Home/>}/>
           <Route path="/about-us" element={<About/>}/>
           <Route path="/login" element={<Login/>}/>
@@ -28,6 +26,8 @@ function App() {
           <Route path="/products" element={<Products/>}/>
           <Route path="/products/:id" element={<Product/>}/>
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/Payment" element={<Payment/>}/>
+
 
         </Routes>
 
