@@ -9,7 +9,7 @@ import Register from './components/client/register';
 import Products from './components/products/products';
 import Product from './components/products/product';
 // import cartSlice from './features/cartSlice';
-import Cart from './components/cart/cart';
+import Cart from './components/cart/Cart';
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import{ ToastContainer}from "react-toastify";
