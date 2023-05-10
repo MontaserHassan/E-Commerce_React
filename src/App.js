@@ -16,7 +16,8 @@ import{ ToastContainer}from "react-toastify";
 function App() {
   return (
     <Fragment>
-    <ToastContainer/>
+      <ToastContainer/>
+        
       <Navbar/>
       
         <Routes>

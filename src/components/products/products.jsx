@@ -14,7 +14,6 @@ const Products = () => {
     const [ isLoading, setIsLoading ] = useState(false);
     const [ activeCategory, setActiveCategory ] = useState(null);
     const [ currentPage, setCurrentPage ] = useState(1);
-
     let componentMounted = true;
 
 
@@ -76,13 +75,13 @@ const Products = () => {
     }
     
     const ShowProducts = () => {
-        console.log(activeCategory);
         return (
+            
             <Fragment>
+                
                 <div className="buttons d-flex justify-content-center mb-5 pb-5">
 
                     <button className="btn btn-outline-dark me-2" onClick={handleFilterProduct}>All</button>
-                    {/* <button className={classNames("btn btn-outline-dark me-2", {active: activeCategory === "all"})} onClick={handleFilterProduct}>All</button> */}
                     <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "men's clothing"})} onClick={()=>{filterProducts("men's clothing")}}>Men's Clothing</button>
                     <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "women's clothing"})} onClick={()=>{filterProducts("women's clothing")}}>Women's Clothing</button>
                     <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "jewelery"})} onClick={()=>{filterProducts('jewelery')}}>Jewelery</button>
@@ -91,30 +90,32 @@ const Products = () => {
 
                 </div>
 
-                {/* <div className="justify-content-center text-center mb-3">
-
-                    <h2 className="text-center fw-bold mb-5">{ activeCategory }</h2>
+                <div className="row">
                 
-                </div> */}
+                    { currentProducts.map((product) => {
+                            return(
+                                <Fragment>
 
-                { currentProducts.map((product) => {
-                    return(
-                        <Fragment>
-
-                            <div className="col-md-3 mb-4">
-                                <div className="card text-center h-100 p-4" key={product.id}>
-                                    <img className="card-img-top" src={product.image} title={product.title} alt={product.title} height="350px"/>
-                                    <div className="card-body">
-                                        <h5 className="card-title  mb-0">{product.title.substring(0,12)}...</h5>
-                                        <p className="card-text lead fw-bold">{ formatCurrency(product.price) }</p>
-                                        <NavLink to={`/products/${product.id}`} className="btn btn-outline-primary">Details</NavLink>
+                                    <div className="col-md-3 mb-4">
+                                        <div className="card text-center h-100 p-4" key={product.id}>
+                                            <img className="card-img-top" src={product.image} title={product.title} alt={product.title} height="350px"/>
+                                            <div className="card-body">
+                                                <h5 className="card-title  mb-0">{product.title.substring(0,12)}...</h5>
+                                                <p className="card-text lead fw-bold">{ formatCurrency(product.price) }</p>
+                                                <NavLink to={`/products/${product.id}`} className="btn btn-outline-primary"> Details </NavLink>
+                                            </div>
+                                            { product.stock > 0 ? ( <p className="card-text text-success fw-bold"> In Stock </p> ) :
+                                            ( <p className="card-text text-danger fw-bold"> Not Available </p> )}
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        
-                        </Fragment>
-                    )
-                }) }
+                                
+                                </Fragment>
+                            )
+                        }) 
+                    }
+                
+                </div>
+                
             </Fragment>
         );
     };
