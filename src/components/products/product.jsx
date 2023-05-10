@@ -2,8 +2,10 @@ import React, { useState, useEffect, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
-import{useDispatch} from "react-redux"
+import{useDispatch, useSelector} from "react-redux"
 import { addToCart } from '../../features/cartSlice';
+
+
 const Product = () => {
 
     const { id } = useParams();
@@ -11,8 +13,11 @@ const Product = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isWishlists, setIsWishlists] = useState(false);
     const [wishlist, setWishlist] = useState([]);
+
     
     const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cart.items);
+
     const handelAddToCart =(product)=>{
         dispatch(addToCart(product))
     }
@@ -42,7 +47,8 @@ const Product = () => {
                     <Skeleton height={50}/> {/* price */}
                     <Skeleton height={150}/> {/* description */}
                     <Skeleton height={50} width={100}/> {/* btn 1 */}
-                    <Skeleton height={50} width={100} style={{ marginLeft:6 }}/> {/* btn 2 */}
+                    <Skeleton height={50} width={100}/> {/* btn 2 */}
+                    <Skeleton height={50} width={100} style={{ marginLeft:6 }}/> {/* btn 3 */}
                 </div>
 
             </Fragment>
@@ -55,14 +61,28 @@ const Product = () => {
       };
 
     const formatCurrency = (currency) => {
-        return Intl.NumberFormat('ar-SA', {
-          style: 'currency',
-          currency: 'SAR',
+        return Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
           minimumFractionDigits: 0,
         }).format(currency);
       }
 
     const ShowProduct = () => {
+
+        const isInCart = cartItems?.find(item => item.id === product.id);
+
+
+        let stockColor = "";
+
+        if (product.stock >= 10) {
+          stockColor = "text-success";
+        } else if (product.stock > 5) {
+          stockColor = "text-warning";
+        } else if (product.stock === 0) {
+          stockColor = "text-danger";
+        }
+
         return (
             <Fragment>
                 
@@ -73,24 +93,33 @@ const Product = () => {
                 <div className="col-md-6">
 
                     <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
-                    <h1 className="display-6">{ product.title }</h1>
-                    <h3 className="fw-bold my-4 display-6">{ formatCurrency(product.price) }</h3>
-                    <p className="lead">{ product.description }</p>
+                    <h1 className="display-6">Product Name: { product.title }</h1>
+                    <h3 className="fw-bold my-4 display-6">Price: { formatCurrency(product.price) }</h3>
+                    <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stock } piece</h5>
+                    <p className="lead">Description: { product.description }</p>
 
-                    <button className="btn btn-outline-success px-4 py-2" onClick={() => handelAddToCart(product)} >
-                    Add To Cart
-                    </button>
+                    {product.stock === 0 ? (
+                        <p className="btn btn-outline-secondary px-4 py-2" disabled> Out of Stock </p>
+                    ) : (
+                        <>
 
-                    <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
-                    {!isWishlists && (
-                        <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={handleAddToWishlist}>
-                            Add To Wishlist
-                        </button>
-                    )}
-                    {isWishlists && (
-                        <button className="btn btn-primary px-4 py-2 ms-3" disabled>
-                            Added To Wishlist
-                        </button>
+                            {isInCart ? (
+                                <button className="btn btn-outline-success px-4 py-2" disabled> In Cart </button>
+                            ) : (
+                                <button className="btn btn-outline-success px-4 py-2" onClick={() => handelAddToCart(product)}> Add To Cart </button>
+                            )}
+
+                            <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
+
+                            {!isWishlists && (
+                                <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={handleAddToWishlist}> Add To Wishlist </button>
+                            )}
+
+                            {isWishlists && (
+                                <button className="btn btn-primary px-4 py-2 ms-3" disabled> In Wishlist </button>
+                            )}
+                        </>
+                        
                     )}
 
                 </div>
