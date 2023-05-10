@@ -27,8 +27,10 @@ const cartSlice =createSlice({
                           } )
                     }
                   localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
-        },
-
+// Dispatch the getTotal action after adding the item to the cart
+                 state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
+                 state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
+},
 
         removeFromCart:(state,action)=>{
          const nextCartItem= state.cartItems.filter(

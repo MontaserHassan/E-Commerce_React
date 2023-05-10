@@ -1,19 +1,19 @@
 import React, { useState,Fragment } from 'react';
-import { NavLink,useNavigate } from 'react-router-dom';
-import{addToCart} from "../../features/cartSlice"
-import{useDispatch} from "react-redux"
+import { NavLink} from 'react-router-dom';
+// import{addToCart} from "../../features/cartSlice"
+// import{useDispatch} from "react-redux"
 import { useSelector } from 'react-redux';
 const Navbar = () => {
     const{cartTotalQuantity}=useSelector(state=>state.cart)
 
-    const navigate =useNavigate();
-    const dispatch=useDispatch();
+    // const navigate =useNavigate();
+    // const dispatch=useDispatch();
     const [searchValue, setSearchValue] = useState("");
     
-    const handelAddToCart=(product) =>{
-        dispatch(addToCart(product));
-        navigate.push("/cart")
-    };
+    // const handelAddToCart=(product) =>{
+    //     dispatch(addToCart(product));
+    //     navigate.push("/cart")
+    // };
     const handleSearchInputChange = (event) => {
         setSearchValue(event.target.value)
     };
