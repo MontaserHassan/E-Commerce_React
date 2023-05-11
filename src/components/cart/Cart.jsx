@@ -1,9 +1,11 @@
-import { React, Fragment,useEffect } from "react";
+import { React, Fragment,useEffect ,useState} from "react";
 import { useSelector ,useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import "./Cart.css"
 import { decreaseCartItems, removeFromCart,addToCart,clearCart,getTotal } from "../../features/cartSlice";
-    
+import { NavLink } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';   
+import Button from 'react-bootstrap/Button';
 
 const formatCurrency = (currency) => {
     return Intl.NumberFormat("ar-SA", {
@@ -30,8 +32,17 @@ const formatCurrency = (currency) => {
 const handelIncreaseCartItems =(cartItem)=>{
 dispatch(addToCart(cartItem));
       }
+      
   const handelClearCart =(cartItem)=>{
   dispatch(clearCart());}
+
+  const [clearCartShow, setClearCartShow] = useState(false);
+const handleClearCartClose = () => setClearCartShow(false);
+const handleClearCartShow = () => setClearCartShow(true);
+  // const [show, setShow] = useState(false);
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   return (
     <Fragment>
@@ -48,7 +59,6 @@ dispatch(addToCart(cartItem));
             src="assets/images/carty.png"
             height="25%"
             className="d-block mx-auto"
-            title="carty"
             alt="cart"
           />
 
@@ -76,44 +86,56 @@ dispatch(addToCart(cartItem));
           </div>
 
         ) : (
+          //cart table
           <div>
-          <table class="table table-striped w-75 m-auto table-hover text-center text-black  border-dark mb-4 ">
+          <table className="table table-striped w-100 m-auto table-hover text-center text-black  border-dark mb-4 mt-4">
           <thead >
-          <tr>
+          <tr >
           <th className="col-4" >Product</th>
           <th className="col-2" >Price</th>
-          <th className="col-3" >Quantity</th>
-          <th className="col-2" >Total</th>
+          <th className=" col-2" >Quantity</th>
+          <th className="col-3" >Total</th>
         </tr>
           </thead>
-          <tbody>
+          <tbody  className="mt-4">
             {cart.cartItems?.map((cartItem) => (
               <tr className="cart-item" key={cartItem.id}>
-
-                <td className="cart-product col-4 pt-2">
+               
+              <td className="cart-product col-4 pt-2">
                   <div className="row">
-                    <div className="col-3 col-md-3">
-                      <img src={cartItem.image} alt={cartItem.title} className="img-fluid" />
-                    </div>
+                       <div className="col-4 col-md-3">
+                          <div className="aspect-ratio aspect-ratio-4x3">
+                            <img src={cartItem.image} alt={cartItem.title} className="img-fluid" />
+                          </div>
+                        </div>
+
                     <div className="col-9 col-md-9">
                       <div className="cart-product-details">
                         <p className="mb-0">{cartItem.title}</p>
-                        <button className="btn text-danger mt-3 p-1" onClick={()=>handelRemoveFromCart(cartItem)}>Remove</button>
+                        <button className="btn text-danger mt-3 fw-bolder p-1" onClick={()=>handelRemoveFromCart(cartItem)}>Remove</button>
                       </div>
                     </div>
                   </div>
                 </td>
 
-                <td className="cart-product-price col-2 pt-4">{formatCurrency(cartItem.price)}</td>
+                <td className="cart-product-price col-2 fw-bolder pt-5">{formatCurrency(cartItem.price)}</td>
                 
-                <td className="cart-product-quantity  col-3 text-center pt-4">
+                <td className="cart-product-quantity  col-3 text-center pt-5">
                 <div className="d-flex align-items-center justify-content-center mx-5 border border-2  border-dark rounded-pill " style={{ width: "55%", height: "1%" }} >
-                <button type="button" className="btn text-danger fw-bolder" onClick={()=>handelDecreaseCartItems(cartItem)}>-</button>
-                 <span className="mx-2">{cartItem.cartQuantity}</span>
-                  <button type="button" className="btn text-success fw-bolder" onClick={()=>handelIncreaseCartItems(cartItem)}>+</button> 
+                <button type="button" className="btn  text-danger fw-bolder" onClick={()=>handelDecreaseCartItems(cartItem)}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"/>
+                </svg>
+                </button>
+                 <span className="mx-2 fw-bolder">{cartItem.cartQuantity}</span>
+                  <button type="button" className="btn text-success fw-bolder" onClick={()=>handelIncreaseCartItems(cartItem)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                     </svg>
+                  </button> 
                </div> 
                </td>
-                <td className="cart-product-total-price col-2 pt-4">{formatCurrency(cartItem.price * cartItem.cartQuantity)}</td>
+                <td className="cart-product-total-price fw-bolder col-2 pt-5">{formatCurrency(cartItem.price * cartItem.cartQuantity)}</td>
              
                 </tr>
             ))}
@@ -121,11 +143,18 @@ dispatch(addToCart(cartItem));
         </table>
 
 
-
-        <div className="container w-75 m-auto">
+       
+/*----------------------------------------------------------------*/
+        <div className="container w-100 m-auto">
         <div className="row">
-          <div className="col-md-4">
-            <button type="button" className="btn btn-danger mb-5" onClick={()=> handelClearCart()}>Clear Cart</button>
+          <div className="col-md-4 pt-5">
+          <button
+          type="button"
+          className="btn btn-danger mb-5"
+          onClick={handleClearCartShow}
+        >
+          Clear Cart
+        </button>
             <div className="Continue-Shopping col-md-12">
             <button type="button" className="btn btn-outline-primary">
               <Link to="/" class="text-decoration-none">
@@ -152,14 +181,41 @@ dispatch(addToCart(cartItem));
               </div>
             </div>
                 <div className="row justify-content-center">
-                  <h6 className="col-md-12 text-center mt-4">Taxes and shipping calculated</h6>
-                  <button type="button" className="btn btn-secondary col-md-8">Checkout</button>
+                  <h6 className="col-md-12 text-center mt-4">You can now complete the purchase</h6>
+                  <NavLink to="/payment" type="button" className="btn btn-secondary col-md-8">Buy Now</NavLink>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+    /* Modal popUp for asking for confirmation before clearing the cart*/
+
+      <Modal
+      show={clearCartShow}
+      onHide={handleClearCartClose}
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Clear Cart Confirmation</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        Are you sure you want to clear your cart?
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClearCartClose}>
+          Cancel
+        </Button>
+        <Button variant="danger" onClick={handelClearCart}>
+          Clear Cart
+        </Button>
+      </Modal.Footer>
+    </Modal>
+      
+
 
 
           </div>

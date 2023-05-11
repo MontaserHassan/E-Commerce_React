@@ -1,5 +1,6 @@
 import {createSlice } from '@reduxjs/toolkit'
 import {toast} from "react-toastify";
+
 const  initialState={
     cartItems:
     localStorage.getItem("cartItem")?JSON.parse(localStorage.getItem("cartItems"))
@@ -71,6 +72,7 @@ const cartSlice =createSlice({
               } );
               localStorage.removeItem("cartItems")
         },
+        
          getTotal:(state,action)=>{
            let{total,quantity}= state.cartItems.reduce((cartTotal,cartItem)=>{
             const{price,cartQuantity}=cartItem;
