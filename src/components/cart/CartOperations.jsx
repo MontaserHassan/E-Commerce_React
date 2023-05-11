@@ -9,27 +9,28 @@ const cart = useSelector((state) => state.cart);
 
   return (
     <div>
-    <div className="row">
+    <div className="opeartion row">
     <div className="col-md-4 pt-5">
+
       <div className="Continue-Shopping col-md-12">
-        <button type="button" className="btn btn-outline-primary">
-          <Link to="/" class="text-decoration-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              fill="currentColor"
-              class="bi bi-arrow-left-short"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"
-              />
-            </svg>
-            Continue Shopping
-          </Link>
-        </button>
+      <button type="button" className="btn btn-outline-primary">
+      <Link to="/" className="text-decoration-none on-hover">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="28"
+          height="28"
+          fill="currentColor"
+          className="bi bi-arrow-left-short"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fillRule="evenodd"
+            d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"
+          />
+        </svg>
+        <span> Continue Shopping </span>
+        </Link>
+    </button>
       </div>
     </div>
     <div className="col-md-8">

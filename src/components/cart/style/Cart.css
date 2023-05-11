@@ -43,5 +43,19 @@
     height: 100%;
     object-fit: cover;
   }
+  .table {
+    border-collapse: separate;
+    border-spacing:0 1.5rem;
+}
 
-  
+.table-hover tbody tr {
+  position: relative;
+}
+
+.table * {
+  font-size: 18px;
+}
+
+.opeartion{
+  font-size: 18px;
+}  
