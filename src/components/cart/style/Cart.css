@@ -45,7 +45,7 @@
   }
   .table {
     border-collapse: separate;
-    border-spacing:0 1.5rem;
+    border-spacing:0 1.2rem;
 }
 
 .table-hover tbody tr {
@@ -53,9 +53,9 @@
 }
 
 .table * {
-  font-size: 18px;
+  font-size: 1rem;
 }
 
 .opeartion{
-  font-size: 18px;
+  font-size: 1rem; 
 }  

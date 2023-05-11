@@ -47,6 +47,7 @@ useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
         <tr className="cart-item " key={cartItem.id}>
           <td className="cart-product col-4 pt-2">
             <div className="row">
+            
               <div className="col-4 col-md-3">
                   <img
                     src={cartItem.image}
