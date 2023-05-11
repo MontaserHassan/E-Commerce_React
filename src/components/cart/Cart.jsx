@@ -2,26 +2,40 @@ import { React, Fragment,useEffect ,useState} from "react";
 import { useSelector ,useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
 import "./Cart.css"
-import { decreaseCartItems, removeFromCart,addToCart,clearCart,getTotal } from "../../features/cartSlice";
+import { decreaseCartItems, removeFromCart,addToCart,getTotal } from "../../features/cartSlice";
 import { NavLink } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';   
 import Button from 'react-bootstrap/Button';
+import Product from "../products/product";
 
-const formatCurrency = (currency) => { return Intl.NumberFormat("ar-SA", { style: "currency",currency:"SAR",minimumFractionDigits: 0,}).format(currency)};
+const formatCurrency = (currency) => {  return Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',minimumFractionDigits: 0,}).format(currency)};
 
 
 const Cart = () => {
 const dispatch = useDispatch();
 
 const cart = useSelector((state) => state.cart);
-const [clearCartShow, setClearCartShow] = useState(false);
-const handleClearCartClose = () => setClearCartShow(false);
-const handleClearCartShow = () => setClearCartShow(true);
+const [showDecreaseModal, setShowDecreaseModal] = useState(false);
+const [itemToDecrease, setItemToDecrease] = useState(null);
+
+
   
-const handelRemoveFromCart =(cartItem)=>{dispatch(removeFromCart(cartItem));}
-const handelDecreaseCartItems =(cartItem)=>{dispatch(decreaseCartItems(cartItem));}
+const handelRemoveFromCart =(cartItem)=>{
+  setShowDecreaseModal(true);
+  setItemToDecrease(cartItem);
+}
+const handelDecreaseCartItems = (cartItem) => {
+  if (cartItem.cartQuantity === 1) {
+    setShowDecreaseModal(true);
+    setItemToDecrease(cartItem);
+  } else {
+    dispatch(decreaseCartItems(cartItem));
+  }
+};
 const handelIncreaseCartItems =(cartItem)=>{dispatch(addToCart(cartItem));}
-const handelClearCart =(cartItem)=>{dispatch(clearCart());}
+// const handelClearCart =(cartItem)=>{dispatch(clearCart());}
 
 useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
 
@@ -131,13 +145,7 @@ useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
         <div className="container w-100 m-auto">
         <div className="row">
           <div className="col-md-4 pt-5">
-          <button
-          type="button"
-          className="btn btn-danger mb-5"
-          onClick={handleClearCartShow}
-        >
-          Clear Cart
-        </button>
+
             <div className="Continue-Shopping col-md-12">
             <button type="button" className="btn btn-outline-primary">
               <Link to="/" class="text-decoration-none">
@@ -176,23 +184,25 @@ useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
 
 
       <Modal
-      show={clearCartShow}
-      onHide={handleClearCartClose}
+      show={showDecreaseModal}
+      onHide={() => setShowDecreaseModal(false)}
       backdrop="static"
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Clear Cart Confirmation</Modal.Title>
+        <Modal.Title>Removing Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Are you sure you want to clear your cart?
+        Are you sure you want to Remove this from  cart? 
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClearCartClose}>
+        <Button variant="secondary" onClick={() => setShowDecreaseModal(false)}>
           Cancel
         </Button>
-        <Button variant="danger" onClick={handelClearCart}>
-          Clear Cart
+        <Button variant="danger" onClick={ ()=>{dispatch(removeFromCart(itemToDecrease));
+          setShowDecreaseModal(false);
+        }}>
+            Remove
         </Button>
       </Modal.Footer>
     </Modal>

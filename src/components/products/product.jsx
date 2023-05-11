@@ -73,14 +73,14 @@ const Product = () => {
         const isInCart = cartItems?.find(item => item.id === product.id);
 
 
-        let stokeColor = "";
+        let stockColor = "";
 
         if (product.stoke >= 10) {
-          stokeColor = "text-success";
+          stockColor = "text-success";
         } else if (product.stoke > 5) {
-          stokeColor = "text-warning";
+          stockColor = "text-warning";
         } else if (product.stoke === 0) {
-          stokeColor = "text-danger";
+          stockColor = "text-danger";
         }
 
         return (
@@ -95,11 +95,11 @@ const Product = () => {
                     <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
                     <h1 className="display-6">Product Name: { product.title }</h1>
                     <h3 className="fw-bold my-4 display-6">Price: { formatCurrency(product.price) }</h3>
-                    <h5 className={`lead fw-bold my-4 ${stokeColor}`}>Available stoke: { product.stoke } piece</h5>
+                    <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stoke } piece</h5>
                     <p className="lead">Description: { product.description }</p>
 
                     {product.stoke === 0 ? (
-                        <p className="px-4 fw-bolder text-danger py-2" disabled> Out of stoke </p>
+                        <p className="btn btn-outline-secondary px-4 py-2" disabled> Out of Stock </p>
                     ) : (
                         <>
 

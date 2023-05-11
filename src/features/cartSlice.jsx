@@ -13,23 +13,49 @@ const cartSlice =createSlice({
     initialState,
     reducers:{
         addToCart:(state,action)=>{
-           const itemIndex= state.cartItems.findIndex((Item) => Item.id === action.payload.id );
-           if(itemIndex>=0){
-                          state.cartItems[itemIndex].cartQuantity++;
-                          toast.info(`Increased ${state.cartItems[itemIndex].title} quantity`,{
-                            position:"bottom-left",
-                          } )
-                      }else{
-                        const tempProduct = {...action.payload,cartQuantity:1};
-                        state.cartItems.push(tempProduct);  
-                        toast.success(` ${action.payload.title} added to your cart`,{
-                            position:"bottom-left",
-                          } )
-                    }
-                  localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
-// Dispatch the getTotal action after adding the item to the cart
-                 state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
-                 state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
+//            const itemIndex= state.cartItems.findIndex((Item) => Item.id === action.payload.id );
+//            if(itemIndex>=0){
+//                           state.cartItems[itemIndex].cartQuantity++;
+//                           toast.info(`Increased ${state.cartItems[itemIndex].title} quantity`,{
+//                             position:"bottom-left",
+//                           } )
+//                       }else{
+//                         const tempProduct = {...action.payload,cartQuantity:1};
+//                         state.cartItems.push(tempProduct);  
+//                         toast.success(` ${action.payload.title} added to your cart`,{
+//                             position:"bottom-left",
+//                           } )
+//                     }
+//                   localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
+// // Dispatch the getTotal action after adding the item to the cart
+//                  state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
+//                  state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
+ const itemIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
+          if (itemIndex >= 0) {
+            if (state.cartItems[itemIndex].cartQuantity >= action.payload.stoke) {
+              // If the product is already in the cart and the cart quantity is greater than or equal to the product stock, show an alert
+              // alert(`Sorry, there are only ${action.payload.stoke} ${action.payload.title} available in stock.`);
+              toast.error(`Sorry, there are only ${action.payload.stoke} available in stock.`,{
+                position:"top-center",
+              } )
+            } else {
+              state.cartItems[itemIndex].cartQuantity++;
+              toast.info(`Increased ${state.cartItems[itemIndex].title} quantity`, {
+                position: "bottom-left",
+              });
+            }
+          } else {
+            const tempProduct = { ...action.payload, cartQuantity: 1 };
+            state.cartItems.push(tempProduct);
+            toast.success(` ${action.payload.title} added to your cart`, {
+              position: "bottom-left",
+            });
+          }
+          localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+          // Dispatch the getTotal action after adding the item to the cart
+          state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
+          state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
+
 },
 
         removeFromCart:(state,action)=>{
