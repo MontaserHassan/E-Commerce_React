@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import{useDispatch, useSelector} from "react-redux"
 import { addToCart } from '../../features/cartSlice';
+import { FormatCurrency } from '../../features/FormatCurrency';
 
 
 const Product = () => {
@@ -60,13 +61,6 @@ const Product = () => {
         setWishlist((prevState) => [...prevState, wishlist])
       };
 
-    const formatCurrency = (currency) => {
-        return Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          minimumFractionDigits: 0,
-        }).format(currency);
-      }
 
     const ShowProduct = () => {
 
@@ -94,7 +88,7 @@ const Product = () => {
 
                     <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
                     <h1 className="display-6">Product Name: { product.title }</h1>
-                    <h3 className="fw-bold my-4 display-6">Price: { formatCurrency(product.price) }</h3>
+                    <h3 className="fw-bold my-4 display-6">Price: { FormatCurrency(product.price) }</h3>
                     <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stoke } piece</h5>
                     <p className="lead">Description: { product.description }</p>
 

@@ -4,8 +4,8 @@ import Skeleton from 'react-loading-skeleton';
 import Pagination from './pagination';
 import classNames from 'classnames';
 import './style/products.css';
-// import { useGetAllProductsQuery } from '../../features/productsAPI';
-// import { useSelector } from 'react-redux';
+import { FormatCurrency } from '../../features/FormatCurrency';
+
 const Products = () => {
     // const {items,status}=useSelector(state => state.products)
     // const {data,error,isLoading}=useGetAllProductsQuery();
@@ -63,14 +63,6 @@ const Products = () => {
     const endIndex = currentPage * productPerPage; // 3
     const currentProducts = filter.slice(startIndex, endIndex); // [ 0, 1, 2 ]
 
-    const formatCurrency = (currency) => {
-        return Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          minimumFractionDigits: 0,
-        }).format(currency);
-    }
-
     const handleFilterProduct = () => {
         setActiveCategory();
         setFilter(products);
@@ -105,7 +97,7 @@ const Products = () => {
                                             </div>
                                             <div className="card-body">
                                                 <h5 className="card-title  mb-0">{product.title.substring(0,12)}...</h5>
-                                                <p className="card-text lead fw-bold">{ formatCurrency(product.price) }</p>
+                                                <p className="card-text lead fw-bold">{ FormatCurrency(product.price) }</p>
                                                 <NavLink to={`/products/${product.id}`} className="btn btn-outline-primary"> Details </NavLink>
                                             </div>
                                             { product.stoke > 0 ? ( <p className="card-text text-success fw-bold"> In Stock </p> ) :

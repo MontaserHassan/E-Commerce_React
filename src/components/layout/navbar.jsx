@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 import { NavLink} from 'react-router-dom';
-// import{addToCart} from "../../features/cartSlice"
-// import{useDispatch} from "react-redux"
 import { useSelector } from 'react-redux';
 import Search from './other/search';
 const Navbar = () => {

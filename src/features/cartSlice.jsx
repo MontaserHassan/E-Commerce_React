@@ -1,5 +1,7 @@
 import {createSlice } from '@reduxjs/toolkit'
 import {toast} from "react-toastify";
+
+
 const  initialState={
     cartItems:
     localStorage.getItem("cartItem")?JSON.parse(localStorage.getItem("cartItems"))
@@ -8,29 +10,14 @@ const  initialState={
     cartTotalAmount:0,
 
 }
-const cartSlice =createSlice({
+const cartSlice =createSlice(
+  {
     name:'cart',
     initialState,
     reducers:{
         addToCart:(state,action)=>{
-//            const itemIndex= state.cartItems.findIndex((Item) => Item.id === action.payload.id );
-//            if(itemIndex>=0){
-//                           state.cartItems[itemIndex].cartQuantity++;
-//                           toast.info(`Increased ${state.cartItems[itemIndex].title} quantity`,{
-//                             position:"bottom-left",
-//                           } )
-//                       }else{
-//                         const tempProduct = {...action.payload,cartQuantity:1};
-//                         state.cartItems.push(tempProduct);  
-//                         toast.success(` ${action.payload.title} added to your cart`,{
-//                             position:"bottom-left",
-//                           } )
-//                     }
-//                   localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
-// // Dispatch the getTotal action after adding the item to the cart
-//                  state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
-//                  state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
- const itemIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
+           state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
+           const itemIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
           if (itemIndex >= 0) {
             if (state.cartItems[itemIndex].cartQuantity >= action.payload.stoke) {
               toast.error(`Sorry, there are only ${action.payload.stoke} available in stock.`,{
@@ -116,6 +103,10 @@ const cartSlice =createSlice({
           
 
     }
-})
+    
+}
+
+
+)
 export const{addToCart,removeFromCart,decreaseCartItems,clearCart,getTotal }=cartSlice.actions;
 export default cartSlice.reducer;
