@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import Pagination from './pagination';
 import classNames from 'classnames';
+import './style/products.css';
 // import { useGetAllProductsQuery } from '../../features/productsAPI';
 // import { useSelector } from 'react-redux';
 const Products = () => {
@@ -63,14 +64,15 @@ const Products = () => {
     const currentProducts = filter.slice(startIndex, endIndex); // [ 0, 1, 2 ]
 
     const formatCurrency = (currency) => {
-        return Intl.NumberFormat('ar-SA', {
-          style: 'currency',
-          currency: 'SAR',
+        return Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
           minimumFractionDigits: 0,
         }).format(currency);
     }
 
     const handleFilterProduct = () => {
+        setActiveCategory();
         setFilter(products);
     }
     
@@ -98,13 +100,15 @@ const Products = () => {
 
                                     <div className="col-md-3 mb-4">
                                         <div className="card text-center h-100 p-4" key={product.id}>
-                                            <img className="card-img-top" src={product.image} title={product.title} alt={product.title} height="350px"/>
+                                            <div className="bg-image hover-overlay hover-zoom hover-shadow ripple">
+                                                <img className="card-img-top" src={product.image} title={product.title} alt={product.title} height="350px"/>
+                                            </div>
                                             <div className="card-body">
                                                 <h5 className="card-title  mb-0">{product.title.substring(0,12)}...</h5>
                                                 <p className="card-text lead fw-bold">{ formatCurrency(product.price) }</p>
                                                 <NavLink to={`/products/${product.id}`} className="btn btn-outline-primary"> Details </NavLink>
                                             </div>
-                                            { product.stock > 0 ? ( <p className="card-text text-success fw-bold"> In Stock </p> ) :
+                                            { product.stoke > 0 ? ( <p className="card-text text-success fw-bold"> In Stock </p> ) :
                                             ( <p className="card-text text-danger fw-bold"> Not Available </p> )}
                                         </div>
                                     </div>
@@ -131,9 +135,8 @@ const Products = () => {
                     
                     <div className="col-12 mt-2">
 
-                        <h3 className="me-2 mt-4 text-center display-6 fw-bolder">Check Our Products</h3>
-                        <hr className="mt-5"/>
                         <h4 className="me-3 ms-2 mt-3 text-center display-6 fw-bolder">The best choice for you is here</h4>
+                        <h3 className="me-2 mt-4 text-center display-6 fw-bolder">Check Our Products</h3>
                     
                     </div>
                 

@@ -1,23 +1,12 @@
-import React, { useState,Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { NavLink} from 'react-router-dom';
 // import{addToCart} from "../../features/cartSlice"
 // import{useDispatch} from "react-redux"
 import { useSelector } from 'react-redux';
+import Search from './other/search';
 const Navbar = () => {
-    const{cartTotalQuantity}=useSelector(state=>state.cart)
 
-    // const navigate =useNavigate();
-    // const dispatch=useDispatch();
-    const [searchValue, setSearchValue] = useState("");
-    
-    // const handelAddToCart=(product) =>{
-    //     dispatch(addToCart(product));
-    //     navigate.push("/cart")
-    // };
-    const handleSearchInputChange = (event) => {
-        setSearchValue(event.target.value)
-    };
-    
+    const{cartTotalQuantity}=useSelector(state=>state.cart);
 
     return (
         <Fragment>
@@ -27,25 +16,25 @@ const Navbar = () => {
                     
                     <div className="container-fluid">
                         
-                        <NavLink className="navbar-brand text-light fw-bolder fs-4 ms-3" to="/">Online Shopping</NavLink>
+                        <NavLink className="navbar-brand text-light fw-bolder me-5 fs-4 ms-3" to="/">Online Shopping</NavLink>
                         
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div className="collapse navbar-collapse ms-5" id="navbarSupportedContent">
                             
                             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                                 
                                 <li className="nav-item">
-                                    <NavLink className="nav-link active text-light ms-2" aria-current="page" to="/">Home</NavLink>
+                                    <NavLink className="nav-link text-light ms-2" aria-current="page" to="/">Home</NavLink>
                                 </li>
 
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/products">Products</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link active text-light ms-2" aria-current="page" to="/about-us">About-Us</NavLink>
+                                    <NavLink className="nav-link text-light ms-2" aria-current="page" to="/about-us">About-Us</NavLink>
                                 </li>
 
                                 <li className="nav-item">
@@ -53,13 +42,8 @@ const Navbar = () => {
                                 </li>
                         
                             </ul>
-                        
-                            <form className="d-flex me-4" role="search">
-                        
-                            <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={searchValue} onChange={handleSearchInputChange}/>
-                               <button className="btn btn-warning rounded-end" type="submit"><i className="fas fa-search"></i></button>
-                        
-                            </form>
+
+                            <Search/>
 
                             <div className="buttons me-5">
                                 <NavLink className="btn btn-outline-light" to="/login">
