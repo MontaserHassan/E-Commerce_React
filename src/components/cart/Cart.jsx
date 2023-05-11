@@ -7,42 +7,26 @@ import { NavLink } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';   
 import Button from 'react-bootstrap/Button';
 
-const formatCurrency = (currency) => {
-    return Intl.NumberFormat("ar-SA", {
-    style: "currency",
-    currency:"SAR",
-    minimumFractionDigits: 0,
-     }).format(currency)
-         };
+const formatCurrency = (currency) => { return Intl.NumberFormat("ar-SA", { style: "currency",currency:"SAR",minimumFractionDigits: 0,}).format(currency)};
 
 
-  const Cart = () => {
-   const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(getTotal());
-  },[cart,dispatch])
-  
-  const handelRemoveFromCart =(cartItem)=>{
-  dispatch(removeFromCart(cartItem));
-      }
-  const handelDecreaseCartItems =(cartItem)=>{
-  dispatch(decreaseCartItems(cartItem));
-      }
-const handelIncreaseCartItems =(cartItem)=>{
-dispatch(addToCart(cartItem));
-      }
-      
-  const handelClearCart =(cartItem)=>{
-  dispatch(clearCart());}
+const Cart = () => {
+const dispatch = useDispatch();
 
-  const [clearCartShow, setClearCartShow] = useState(false);
+const cart = useSelector((state) => state.cart);
+const [clearCartShow, setClearCartShow] = useState(false);
 const handleClearCartClose = () => setClearCartShow(false);
 const handleClearCartShow = () => setClearCartShow(true);
-  // const [show, setShow] = useState(false);
+  
+const handelRemoveFromCart =(cartItem)=>{dispatch(removeFromCart(cartItem));}
+const handelDecreaseCartItems =(cartItem)=>{dispatch(decreaseCartItems(cartItem));}
+const handelIncreaseCartItems =(cartItem)=>{dispatch(addToCart(cartItem));}
+const handelClearCart =(cartItem)=>{dispatch(clearCart());}
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
+
+
+
 
   return (
     <Fragment>
@@ -86,7 +70,6 @@ const handleClearCartShow = () => setClearCartShow(true);
           </div>
 
         ) : (
-          //cart table
           <div>
           <table className="table table-striped w-100 m-auto table-hover text-center text-black  border-dark mb-4 mt-4">
           <thead >
@@ -144,7 +127,7 @@ const handleClearCartShow = () => setClearCartShow(true);
 
 
        
-/*----------------------------------------------------------------*/
+
         <div className="container w-100 m-auto">
         <div className="row">
           <div className="col-md-4 pt-5">
@@ -191,7 +174,6 @@ const handleClearCartShow = () => setClearCartShow(true);
       </div>
 
 
-    /* Modal popUp for asking for confirmation before clearing the cart*/
 
       <Modal
       show={clearCartShow}
