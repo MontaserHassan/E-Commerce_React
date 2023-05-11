@@ -6,7 +6,6 @@ import { decreaseCartItems, removeFromCart,addToCart,getTotal } from "../../feat
 import { NavLink } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';   
 import Button from 'react-bootstrap/Button';
-import Product from "../products/product";
 
 const formatCurrency = (currency) => {  return Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -35,7 +34,6 @@ const handelDecreaseCartItems = (cartItem) => {
   }
 };
 const handelIncreaseCartItems =(cartItem)=>{dispatch(addToCart(cartItem));}
-// const handelClearCart =(cartItem)=>{dispatch(clearCart());}
 
 useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
 

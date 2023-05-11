@@ -33,8 +33,6 @@ const cartSlice =createSlice({
  const itemIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
           if (itemIndex >= 0) {
             if (state.cartItems[itemIndex].cartQuantity >= action.payload.stoke) {
-              // If the product is already in the cart and the cart quantity is greater than or equal to the product stock, show an alert
-              // alert(`Sorry, there are only ${action.payload.stoke} ${action.payload.title} available in stock.`);
               toast.error(`Sorry, there are only ${action.payload.stoke} available in stock.`,{
                 position:"top-center",
               } )
