@@ -3,7 +3,7 @@ import { useSelector ,useDispatch} from "react-redux";
 import { decreaseCartItems, removeFromCart,addToCart,getTotal } from "../../features/cartSlice";
 import Modal from 'react-bootstrap/Modal';   
 import Button from 'react-bootstrap/Button';
-import "./Cart.css"
+import "./style/Cart.css"
 import CartOperations from "./CartOperations";
 import { FormatCurrency } from '../../features/FormatCurrency';
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import "./style/Cart.css"
 import { NavLink } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -61,8 +62,7 @@ const cart = useSelector((state) => state.cart);
       </div>
     </div>
   </div>
-
-    </div>
+</div>
   )
 }
 

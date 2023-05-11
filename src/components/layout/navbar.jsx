@@ -14,7 +14,7 @@ const Navbar = () => {
                     
                     <div className="container-fluid">
                         
-                        <NavLink className="navbar-brand text-light fw-bolder me-5 fs-4 ms-3" to="/">
+                        <NavLink className="navbar-brand text-light fw-bolder me-5 fs-4 ms-3 mt-3" to="/">
                         <img src="assets/images/nav-icon.png" alt="Quick Buy Logo" 
                         width="100" height="55" 
                         className="d-inline-block align-text-top me-2 " />

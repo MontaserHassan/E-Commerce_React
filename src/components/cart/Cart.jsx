@@ -1,6 +1,6 @@
 import { React, Fragment,useEffect } from "react";
 import { useSelector ,useDispatch} from "react-redux";
-import "./Cart.css"
+import "./style/Cart.css"
 import {getTotal } from "../../features/cartSlice";
 import CartTable from "./CartTable"
 import EmptyCart from "./EmptyCart"
@@ -9,7 +9,6 @@ const Cart = () => {
 
 const dispatch = useDispatch();
 const cart = useSelector((state) => state.cart);
-
 useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
 
   return (
