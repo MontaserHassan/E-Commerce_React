@@ -14,14 +14,14 @@ import productsReducer, { productsFetch } from './features/productsSlice';
 import { productApi } from './features/productsAPI';
 
 
-const store= configureStore({
+const store = configureStore({
   reducer: {
-    products:productsReducer,
-    [productApi.reducerPath]:productApi.reducer,
-    cart:cartReducer,
+    products: productsReducer,
+    [productApi.reducerPath]: productApi.reducer,
+    cart: cartReducer,
   },
-  middleware:(getDefaultMiddleware)=>
-     getDefaultMiddleware().concat(productApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(productApi.middleware),
 })
 
 store.dispatch(productsFetch());
@@ -31,11 +31,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <BrowserRouter>
-<Provider store ={store}>  
- <App />
-</Provider>
- 
-
+    <Provider store={store}>
+      <App />
+    </Provider>
   </BrowserRouter>
 
 );

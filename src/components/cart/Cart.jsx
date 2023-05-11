@@ -1,11 +1,12 @@
-import { React, Fragment, useEffect } from "react";
+import { React, Fragment, useEffect,useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Cart.css"
 import { decreaseCartItems, removeFromCart, addToCart, clearCart, getTotal } from "../../features/cartSlice";
+import Payment from "../payment/payment";
 
-
-const formatCurrency = (currency) => {
+export const formatCurrency = (currency) => {
   return Intl.NumberFormat("ar-SA", {
     style: "currency",
     currency: "SAR",
@@ -13,8 +14,8 @@ const formatCurrency = (currency) => {
   }).format(currency)
 };
 
-
 const Cart = () => {
+  // const [amount, setAmount]=useState(0);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,6 +34,11 @@ const Cart = () => {
   const handelClearCart = (cartItem) => {
     dispatch(clearCart());
   }
+  // const handelTotalAmount = (cartItem) => {
+  //   const total = dispatch(getTotal()); 
+    
+  //   setAmount(6);
+  // }
 
   return (
     <Fragment>
@@ -127,7 +133,7 @@ const Cart = () => {
                   <button type="button" className="btn btn-danger mb-5" onClick={() => handelClearCart()}>Clear Cart</button>
                   <div className="Continue-Shopping col-md-12">
                     <button type="button" className="btn btn-outline-primary">
-                      <Link to="/" class="text-decoration-none">
+                      <Link to="/" className="text-decoration-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
                           <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z" />
                         </svg>
@@ -136,9 +142,10 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="Continue-Shopping col-md-8">
-                    <button type="button" className="btn btn-outline-primary">
-                      <Link to="/payment" class="text-decoration-none">
+                    <button type="button" className="btn btn-outline-primary" >
+                      <Link to="/payment" className="text-decoration-none">
                         Buy Now
+                      {/* <Payment amount={amount} /> */}
                       </Link>
                     </button>
                   </div>
