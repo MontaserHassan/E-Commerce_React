@@ -75,12 +75,12 @@ const Products = () => {
                 
                 <div className="buttons d-flex justify-content-center mb-5 pb-5">
 
-                    <button className="btn btn-outline-dark me-2" onClick={handleFilterProduct}>All</button>
-                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "men's clothing"})} onClick={()=>{filterProducts("men's clothing")}}>Men's Clothing</button>
-                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "women's clothing"})} onClick={()=>{filterProducts("women's clothing")}}>Women's Clothing</button>
-                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "jewelery"})} onClick={()=>{filterProducts('jewelery')}}>Jewelery</button>
-                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "watches"})} onClick={()=>{filterProducts('watches')}}>Watches</button>
-                    <button className={classNames('btn btn-outline-dark me-2', {active: activeCategory === "electronics"})} onClick={()=>{filterProducts('electronics')}}>Electronic</button>
+                    <button className="btn btn-outline-dark rounded-5 me-2" onClick={handleFilterProduct}>All</button>
+                    <button className={classNames('btn btn-outline-dark rounded-5 me-2', {active: activeCategory === "men's clothing"})} onClick={()=>{filterProducts("men's clothing")}}>Men's Clothing</button>
+                    <button className={classNames('btn btn-outline-dark rounded-5 me-2', {active: activeCategory === "women's clothing"})} onClick={()=>{filterProducts("women's clothing")}}>Women's Clothing</button>
+                    <button className={classNames('btn btn-outline-dark rounded-5 me-2', {active: activeCategory === "jewelery"})} onClick={()=>{filterProducts('jewelery')}}>Jewelery</button>
+                    <button className={classNames('btn btn-outline-dark rounded-5 me-2', {active: activeCategory === "watches"})} onClick={()=>{filterProducts('watches')}}>Watches</button>
+                    <button className={classNames('btn btn-outline-dark rounded-5 me-2', {active: activeCategory === "electronics"})} onClick={()=>{filterProducts('electronics')}}>Electronic</button>
 
                 </div>
 

@@ -13,25 +13,29 @@ const Product = () => {
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isWishlists, setIsWishlists] = useState(false);
+    const [isInCart, setIsInCart] = useState(false);
     const [wishlist, setWishlist] = useState([]);
 
     
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
 
-    const handelAddToCart =(product)=>{
-        dispatch(addToCart(product))
-    }
-
+    const handleAddToCart = (product) => {
+        const alreadyInCart = cartItems?.find((item) => item.id === product.id);
+        if (!alreadyInCart) {
+            dispatch(addToCart(product));
+            setIsInCart(true);
+        }
+    };
 
     useEffect(() => {
         const getProduct = async () => {
             setIsLoading(true);
             const response = await fetch(`http://localhost:3030/products/${id}`);
-                setProduct(await response.clone().json());
-                setIsLoading(false);
+            setProduct(await response.clone().json());
+            setIsLoading(false);
         }
-        getProduct()
+        getProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
@@ -64,9 +68,6 @@ const Product = () => {
 
     const ShowProduct = () => {
 
-        const isInCart = cartItems?.find(item => item.id === product.id);
-
-
         let stockColor = "";
 
         if (product.stoke >= 10) {
@@ -87,20 +88,27 @@ const Product = () => {
                 <div className="col-md-6">
 
                     <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
-                    <h1 className="display-6">Product Name: { product.title }</h1>
-                    <h3 className="fw-bold my-4 display-6">Price: { FormatCurrency(product.price) }</h3>
+                    <h3 className="display-6">Product Name: { product.title }</h3>
+                    <h5 className="fw-bold my-4 display-6">Price: { FormatCurrency(product.price) }</h5>
                     <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stoke } piece</h5>
                     <p className="lead">Description: { product.description }</p>
 
                     {product.stoke === 0 ? (
-                        <p className="btn btn-outline-secondary px-4 py-2" disabled> Out of Stock </p>
+                        
+                        <>
+                        
+                            <p className="btn btn-outline-secondary px-4 py-2" disabled> Out of Stock </p>
+                            <h6 className="text-secondary fw-bolder text-uppercase">Coming Soon</h6>
+                        
+                        </>
+                    
                     ) : (
                         <>
 
                             {isInCart ? (
-                                <button className="btn btn-outline-success px-4 py-2" disabled> In Cart </button>
+                                <button className="btn btn-success px-4 py-2" disabled> In Cart </button>
                             ) : (
-                                <button className="btn btn-outline-success px-4 py-2" onClick={() => handelAddToCart(product)}> Add To Cart </button>
+                                <button className="btn btn-outline-success px-4 py-2" disabled={ isInCart } onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
                             )}
 
                             <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
@@ -111,7 +119,7 @@ const Product = () => {
 
                             {isWishlists && (
                                 <button className="btn btn-primary px-4 py-2 ms-3" disabled> In Wishlist </button>
-                            )}
+                            )}                        
                         </>
                         
                     )}

@@ -14,7 +14,7 @@ const cart = useSelector((state) => state.cart);
 
       <div className="Continue-Shopping col-md-12">
       <button type="button" className="btn btn-outline-primary">
-      <Link to="/" className="text-decoration-none on-hover">
+      <Link to="/products" className="text-decoration-none on-hover">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="28"
