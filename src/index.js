@@ -13,16 +13,17 @@ import { Provider } from 'react-redux';
 import cartReducer, { getTotal } from "./features/cartSlice"
 import productsReducer, { productsFetch } from './features/productsSlice';
 import { productApi } from './features/productsAPI';
+import { userLoginReducer } from './components/client/userReducer'
 
-
-const store= configureStore({
+const store = configureStore({
   reducer: {
-    products:productsReducer,
-    [productApi.reducerPath]:productApi.reducer,
-    cart:cartReducer,
+    products: productsReducer,
+    [productApi.reducerPath]: productApi.reducer,
+    cart: cartReducer,
+    userLogin: userLoginReducer
   },
-  middleware:(getDefaultMiddleware)=>
-     getDefaultMiddleware().concat(productApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(productApi.middleware),
 })
 
 store.dispatch(productsFetch());
@@ -32,10 +33,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <BrowserRouter>
-<Provider store ={store}>  
- <App />
-</Provider>
- 
+    <Provider store={store}>
+      <App />
+    </Provider>
+
 
   </BrowserRouter>
 
