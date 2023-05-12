@@ -14,7 +14,7 @@ const Search = () => {
         fetch('http://localhost:3030/products')
             .then(response => response.json() )
             .then( data =>{
-                console.log(data);
+                // console.log(data);
                 setFilterData(data) })
             .catch( error => console.log(error) )
     }, [])

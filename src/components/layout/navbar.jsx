@@ -8,27 +8,22 @@ const Navbar = () => {
 
     return (
         <Fragment>
-            <div className="ms-2 me-2 mt-3">
+            <div className=" ms-2 me-2 mt-3">
 
                 <nav className="navbar navbar-expand-lg bg-dark rounded-3 py-2 shadow-sm">
                     
                     <div className="container-fluid">
-                    <div className="col-2">
 
                         <NavLink className="navbar-brand text-light fw-bolder me-5 fs-5 ms-4 mt-2 mb-1" to="/">
-                        <img src="assets/images/nav-icon.png" alt="Quick Buy Logo" 
-                        width="90" height="50" 
-                        className="d-inline-block align-text-top me-2" />
-                        QUICK BUY
-                        </NavLink>
-                        </div>
+                        <img src="assets/images/nav-icon.png" alt="Quick Buy Logo" width="40" height="40" className="d-inline-block align-text-top"/> QUICK BUY </NavLink>
+
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         
                         <div className="collapse navbar-collapse ms-5" id="navbarSupportedContent">
                             
-                            <ul className="navbar-nav mb-2 mb-lg-0">
+                            <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
                                 
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" aria-current="page" to="/">Home</NavLink>
@@ -71,6 +66,7 @@ const Navbar = () => {
                 </nav>            
             
             </div>
+            
         </Fragment>
     );
 };

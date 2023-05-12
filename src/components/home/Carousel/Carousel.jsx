@@ -5,7 +5,7 @@ const Carousel = () => {
     return (
             <Fragment>
                 
-                <div id="carouselExampleIndicators" className="rounded-3  carousel carousel-home slide mx-5 ms-5" data-bs-ride="carousel">
+                <div id="carouselExampleIndicators" className="rounded-3 carousel carousel-home slide m-auto mt-4" data-bs-ride="carousel">
                     
                     <div className="carousel-indicators rounded-3">
                     

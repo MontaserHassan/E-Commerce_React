@@ -8,8 +8,9 @@ import Login from './components/client/login';
 import Register from './components/client/register';
 import Products from './components/products/products';
 import Product from './components/products/product';
-import Payment from './components/payment/payment';
 import Cart from './components/cart/Cart';
+import Payment from './components/payment/payment';
+import Order from './components/order/order';
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import{ ToastContainer}from "react-toastify";
@@ -19,7 +20,9 @@ function App() {
       <ToastContainer/>
         
       <Navbar/>
+
         <Routes>
+      
           <Route path="/" element={<Home/>}/>
           <Route path="/about-us" element={<About/>}/>
           <Route path="/login" element={<Login/>}/>
@@ -28,7 +31,7 @@ function App() {
           <Route path="/products/:id" element={<Product/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/Payment" element={<Payment/>}/>
-
+          <Route path="/order" element={<Order/>}/>
 
         </Routes>
 
