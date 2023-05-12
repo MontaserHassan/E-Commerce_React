@@ -31,7 +31,7 @@ const Login = () => {
                         <div className="card bg-light text-dark">
                             <div className="card-body p-5">
                                 <div className="mb-md-5 mt-md-4 pb-5">
-                                    <h1 className='text-center'>Sign in</h1>
+                                    <h1 className='text-center' style={{ textTransform: 'capitalize' }}>Sign in</h1>
 
                                     <form onSubmit={submitHandler} style={{ maxWidth: '40rem', margin: '0 auto' }}>
                                         <div className='mb-3'>

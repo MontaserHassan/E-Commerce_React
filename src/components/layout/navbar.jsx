@@ -31,7 +31,6 @@ const Navbar = () => {
     }
 
 
-
     return (
         <Fragment>
             <div className=" ms-2 me-2 mt-3">
@@ -77,9 +76,9 @@ const Navbar = () => {
                                             <i className="fas fa-sign-in-alt me-1"></i>
                                             Profile
                                         </NavLink>
-                                        <button className="dropdown-item text-center" onClick={handleLogout}>
+                                        <button className="btn btn-outline-dark" onClick={handleLogout}>
                                             <i className="fas fa-sign-in-alt me-1"></i>
-                                            Logout
+                                            &nbsp;  Logout
                                         </button>
                                     </NavDropdown>
 
