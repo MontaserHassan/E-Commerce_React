@@ -12,7 +12,7 @@ const Home = () => {
 
               
                 <div className="row ">
-                    <div className="hero mx-5 mt-1 text-center ">
+                    <div className="hero  mt-1 text-center ">
                         <Carousel />
                     </div>
                 </div>
