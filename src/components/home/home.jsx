@@ -8,15 +8,11 @@ const Home = () => {
 
         <Fragment>
 
-            <div className="container-fluid mx-5">
+            <div className="container-fluid ">
 
-                <div className="text-center-fw-bold mt-5 mb-5">
-                    <h1 className="me-2 text-center display-6 fw-bolder">Visit us to find what please you</h1>
-                </div>
-
-                
+              
                 <div className="row ">
-                    <div className="hero mt-1 text-center col-md-12">
+                    <div className="hero  mt-1 text-center ">
                         <Carousel />
                     </div>
                 </div>

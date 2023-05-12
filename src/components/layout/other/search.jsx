@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import './style/search.css';
 
@@ -38,12 +38,16 @@ const Search = () => {
     }
 
     return (
-        <>
+        <Fragment>
             <div className='position-relative'>
                 <form className="d-flex me-4" role="search">
                     <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={navLinkClicked ? '' : inputValue} onChange={handleFilterData}/>
-                    <button className="btn btn-warning rounded-end" type="submit"><i className="fas fa-search"></i></button>
+                    <button className="btn btn-warning rounded-end" type="button">
+                    <i className="fas fa-search"></i>
+                    </button>
                 </form>
+                  
+
 
                 {products.length > 0 && !navLinkClicked && (
                     <ul className="list-group position-absolute w-100 p-0 mb-1" style={{ top: '100%', zIndex: '1' }}>
@@ -55,7 +59,7 @@ const Search = () => {
                     </ul>
                 )}
             </div>
-        </>
+        </Fragment>
     );
 }
 
