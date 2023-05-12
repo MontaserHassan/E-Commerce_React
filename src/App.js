@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {React,Fragment} from 'react';
 import Navbar from './components/layout/navbar';
 import Home from './components/home/home';
-import About from './components/other/aboutUs';
+import About from './components/Information/aboutUs';
 import Login from './components/client/login';
 import Register from './components/client/register';
 import Products from './components/products/products';
