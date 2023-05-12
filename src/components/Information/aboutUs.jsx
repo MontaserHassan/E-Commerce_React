@@ -10,14 +10,14 @@ const AboutUs = () => {
           <CardBody>
             <CardTitle className="text-center mb-3"><h1>About Us</h1></CardTitle>
             <CardText>
-              <p>
+              <p className="mb-3">
                 At our company, we pride ourselves on having a good team of
                 talented and dedicated individuals who work together to achieve
                 our goals. Each member of our team brings their unique skills,
                 experiences, and perspectives to the table, and we value and
                 respect their contributions.
               </p>
-              <p>
+              <p className="mb-3">
                 Thank you for visiting our website! We are grateful for your
                 time and attention, and we hope that you find the information
                 and resources here helpful and informative.
@@ -33,37 +33,28 @@ const AboutUs = () => {
                       <ul className="list-unstyled">
                         <li>
                           <Card className="team-card">
-                            <CardBody>
-                              <h3>Hend</h3>
-                            </CardBody>
+                              <h3>Hend Mohammed</h3>
                           </Card>
                         </li>
                         <li>
                           <Card className="team-card">
-                            <CardBody>
-                              <h3>Nada</h3>
-                            </CardBody>
+                              <h3>Nada Hesham</h3>
                           </Card>
                         </li>
                         <li>
                           <Card className="team-card">
-                            <CardBody>
-                              <h3>Amany</h3>
-                            </CardBody>
+                              <h3>Amany Khaled</h3>
                           </Card>
                         </li>
                         <li>
                           <Card className="team-card">
-                            <CardBody>
-                              <h3>Mohamed</h3>
-                            </CardBody>
+                              <h3>Mohamed Salah</h3>
                           </Card>
                         </li>
                         <li>
                           <Card className="team-card">
-                            <CardBody>
-                              <h3>Montaser</h3>
-                            </CardBody>
+                              <h3>Montaser Mohamed</h3>
+                           
                           </Card>
                         </li>
                       </ul>
@@ -72,7 +63,7 @@ const AboutUs = () => {
                 </CardBody>
               </Card>
 
-              <p>
+              <p className="mt-3">
                 Our team has put a lot of effort and love into creating this
                 site, and we are excited to share it with you. If you have any
                 feedback or suggestions for us, please don't hesitate to reach
