@@ -70,9 +70,9 @@ const Product = () => {
 
         let stockColor = "";
 
-        if (product.stoke >= 10) {
+        if (product.stoke >= 5) {
           stockColor = "text-success";
-        } else if (product.stoke > 5) {
+        } else if (product.stoke < 5 && product.stoke > 0) {
           stockColor = "text-warning";
         } else if (product.stoke === 0) {
           stockColor = "text-danger";

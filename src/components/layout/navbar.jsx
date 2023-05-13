@@ -4,7 +4,24 @@ import { useSelector } from 'react-redux';
 import Search from './other/search';
 const Navbar = () => {
 
-    const{cartTotalQuantity}=useSelector(state=>state.cart);
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
+
+
+
+    const { cartTotalQuantity } = useSelector(state => state.cart);
+    useEffect(() => {
+        const storedUserInfo = localStorage.getItem('userInfo');
+        if (storedUserInfo) {
+            dispatch({ type: USER_LOGIN_SUCCESS, payload: JSON.parse(storedUserInfo) });
+        }
+    }, [dispatch]);
+
+    const handleLogout = () => {
+        dispatch({ type: 'USER_LOGOUT' });
+        localStorage.removeItem('userInfo');
+    }
+
 
     return (
         <Fragment>
