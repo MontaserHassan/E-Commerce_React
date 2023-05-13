@@ -15,8 +15,6 @@ const Navbar = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-
-
     const { cartTotalQuantity } = useSelector(state => state.cart);
     useEffect(() => {
         const storedUserInfo = localStorage.getItem('userInfo');

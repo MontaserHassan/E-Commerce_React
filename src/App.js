@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { React, Fragment } from 'react';
 import Navbar from './components/layout/navbar';
 import Home from './components/home/home';
-import About from './components/Information/aboutUs';
+// import About from './components/Information/aboutUs';
 import Login from './components/client/login';
 import Register from './components/client/register';
 import Products from './components/products/products';
@@ -24,7 +24,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Home />} />
-        <Route path="/about-us" element={<About />} />
+        {/* <Route path="/about-us" element={<About />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/products" element={<Products />} />
