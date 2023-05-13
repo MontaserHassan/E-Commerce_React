@@ -32,7 +32,7 @@ const cartSlice =createSlice(
           } else {
             const tempProduct = { ...action.payload, cartQuantity: 1 };
             state.cartItems.push(tempProduct);
-            toast.success(` ${action.payload.title.substring(0,30)}... added to your cart`, {
+            toast.success(` ${action.payload.title} added to your cart`, {
               position: "bottom-left",
             });
           }
@@ -49,7 +49,7 @@ const cartSlice =createSlice(
           )
         state.cartItems=nextCartItem
         localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
-        toast.error(` ${action.payload.title.substring(0,30)}... removed from your cart`,{
+        toast.error(` ${action.payload.title} removed from your cart`,{
                   position:"bottom-left",
                 } );
               },
@@ -60,11 +60,7 @@ const cartSlice =createSlice(
           )
           if(state.cartItems[itemIndex].cartQuantity>1){
             state.cartItems[itemIndex].cartQuantity--;
-            toast.info(
-              `Decreased
-               ${state.cartItems[itemIndex].title.substring(0,30)}... 
-               quantity`
-              ,{
+            toast.info(`Decreased ${state.cartItems[itemIndex].title} quantity`,{
               position:"bottom-left",
             } )
           }else if( state.cartItems[itemIndex].cartQuantity===1){
@@ -72,7 +68,7 @@ const cartSlice =createSlice(
               (cartItem) => cartItem.id!== action.payload.id
             )
           state.cartItems=nextCartItem
-          toast.error(` ${action.payload.title.substring(0,30)}... removed from your cart`,{
+          toast.error(` ${action.payload.title} removed from your cart`,{
                     position:"bottom-left",
                   } );
         }

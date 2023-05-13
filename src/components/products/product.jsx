@@ -95,15 +95,15 @@ const Product = () => {
 
                     {product.stoke === 0 ? (
                         
-                        <>
+                        <Fragment>
                         
                             <p className="btn btn-outline-secondary px-4 py-2" disabled> Out of Stock </p>
                             <h6 className="text-secondary fw-bolder text-uppercase">Coming Soon</h6>
                         
-                        </>
+                        </Fragment>
                     
                     ) : (
-                        <>
+                        <Fragment>
 
                             {isInCart ? (
                                 <button className="btn btn-success px-4 py-2" disabled> In Cart </button>
@@ -120,7 +120,7 @@ const Product = () => {
                             {isWishlists && (
                                 <button className="btn btn-primary px-4 py-2 ms-3" disabled> In Wishlist </button>
                             )}                        
-                        </>
+                        </Fragment>
                         
                     )}
 
