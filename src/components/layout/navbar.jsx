@@ -38,7 +38,7 @@ const Navbar = () => {
                     <div className="container-fluid">
 
                         <NavLink className="navbar-brand text-light fw-bolder me-5 fs-5 ms-4 mt-2 mb-1" to="/">
-                            <img src="assets/images/nav-icon.png" alt="Quick Buy Logo" width="40" height="40" className="d-inline-block align-text-top" /> QUICK BUY </NavLink>
+                            <img src="/assets/images/nav-icon.png" alt="" width="40" height="40" className="d-inline-block align-text-top" /> QUICK BUY </NavLink>
 
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
