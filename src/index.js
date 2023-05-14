@@ -9,16 +9,19 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import cartReducer, { getTotal } from "./features/cartSlice"
+import cartReducer, { getTotal } from "./features/cartSlice";
+import  wishListReducer from "./features/wishlistSlice"
 import productsReducer, { productsFetch } from './features/productsSlice';
 import { productApi } from './features/productsAPI';
 
 
 const store= configureStore({
   reducer: {
+    wishlist:wishListReducer,
     products:productsReducer,
     [productApi.reducerPath]:productApi.reducer,
     cart:cartReducer,
+   
   },
   middleware:(getDefaultMiddleware)=>
      getDefaultMiddleware().concat(productApi.middleware),

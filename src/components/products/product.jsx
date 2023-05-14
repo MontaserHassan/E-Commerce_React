@@ -4,18 +4,22 @@ import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import{useDispatch} from "react-redux"
 import { addToCart } from '../../features/cartSlice';
+import { addToWishList } from '../../features/wishlistSlice';
 const Product = () => {
 
     const { id } = useParams();
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isWishlists, setIsWishlists] = useState(false);
-    const [wishlist, setWishlist] = useState([]);
+    // const [isWishlists, setIsWishlists] = useState(false);
+    // const [wishlist, setWishlist] = useState([]);
     
     const dispatch = useDispatch();
     const handelAddToCart =(product)=>{
         dispatch(addToCart(product))
     }
+    const handleAddToWishlist = (product) => {
+        dispatch(addToWishList(product))
+      };
 
 
     useEffect(() => {
@@ -49,10 +53,7 @@ const Product = () => {
         );
     };
 
-    const handleAddToWishlist = () => {
-        setIsWishlists(true);
-        setWishlist((prevState) => [...prevState, wishlist])
-      };
+  
 
     const formatCurrency = (currency) => {
         return Intl.NumberFormat('ar-SA', {
@@ -80,10 +81,12 @@ const Product = () => {
                     <button className="btn btn-outline-success px-4 py-2" onClick={() => handelAddToCart(product)} >
                     Add To Cart
                     </button>
-
+                    <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={() => handleAddToWishlist(product)}>
+                            Add To Wishlist
+                        </button>
                     <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
-                    {!isWishlists && (
-                        <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={handleAddToWishlist}>
+                    {/* {!isWishlists && (
+                        <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={() => handleAddToWishlist(product)}>
                             Add To Wishlist
                         </button>
                     )}
@@ -91,7 +94,7 @@ const Product = () => {
                         <button className="btn btn-primary px-4 py-2 ms-3" disabled>
                             Added To Wishlist
                         </button>
-                    )}
+                    )} */}
 
                 </div>
 

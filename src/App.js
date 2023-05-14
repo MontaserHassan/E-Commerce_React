@@ -10,6 +10,7 @@ import Products from './components/products/products';
 import Product from './components/products/product';
 // import cartSlice from './features/cartSlice';
 import Cart from './components/cart/Cart';
+import WishList from './components/WishList/WishList';
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import{ ToastContainer}from "react-toastify";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/products" element={<Products/>}/>
           <Route path="/products/:id" element={<Product/>}/>
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/WishList" element={<WishList/>}/>
 
         </Routes>
 
