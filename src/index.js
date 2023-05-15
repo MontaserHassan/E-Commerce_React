@@ -13,14 +13,16 @@ import { Provider } from 'react-redux';
 import cartReducer, { getTotal } from "./features/cartSlice"
 import productsReducer, { productsFetch } from './features/productsSlice';
 import { productApi } from './features/productsAPI';
-import { userLoginReducer } from './components/client/userReducer'
+import { userLoginReducer, userRegisterReducer, userReducer } from './components/client/userReducer'
 
 const store = configureStore({
   reducer: {
     products: productsReducer,
     [productApi.reducerPath]: productApi.reducer,
     cart: cartReducer,
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
+    userRegister: userRegisterReducer,
+    userDetails: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(productApi.middleware),
