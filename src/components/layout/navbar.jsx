@@ -1,6 +1,6 @@
 
 import React, { Fragment, useEffect } from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
@@ -8,6 +8,8 @@ import { NavDropdown, LinkContainer } from 'react-bootstrap';
 import {
     USER_LOGIN_SUCCESS,
 } from '../client/userConst'
+
+import { logout } from '../client/userAction'
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -24,10 +26,8 @@ const Navbar = () => {
     }, [dispatch]);
 
     const handleLogout = () => {
-        dispatch({ type: 'USER_LOGOUT' });
-        localStorage.removeItem('userInfo');
+        dispatch(logout());
     }
-
 
     return (
         <Fragment>
@@ -79,7 +79,7 @@ const Navbar = () => {
                                     <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
                                         <NavLink className="dropdown-item text-center" to="/profile">
                                             <i className="fas fa-sign-in-alt me-1"></i>
-                                            Profile
+                                            <Link to='/profile'>Profile</Link>
                                         </NavLink>
                                         <button className="btn btn-outline-dark" onClick={handleLogout}>
                                             <i className="fas fa-sign-in-alt me-1"></i>

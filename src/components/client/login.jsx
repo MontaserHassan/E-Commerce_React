@@ -31,7 +31,7 @@ const Login = () => {
                         <div className="card bg-light text-dark">
                             <div className="card-body p-5">
                                 <div className="mb-md-5 mt-md-4 pb-5">
-                                    <h1 className='text-center' style={{ textTransform: 'capitalize' }}>Sign in</h1>
+                                    <h1 className='text-center' style={{ textTransform: 'capitalize' }}>LOGIN</h1>
 
                                     <form onSubmit={submitHandler} style={{ maxWidth: '40rem', margin: '0 auto' }}>
                                         <div className='mb-3'>
@@ -57,7 +57,7 @@ const Login = () => {
                                         </div>
                                         {error && <div className="error-message danger">{error}</div>}
                                         <div className="text-center mb-4">
-                                            <button type="submit" className="btn btn-dark">Submit</button>
+                                            <button type="submit" className="btn btn-dark">login</button>
                                         </div>
                                         <div className="text-center">
                                             <p>Don't have an account? <Link to="/register">Sign up</Link></p>
