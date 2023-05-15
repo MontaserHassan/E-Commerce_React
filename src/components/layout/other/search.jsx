@@ -5,17 +5,17 @@ import './style/search.css';
 
 const Search = () => {
 
-    const [ products, setProducts ] = useState([]);
-    const [ filterData, setFilterData ] = useState([]);
-    const [ inputValue, setInputValue ] = useState('');
+    const [products, setProducts] = useState([]);
+    const [filterData, setFilterData] = useState([]);
+    const [inputValue, setInputValue] = useState('');
     const navigate = useNavigate();
 
 
     useEffect(() => {
-    fetch('http://localhost:3030/products')
-        .then(response => response.json())
-        .then(data => setProducts(data))
-        .catch(error => console.log(error));
+        fetch('http://localhost:3030/products')
+            .then(response => response.json())
+            .then(data => setProducts(data))
+            .catch(error => console.log(error));
     }, []);
 
     const handleFilterData = (event) => {
@@ -25,7 +25,7 @@ const Search = () => {
         setFilterData(filteredProducts);
     }
 
-    const handleNavLinkClick = ( productId) => {
+    const handleNavLinkClick = (productId) => {
         setInputValue('');
         setFilterData([]);
         navigate(`/products/${productId}`);
@@ -34,32 +34,32 @@ const Search = () => {
     return (
 
         <Fragment>
-        
+
             <div className='position-relative'>
-        
+
                 <form className="d-flex me-4" role="search">
-        
-                    <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={inputValue} onChange={handleFilterData}/>
+
+                    <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={inputValue} onChange={handleFilterData} />
                     <button className="btn btn-warning rounded-end" type="button"> <i className="fas fa-search"></i> </button>
-                
+
                 </form>
 
-                {filterData.length > 0  && (
-                
+                {filterData.length > 0 && (
+
                     <ul className="list-group position-absolute w-100 p-0 mb-1" style={{ top: '100%', zIndex: '1' }}>
-                    
-                        { filterData.map( product => (
-                            <a href={`/products/${product.id}`} className="list-group-item list-group-item-action" key={ product.id } onClick={ () => handleNavLinkClick(product.id) }> { product.title.substring(0,30) }... </a>
+
+                        {filterData.map(product => (
+                            <a href={`/products/${product.id}`} className="list-group-item list-group-item-action" key={product.id} onClick={() => handleNavLinkClick(product.id)}> {product.title.substring(0, 30)}... </a>
                         ))}
-                    
+
                     </ul>
-                
+
                 )}
-            
+
             </div>
-        
+
         </Fragment>
-    
+
     );
 
 }

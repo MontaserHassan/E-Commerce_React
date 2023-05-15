@@ -100,23 +100,25 @@ export const userRegisterRequest = (email, username, password, password_confirma
 
     }
 }
-
-
-export const UpdateUserInfo = (userId, userData) => async (dispatch, getState) => {
+export const UpdateUserInfo = (userId, userData, token) => async (dispatch, getState) => {
     try {
         dispatch({
-            type: USER_DETAILS_REQUEST
+            type: USER_DETAILS_REQUEST,
         });
-        const { userLogin: { userInfo } } = getState()
+
+        const { userLogin: { userInfo } } = getState();
 
         const config = {
             headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${userInfo.access}`,
+                Authorization: `Bearer ${token}`,
             },
         };
 
-        const response = await axios.put(`http://localhost:8000/user/update/${userId}`);
+        const response = await axios.put(
+            `http://localhost:8000/user/update/${userId}`,
+            userData,
+            config
+        );
 
         dispatch({
             type: USER_DETAILS_SUCCESS,

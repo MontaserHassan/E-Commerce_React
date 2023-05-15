@@ -8,7 +8,7 @@ import { NavDropdown, LinkContainer } from 'react-bootstrap';
 import {
     USER_LOGIN_SUCCESS,
 } from '../client/userConst'
-
+import './other/style/navbar.css'
 import { logout } from '../client/userAction'
 
 const Navbar = () => {
@@ -31,9 +31,9 @@ const Navbar = () => {
 
     return (
         <Fragment>
-            <div className=" ms-2 me-2 mt-3">
+            <div className="">
 
-                <nav className="navbar navbar-expand-lg bg-dark rounded-3 py-2 shadow-sm">
+                <nav className="navbar navbar-expand-lg  py-2 ">
 
                     <div className="container-fluid">
 
