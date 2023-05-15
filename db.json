@@ -462,18 +462,22 @@
             "Shipped": ""
         }
     ],
-    "order": [
+    "orders": [
         {
+            "id": 1,
+            "transaction_id": "654d7jec62es006",
             "items": [
                 {
                     "product_id": 2,
                     "quantity": 2,
-                    "price": 22.3
+                    "price": 22.3, 
+                    "title": "Hilfiger"
                 },
                 {
                     "product_id": 4,
                     "quantity": 1,
-                    "price": 15.99
+                    "price": 15.99,
+                    "title": "Mens Cotton Jacket"
                 }
             ],
             "shipping_address": {
@@ -482,19 +486,24 @@
                 "city": "Anytown"
             },
             "total": 60.59,
-            "status": "shipped"
+            "status": "pending",
+            "delivery_date": "2020-07-04"
         },
         {
+            "id": 2,
+            "transaction_id": "2538h3d864c9f2",
             "items": [
                 {
                     "product_id": 2,
                     "quantity": 2,
-                    "price": 22.3
+                    "price": 22.3,
+                    "title": "Ring"
                 },
                 {
                     "product_id": 4,
                     "quantity": 1,
-                    "price": 15.99
+                    "price": 15.99,
+                    "title": "Shoes"
                 }
             ],
             "shipping_address": {
@@ -503,7 +512,8 @@
                 "city": "Anytown"
             },
             "total": 60.59,
-            "status": "shipped"
+            "status": "shipped",
+            "delivery_date": "2020-12-19"
         }
     ]
 }

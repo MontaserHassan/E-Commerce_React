@@ -43,8 +43,6 @@ const Search = () => {
                     <button className="btn btn-warning rounded-end" type="button"> <i className="fas fa-search"></i> </button>
                 
                 </form>
-                  
-
 
                 {filterData.length > 0  && (
                 
