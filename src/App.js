@@ -20,14 +20,6 @@ function App() {
     <Fragment>
       <ToastContainer />
 
-          <Route path="/" element={<Home/>}/>
-          <Route path="/about-us" element={<About/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
-          <Route path="/products" element={<Products/>}/>
-          <Route path="/products/:id" element={<Product/>}/>
-          <Route path="/cart" element={<Cart/>}/>
-          <Route path="/WishList" element={<WishList/>}/>
       <Navbar />
 
       <Routes>

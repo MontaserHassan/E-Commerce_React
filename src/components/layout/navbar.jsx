@@ -68,11 +68,8 @@ const Navbar = () => {
                                     <NavLink className="nav-link text-light ms-2" to="/contact-us">Contact-Us</NavLink>
                                 </li>
 
-<<<<<<< HEAD
 
                         
-=======
->>>>>>> bff16a0e3e30675fcb0ed3e7bf44f417482e2641
                             </ul>
 
                             <Search />

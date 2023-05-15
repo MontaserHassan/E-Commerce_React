@@ -13,12 +13,19 @@ const Product = () => {
     const { id } = useParams();
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+   
+    
+    const dispatch = useDispatch();
+    const handelAddToCart =(product)=>{
+        dispatch(addToCart(product))
+    }
+    const handleAddToWishlist = (product) => {
+        dispatch(addToWishList(product))
+      };
     const [isWishlists, setIsWishlists] = useState(false);
     const [isInCart, setIsInCart] = useState(false);
     const [wishlist, setWishlist] = useState([]);
 
-    
-    const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
 
     const handleAddToCart = (product) => {
@@ -112,7 +119,7 @@ const Product = () => {
                             <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
 
                             {!isWishlists && (
-                                <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={() => handelAddToCart(product)}> Add To Wishlist </button>
+                                <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={() => handleAddToWishlist(product)}> Add To Wishlist </button>
                             )}
 
                             {isWishlists && (

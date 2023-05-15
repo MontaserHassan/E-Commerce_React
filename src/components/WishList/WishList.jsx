@@ -13,6 +13,9 @@ const WishList = () => {
          dispatch(removeFromWishList(wishlistitem))
     }
 
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo, loading, error } = userLogin
+
     const handleClearing=()=>{
       dispatch(clearWishList())
  }
