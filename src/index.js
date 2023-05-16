@@ -20,9 +20,6 @@ const store = configureStore({
     products: productsReducer,
     [productApi.reducerPath]: productApi.reducer,
     cart: cartReducer,
-    products: productsReducer,
-    [productApi.reducerPath]: productApi.reducer,
-    cart: cartReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userReducer,
@@ -40,7 +37,10 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <App />
+
     </Provider>
+
+
   </BrowserRouter>
 
 );
