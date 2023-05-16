@@ -16,7 +16,6 @@ import UserProfile from './components/client/Profile/UserProfile'
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
 function App() {
   const location = useLocation();
 
@@ -24,22 +23,22 @@ function App() {
 
   return (
     <Fragment>
-      <ToastContainer />
+    <ToastContainer/>
+      <Navbar/>
+      
+        <Routes>
 
-      {isNavbarVisible && <Navbar />}
+          <Route path="/" element={<Home/>}/>
+          {/* <Route path="/about-us" element={<About/>}/> */}
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
+          <Route path="/products" element={<Products/>}/>
+          <Route path="/products/:id" element={<Product/>}/>
+          <Route path="/cart" element={<Cart/>}/>
+          <Route path="/payment" element={<Payment/>}/>
+          <Route path="/order" element={<Order/>}/>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/about-us" element={<About />} /> */}
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/Payment" element={<Payment />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<UserProfile />} />
-      </Routes>
+        </Routes>
 
       {isNavbarVisible && <Footer />}
     </Fragment>

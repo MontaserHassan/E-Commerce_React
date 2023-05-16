@@ -27,6 +27,15 @@
 .on-hover:hover >span {
     color: #fff;
   }
+  a.text-decoration-none:hover {
+    color: white;
+  }
+  .Continue-Shopping {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
 
   .aspect-ratio {
     position: relative;
