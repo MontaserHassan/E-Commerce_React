@@ -1,27 +1,32 @@
 import './App.css';
 import "react-toastify/dist/ReactToastify.css";
 import { React, Fragment } from 'react';
+import { useLocation } from "react-router-dom";
 import Navbar from './components/layout/navbar';
 import Home from './components/home/home';
 // import About from './components/Information/aboutUs';
-import Login from './components/client/login';
-import Register from './components/client/register';
+import Login from './components/client/Login/login';
+import Register from './components/client/Register/register';
 import Products from './components/products/products';
 import Product from './components/products/product';
 import Cart from './components/cart/Cart';
 import WishList from './components/WishList/WishList';
 import Payment from './components/payment/payment';
 import Order from './components/order/order';
-import UserProfile from './components/client/UserProfile'
+import UserProfile from './components/client/Profile/UserProfile'
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 function App() {
+  const location = useLocation();
+
+  const isNavbarVisible = !["/register"].includes(location.pathname);
+
   return (
     <Fragment>
-      <ToastContainer />
-
-      <Navbar />
+    <ToastContainer/>
+      <Navbar/>
+      
 
       <Routes>
 
@@ -42,6 +47,7 @@ function App() {
 
       <Footer />
 
+      {isNavbarVisible && <Footer />}
     </Fragment>
   );
 };

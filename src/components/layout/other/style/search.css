@@ -1,3 +1,7 @@
 .collapse.navbar-collapse {
-    position: relative;
-  }
+  position: relative;
+}
+
+input {
+  background-color: transparent;
+}
