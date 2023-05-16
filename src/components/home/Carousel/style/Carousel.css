@@ -1,0 +1,10 @@
+.carousel-home {
+    width: 50%;
+}
+
+.carousel-item img {
+    background-size: cover;
+    background-position: center;
+    height: 600px;
+    /* width: 100%; */
+}

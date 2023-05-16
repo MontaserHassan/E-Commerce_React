@@ -1,0 +1,70 @@
+
+@keyframes color-change {
+    0% {
+      color: rgb(141, 141, 206);
+    }
+    50% {
+      color: rgb(52, 52, 156);
+    }
+    100% {
+      color: rgb(88, 99, 215);
+    }
+  }
+  @keyframes move-text {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+ .container h2{
+    color: rgb(52, 52, 156);
+} 
+.on-hover:hover >span {
+    color: #fff;
+  }
+  a.text-decoration-none:hover {
+    color: white;
+  }
+  .Continue-Shopping {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+
+  .aspect-ratio {
+    position: relative;
+    width: 130%;
+    height: 10%;
+    padding-bottom: 120%;
+  }
+
+  .aspect-ratio img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .table {
+    border-collapse: separate;
+    border-spacing:0 1.2rem;
+}
+
+.table-hover tbody tr {
+  position: relative;
+}
+
+.table * {
+  font-size: 1rem;
+}
+
+.opeartion{
+  font-size: 1rem; 
+}  

@@ -1,12 +1,11 @@
 .gradStart {
-    background-image: linear-gradient(to right, red , blue);
+    background-image: linear-gradient(to right,rgba(2, 1, 7, 0.336),rgb(242, 244, 247) );
 }
 
 .gradCenter {
-    background-image: linear-gradient(to right, blue , blue);
+    background-image: linear-gradient(to right,rgb(242, 244, 247) , rgba(2, 1, 7, 0.043));
 }
 
 .gradEnd {
-    background-image: linear-gradient(to right, red , blue);
-    background-image: linear-gradient(to right, blue, red );
+    background-image: linear-gradient(to right,rgb(242, 244, 247) ,rgba(2, 1, 7, 0.457));
 }
