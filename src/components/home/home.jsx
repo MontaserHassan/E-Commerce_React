@@ -2,7 +2,9 @@ import React, { Fragment } from 'react';
 import Carousel from './Carousel/Carousel';
 import HomeFooter from './home-footer';
 
+
 const Home = () => {
+  
     return (
 
         <Fragment>

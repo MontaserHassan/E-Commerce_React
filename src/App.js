@@ -36,6 +36,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<Payment />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/WishList" element={<WishList/>} />
 
       </Routes>
 
