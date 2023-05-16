@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../login.css';
 import auth from '../../images/auth.mp4'
 import './register.css'
+import { setAppElement } from 'react-modal';
+import PasswordChecklist from "react-password-checklist"
+
 const Register = () => {
 
     const [email, setEmail] = useState('');
@@ -13,8 +16,8 @@ const Register = () => {
     const [Confirmpassword, setConfirmPassword] = useState('');
     const [massage, setMassage] = useState('');
     const [inputError, setInputError] = useState('');
-
-
+    const [Error, setError] = useState('');
+    const passwordInstructions = 'Password should contain at least one uppercase letter, one lowercase letter, one number, and one special character';
     const navigate = useNavigate();
     const userRegister = useSelector(state => state.userRegister);
     const { loading, userInfo, error } = userRegister;
@@ -28,6 +31,8 @@ const Register = () => {
             setInputError('Please fill in all the fields');
         }
         else {
+            setMassage('')
+            setError('')
             dispatch(userRegisterRequest(email, username, Confirmpassword, password));
         }
 
@@ -37,7 +42,11 @@ const Register = () => {
         if (userInfo) {
             navigate('/');
         }
-    }, [userInfo, navigate]);
+        if (error) {
+            setError(error)
+        }
+    }, [userInfo, navigate, error]);
+
 
     return (
 
@@ -53,7 +62,7 @@ const Register = () => {
                                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                                         <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">SIGN UP</p>
-                                        <form onSubmit={submitHandler} className="mx-1 mx-md-4" >
+                                        <form onSubmit={submitHandler} className="mx-1 mx-md-4" noValidate >
                                             <div className="d-flex flex-row align-items-center mb-4">
                                                 <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                                                 <div className=" flex-fill mb-0">
@@ -85,9 +94,10 @@ const Register = () => {
                                                     />
                                                 </div>
                                             </div>
+
                                             {inputError && !username && <div className="error-message">Please enter your username</div>}
                                             <div className="d-flex flex-row align-items-center mb-4">
-                                                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                                <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                                 <div className="flex-fill mb-0">
                                                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                                                     <input
@@ -95,15 +105,26 @@ const Register = () => {
                                                         className="form-control"
                                                         id="exampleInputPassword1"
                                                         value={password}
-                                                        onChange={e => setPassword(e.target.value)}
+                                                        onChange={e => {
+                                                            setPassword(e.target.value);
+
+                                                        }}
                                                         required
                                                     />
                                                 </div>
                                             </div>
+                                            <PasswordChecklist
+                                                rules={["minLength", "specialChar", "number", "capital", "match"]}
+                                                minLength={5}
+                                                value={password}
+                                                valueAgain={Confirmpassword}
+
+                                            />
+
                                             {inputError && !password && <div className="error-message">Please enter your password</div>}
 
                                             <div className="d-flex flex-row align-items-center mb-4">
-                                                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                                <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                                 <div className="flex-fill mb-0">
                                                     <label htmlFor="exampleInputPassword" className="form-label"> Confirm Password</label>
                                                     <input

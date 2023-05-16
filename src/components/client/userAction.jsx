@@ -80,7 +80,8 @@ export const userRegisterRequest = (email, username, password, password_confirma
         })
 
     } catch (error) {
-        let errorMessage = 'An error occurred during login.';
+        let errorMessage = 'An error occurred during Register.';
+
 
         if (error.response && error.response.data) {
 

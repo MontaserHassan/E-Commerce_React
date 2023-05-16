@@ -25,7 +25,7 @@ const Login = () => {
 
     return (
         <section className="vh-200" style={{ backgroundColor: 'rgb(252, 247, 224)' }}>
-            <h3 className='text-left p-3'>  <img src="/assets/images/nav-icon.png" alt="" width="40" height="40" className="d-inline-block align-text-top" />QUICK BUY</h3>
+
             <div className="container h-100">
 
                 <div className="row d-flex justify-content-center align-items-center h-100 " >

@@ -20,7 +20,7 @@ import { ToastContainer } from "react-toastify";
 function App() {
   const location = useLocation();
 
-  const isNavbarVisible = !["/login", "/register"].includes(location.pathname);
+  const isNavbarVisible = !["/register"].includes(location.pathname);
 
   return (
     <Fragment>
