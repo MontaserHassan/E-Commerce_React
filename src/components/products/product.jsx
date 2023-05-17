@@ -57,7 +57,7 @@ const Product = () => {
 
                 <div className="col-md-6" style={{ lineHeight:2 }}>
                     <Skeleton width={350} height={50}/> {/* category */}
-                    <Skeleton height={75}/> {/* title */}
+                    <Skeleton height={75}/> {/* name */}
                     <Skeleton height={50}/> {/* price */}
                     <Skeleton height={150}/> {/* description */}
                     <Skeleton height={50} width={100}/> {/* btn 1 */}
@@ -88,13 +88,13 @@ const Product = () => {
             <Fragment>
                 
                 <div className="col-md-6">
-                    <img src={product.image} alt={product.title} height="400px" width="400px"/>
+                    <img src={product.image} alt={product.name} height="400px" width="400px"/>
                 </div>
 
                 <div className="col-md-6">
 
                     <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
-                    <h3 className="display-6">Product Name: { product.title }</h3>
+                    <h3 className="display-6">Product Name: { product.name }</h3>
                     <h5 className="fw-bold my-4 display-6">Price: { FormatCurrency(product.price) }</h5>
                     <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stoke } piece</h5>
                     <p className="lead">Description: { product.description }</p>

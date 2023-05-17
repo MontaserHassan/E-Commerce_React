@@ -38,21 +38,56 @@ export const fetchWishListItems = createAsyncThunk(
                             reducers:{
                             addToWishList(state,action){
 
-                             console.log(action.payload[1],action.payload[0], action.payload[2])
-                            fetch('http://127.0.0.1:8000/wishList/addwishListItem', {
-                            method: 'POST',
-                            headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': action.payload[2]
-                            },
-                            body: JSON.stringify({
-                            user_id:action.payload[1],
-                            product_id: action.payload[0]
-                            })
-                            })
-                            .then(response => response.json())
-                            .then(data => console.log(data,"inserted"))
-                            .catch(error => console.error(error,"faild"));
+                               let found = []
+                               fetch(`http://127.0.0.1:8000/wishList/getWishListByProductId/${action.payload[0]}`, {
+                                method: 'GET',
+                                headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': action.payload[2]
+                                }
+                                })
+                                .then(response => {
+                                if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                                })
+                                .then(data => {
+                                if(data){
+                                    found = data.filter(item  =>{
+                                        
+                                        return item.user_id===action.payload[1]
+                                    })
+                                    return found.length
+                                }
+                                }).then(len=>{
+                                    
+                                    if(len===0){
+                                        fetch('http://127.0.0.1:8000/wishList/addwishListItem', {
+                                            method: 'POST',
+                                            headers: {
+                                            'Content-Type': 'application/json',
+                                            'Authorization': action.payload[2]
+                                            },
+                                            body: JSON.stringify({
+                                            user_id:action.payload[1],
+                                            product_id: action.payload[0]
+                                            })
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => console.log(data,"inserted"))
+                                            .catch(error => console.error(error,"faild"));
+                                    }
+                                })
+                                .catch(error => {
+                                console.error('There was a problem with the fetch operation:', error);
+                                });
+                                
+
+                         
+
+                             
+                            
         
 
         }

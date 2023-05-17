@@ -17,6 +17,8 @@ import UserProfile from './components/client/Profile/UserProfile'
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+
+
 function App() {
   const location = useLocation();
 
@@ -35,7 +37,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={< UserProfile />} />
-
         <Route path="/product" element={<Products />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
@@ -47,7 +48,7 @@ function App() {
 
       <Footer />
 
-      {isNavbarVisible && <Footer />}
+      {/* {isNavbarVisible && <Footer />} */}
     </Fragment>
   );
 };

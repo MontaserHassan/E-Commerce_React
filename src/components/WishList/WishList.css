@@ -1,8 +1,8 @@
 :root{
-    background-color: white;
+    /* background-color: white; */
 }
 .container{
-    background-color: white;
+    /* background-color: white; */
 }
 th{
     font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -30,7 +30,7 @@ td img {
 .wishListContainer{ 
     display: flex;
    
-    background-color: white;
+
     align-items: center;
     justify-content: center;
    
@@ -63,6 +63,9 @@ td img {
     display: block;
  
 }
+.text-decoration-none:hover {
+    color: red;
+  }
 
 .linklist{
     font-weight: 500;
