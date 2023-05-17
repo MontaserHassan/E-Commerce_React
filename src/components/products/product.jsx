@@ -17,9 +17,9 @@ const Product = () => {
     const { userInfo, loading, error } = userLogin
     
     const dispatch = useDispatch();
-    const handelAddToCart =(product)=>{
-        dispatch(addToCart(product))
-    }
+    // const handelAddToCart =(product)=>{
+    //     dispatch(addToCart(product))
+    // }
     const handleAddToWishlist = (product,userId,useracess) => {
         dispatch(addToWishList([product.id,userId,useracess]))
       };
@@ -40,7 +40,7 @@ const Product = () => {
     useEffect(() => {
         const getProduct = async () => {
             setIsLoading(true);
-            const response = await fetch(`http://localhost:3030/products/${id}`);
+            const response = await fetch(`http://127.0.0.1:8000/product/${id}`);
             setProduct(await response.clone().json());
             setIsLoading(false);
         }

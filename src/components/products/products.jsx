@@ -21,7 +21,7 @@ const Products = () => {
     useEffect(() => {
         const getAllProducts = async () => {
             setIsLoading(true);
-            const response = await fetch('http://localhost:3030/products');
+            const response = await fetch('http://127.0.0.1:8000/product');
             if(componentMounted){
                 setProducts(await response.clone().json());
                 setFilter(await response.json());

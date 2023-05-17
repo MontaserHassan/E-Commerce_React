@@ -1,7 +1,7 @@
-import {createSlice, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
-import {toast} from "react-toastify";
-import { useEffect , useState} from 'react';
+import {createSlice} from '@reduxjs/toolkit';
+// import { useSelector } from 'react-redux';
+// import {toast} from "react-toastify";
+// import { useEffect , useState} from 'react';
 import axios from "axios"
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -74,7 +74,9 @@ export const fetchWishListItems = createAsyncThunk(
           .then(data => console.log(data))
           .catch(error => console.error(error));
 
-    }, clearWishList(state,action){
+    }, 
+    
+    clearWishList(state,action){
        
         
         console.log(action.payload)
