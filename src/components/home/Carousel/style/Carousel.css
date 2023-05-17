@@ -5,6 +5,11 @@
 .carousel-item img {
     background-size: cover;
     background-position: center;
-    height: 600px;
+    height: 400px;
     /* width: 100%; */
+}
+
+.carousel-inner {
+    margin-top: 120vh;
+
 }
