@@ -1,7 +1,7 @@
 import { React, Fragment,useEffect } from "react";
 import { useSelector ,useDispatch} from "react-redux";
 import "./style/Cart.css"
-import {getTotal,fetchCartItems, removeFromCart,decreaseCartItems, clearCart   }from "../../features/cartSlice";
+import {fetchCartItems  }from "../../features/cartSlice";
 import CartTable from "./CartTable"
 import EmptyCart from "./EmptyCart"
 

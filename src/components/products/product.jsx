@@ -17,9 +17,9 @@ const Product = () => {
     const { userInfo, loading, error } = userLogin
     
     const dispatch = useDispatch();
-    // const handelAddToCart =(product)=>{
-    //     dispatch(addToCart(product))
-    // }
+    const handelAddToCart =(product)=>{
+        dispatch(addToCart(product))
+    }
     const handleAddToWishlist = (product,userId,useracess) => {
         dispatch(addToWishList([product.id,userId,useracess]))
       };

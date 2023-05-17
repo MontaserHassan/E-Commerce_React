@@ -1,7 +1,7 @@
 import { React, Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { decreaseCartItems, removeFromCart, addToCart, getTotal,fetchCartItems } from "../../features/cartSlice";
+import { decreaseCartItems, removeFromCart, addToCart,fetchCartItems } from "../../features/cartSlice";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import "./style/Cart.css"
