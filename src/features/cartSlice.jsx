@@ -30,16 +30,16 @@ const cartSlice = createSlice({
           });
         }
       } else {
-        axios.post('http://127.0.0.1:8000/cart/addToCartItems', { product_id: action.payload.product.id, quantity: 1 })
+        axios.post('http://127.0.0.1:8000/cart/addToCartItems', { product_id: action.payload.id, quantity: 1 })
           .then(response => {
             state.cartItems.product.push(response.data);
-            toast.success(` ${action.payload.product.name} added to your cart`, {
+            toast.success(` ${action.payload.name} added to your cart`, {
               position: 'bottom-left',
             });
           })
           .catch(error => {
             console.log(error);
-            toast.error('An error occurred while adding the item to your cart.', {
+            toast.error(`An error occurred while adding the ${action.payload.name} to your cart.`, {
               position: 'bottom-left',
             });
           });
