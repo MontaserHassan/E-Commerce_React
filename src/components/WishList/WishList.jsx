@@ -39,7 +39,7 @@ const WishList = () => {
 <div className="text">wishList is empty</div>
 <div className="n"><img src="https://www.elitejewelryhouse.com/assets/images/empty-wishlist.png" alt="empty wishList" className="img-fluid" />
 </div>
-<Link to ="/" className="text-decoration-none on-hover link" > go to Shopping </Link>
+<Link to ="/" className="text-decoration-none  link" > go to Shopping </Link>
 </div>
         ):(
           <div className="container mt-5 py-3">
