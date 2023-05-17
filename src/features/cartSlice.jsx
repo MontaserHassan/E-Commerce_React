@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const initialState = {
   cartItems: sessionStorage.getItem('cartItems') ? JSON.parse(sessionStorage.getItem('cartItems')) : [],
@@ -11,80 +12,128 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+  
     addToCart: (state, action) => {
-      state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
       const itemIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
       if (itemIndex >= 0) {
-        if (state.cartItems[itemIndex].cartQuantity >= action.payload.stoke) {
-          toast.error(`Sorry, there are only ${action.payload.stoke} available in stock.`, {
+        const currentQuantity = state.cartItems[itemIndex].quantity;
+        if (currentQuantity >= action.payload.product.stoke) {
+          toast.error(`Sorry, there are only ${action.payload.product.stoke} available in stock.`, {
             position: 'top-center',
           });
         } else {
-          state.cartItems[itemIndex].cartQuantity++;
-          toast.info(`Increased ${state.cartItems[itemIndex].title} quantity`, {
+          const updatedCartItems = [...state.cartItems];
+          updatedCartItems[itemIndex] = { ...updatedCartItems[itemIndex], quantity: currentQuantity + 1 };
+          state.cartItems = updatedCartItems;
+          toast.info(`Increased ${updatedCartItems[itemIndex].product.name} quantity`, {
             position: 'bottom-left',
           });
         }
       } else {
-        const tempProduct = { ...action.payload, cartQuantity: 1 };
-        state.cartItems.push(tempProduct);
-        toast.success(` ${action.payload.title} added to your cart`, {
-          position: 'bottom-left',
-        });
+        axios.post('http://127.0.0.1:8000/cart/addToCartItems', { product_id: action.payload.id, quantity: 1 })
+          .then(response => {
+            state.cartItems.product.push(response.data);
+            toast.success(` ${action.payload.name} added to your cart`, {
+              position: 'bottom-left',
+            });
+          })
+          .catch(error => {
+            console.log(error);
+            toast.error(`An error occurred while adding the ${action.payload.name} to your cart.`, {
+              position: 'bottom-left',
+            });
+          });
       }
-      sessionStorage.setItem('cartItems', JSON.stringify(state.cartItems));
-      // Dispatch the getTotal action after adding the item to the cart
-      state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
-      state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
+      // calculate total amount
+  // const cartTotalAmount = state.cartItems.reduce((total, item) => {
+  //   return total + (item.quantity * item.product.price);
+  // }, 0);
+
+  // // update state with new cart total amount
+  // state.cartTotalAmount = cartTotalAmount;
     },
+
+
 
     removeFromCart: (state, action) => {
       const nextCartItem = state.cartItems.filter((cartItem) => cartItem.id !== action.payload.id);
       state.cartItems = nextCartItem;
-      sessionStorage.setItem('cartItems', JSON.stringify(state.cartItems));
-      toast.error(` ${action.payload.title} removed from your cart`, {
-        position: 'bottom-left',
-      });
-      // Update the cartTotalQuantity and cartTotalAmount after removing the item from the cart
-      state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
-      state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
+      axios.delete(`http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`)
+        .then(response => {
+          toast.error(` ${action.payload.name} removed from your cart`, {
+            position: 'bottom-left',
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          toast.error('An error occurred while removing the item from your cart.', {
+            position: 'bottom-left',
+          });
+        });
     },
+
 
     decreaseCartItems: (state, action) => {
       const itemIndex = state.cartItems.findIndex((cartItem) => cartItem.id === action.payload.id);
-      if (state.cartItems[itemIndex].cartQuantity > 1) {
-        state.cartItems[itemIndex].cartQuantity--;
-        toast.info(`Decreased ${state.cartItems[itemIndex].title} quantity`, {
+      if (state.cartItems[itemIndex].quantity > 1) {
+        const updatedCartItems = [...state.cartItems];
+        updatedCartItems[itemIndex] = { ...updatedCartItems[itemIndex], quantity: updatedCartItems[itemIndex].quantity - 1 };
+        state.cartItems = updatedCartItems;
+        toast.info(`Decreased ${updatedCartItems[itemIndex].product.name} quantity`, {
           position: 'bottom-left',
         });
-      } else if (state.cartItems[itemIndex].cartQuantity === 1) {
+        axios.put(`http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`, { quantity: updatedCartItems[itemIndex].quantity })
+          .catch(error => {
+            console.log(error);
+            toast.error('An error occurred while updating the quantity of the item in your cart.', {
+              position: 'bottom-left',
+            });
+          });
+      } else if (state.cartItems[itemIndex].quantity === 1) {
         const nextCartItem = state.cartItems.filter((cartItem) => cartItem.id !== action.payload.id);
         state.cartItems = nextCartItem;
-        toast.error(` ${action.payload.title} removed from your cart`, {
-          position: 'bottom-left',
-        });
+        axios.delete(`http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`)
+          .then(response => {
+            toast.error(` ${action.payload.name} removed from your cart`, {
+              position: 'bottom-left',
+            });
+          })
+          .catch(error => {
+            console.log(error);
+            toast.error('An error occurred while removing the item from your cart.', {
+              position: 'bottom-left',
+            });
+          });
       }
-      sessionStorage.setItem('cartItems', JSON.stringify(state.cartItems));
-      // Update the cartTotalQuantity and cartTotalAmount after decreasing the item quantity
-      state.cartTotalQuantity = state.cartItems.reduce((total, item) => total + item.cartQuantity, 0);
-      state.cartTotalAmount = state.cartItems.reduce((total, item) => total + item.price * item.cartQuantity, 0);
     },
+
 
     clearCart: (state, action) => {
       state.cartItems = [];
-      toast.success('Your cart has been cleared', {
-        position: 'bottom-left',
-      });
-      sessionStorage.removeItem('cartItems');
-      // Set the cartTotalQuantity and cartTotalAmount to 0 after clearing the cart
-      state.cartTotalQuantity = 0;
-      state.cartTotalAmount = 0;
+      axios.delete('http://127.0.0.1:8000/cart/CartItems')
+        .then(response => {
+          toast.success('Your cart has been cleared', {
+            position: 'bottom-left',
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          toast.error('An error occurred while clearing your cart.', {
+            position: 'bottom-left',
+          });
+        });
+    },
+    getCartItemsSuccess: (state, action) => {
+      state.cartItems = action.payload;
     },
 
+    getCartItemsFailure: (state, action) => {
+      console.log(action.payload);
+    },
     getTotal: (state, action) => {
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {
-          const { price, cartQuantity } = cartItem;
+          const { price, cartQuantity } = cartItem.product;
           const itemTotal = price * cartQuantity;
 
           cartTotal.total += itemTotal;
@@ -102,5 +151,17 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, decreaseCartItems, clearCart, getTotal } = cartSlice.actions;
+// export const { addToCart, removeFromCart, decreaseCartItems, clearCart, getTotal } = cartSlice.actions;
+export const { addToCart, removeFromCart, decreaseCartItems, clearCart, getCartItemsSuccess, getCartItemsFailure,getTotal } = cartSlice.actions;
+
+export const fetchCartItems = () => (dispatch) => {
+  axios.get('http://127.0.0.1:8000/cart/CartItems')
+    .then(response => {
+      dispatch(getCartItemsSuccess(response.data));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(getCartItemsFailure(error));
+    });
+};
 export default cartSlice.reducer;

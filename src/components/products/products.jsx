@@ -21,7 +21,7 @@ const Products = () => {
     useEffect(() => {
         const getAllProducts = async () => {
             setIsLoading(true);
-            const response = await fetch('http://localhost:3030/products');
+            const response = await fetch('http://127.0.0.1:8000/product');
             if(componentMounted){
                 setProducts(await response.clone().json());
                 setFilter(await response.json());
@@ -93,10 +93,10 @@ const Products = () => {
                                     <div className="col-md-3 mb-4">
                                         <div className="card text-center h-100 p-4" key={product.id}>
                                             <div className="bg-image hover-overlay hover-zoom hover-shadow ripple">
-                                                <img className="card-img-top" src={product.image} title={product.title} alt={product.title} height="350px"/>
+                                                <img className="card-img-top" src={product.image} name={product.name} alt={product.name} height="350px"/>
                                             </div>
                                             <div className="card-body">
-                                                <h5 className="card-title  mb-0">{product.title.substring(0,12)}...</h5>
+                                                <h5 className="card-title  mb-0">{product.name.substring(0,12)}...</h5>
                                                 <p className="card-text lead fw-bold">{ FormatCurrency(product.price) }</p>
                                                 <NavLink to={`/products/${product.id}`} className="btn btn-outline-primary"> Details </NavLink>
                                             </div>

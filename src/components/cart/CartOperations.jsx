@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FormatCurrency } from '../../features/FormatCurrency';
 const CartOperations = () => {
-const cart = useSelector((state) => state.cart);
-
+// const cart = useSelector((state) => state.cart);
+const cartItems = useSelector(state => state.cart.cartItems);
   return (
     <div>
     <div className="opeartion row">
@@ -14,7 +14,7 @@ const cart = useSelector((state) => state.cart);
 
       <div className="Continue-Shopping col-md-12">
       <button type="button" className="btn btn-outline-primary">
-      <Link to="/products" className="text-decoration-none on-hover">
+      <Link to="/product/" className="text-decoration-none on-hover">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="28"
@@ -43,7 +43,7 @@ const cart = useSelector((state) => state.cart);
             </div>
             <div className="col-auto">
               <span className="amount text-center fw-bold">
-                {FormatCurrency(cart.cartTotalAmount)}
+                {FormatCurrency(cartItems.cartTotalAmount)}
               </span>
             </div>
           </div>
