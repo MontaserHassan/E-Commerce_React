@@ -18,9 +18,6 @@ export const fetchCartItems = createAsyncThunk(
   const response2 = await axios.post('http://127.0.0.1:8000/cart/addToCartItems',
   {cart:response.data.id,product:data[1].id,quantity:1}) 
   console.log(data[1].id,response2.data)
-  toast.success(`Added  this product to cart`, {
-    position: 'bottom-left',
-  });
   }
   else{
   
