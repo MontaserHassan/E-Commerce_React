@@ -10,13 +10,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import cartReducer, { getTotal } from "./features/cartSlice"
+import cartReducer, { getTotal } from "./features/cartSlice";
+import  wishListReducer from "./features/wishlistSlice"
 import productsReducer, { productsFetch } from './features/productsSlice';
 import { productApi } from './features/productsAPI';
 import { userLoginReducer, userRegisterReducer, userReducer } from './components/client/userReducer'
 
 const store = configureStore({
   reducer: {
+    wishlist:wishListReducer,
+    products:productsReducer,
+    [productApi.reducerPath]:productApi.reducer,
+    cart:cartReducer,
     products: productsReducer,
     [productApi.reducerPath]: productApi.reducer,
     cart: cartReducer,

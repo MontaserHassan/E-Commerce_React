@@ -4,6 +4,7 @@ import HomeFooter from './home-footer';
 import main from '../images/main.png'
 import './style/home.css'
 const Home = () => {
+
     return (
 
         <Fragment>

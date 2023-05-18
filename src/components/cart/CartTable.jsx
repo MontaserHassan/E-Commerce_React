@@ -1,7 +1,7 @@
 import { React, Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { decreaseCartItems, removeFromCart, addToCart, getTotal } from "../../features/cartSlice";
+import { decreaseCartItems, removeFromCart, addToCart, getTotal,fetchCartItems } from "../../features/cartSlice";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import "./style/Cart.css"
@@ -10,8 +10,8 @@ import { FormatCurrency } from '../../features/FormatCurrency';
 
 const CartTable = () => {
   const dispatch = useDispatch();
-
-  const cart = useSelector((state) => state.cart);
+  const cartItems = useSelector(state => state.cart.cartItems);
+  // const cart = useSelector((state) => state.cart);
   const [showDecreaseModal, setShowDecreaseModal] = useState(false);
   const [itemToDecrease, setItemToDecrease] = useState(null);
 
@@ -20,7 +20,7 @@ const CartTable = () => {
     setItemToDecrease(cartItem);
   }
   const handelDecreaseCartItems = (cartItem) => {
-    if (cartItem.cartQuantity === 1) {
+    if (cartItem.quantity === 1) {
       setShowDecreaseModal(true);
       setItemToDecrease(cartItem);
     } else {
@@ -29,8 +29,10 @@ const CartTable = () => {
   };
   const handelIncreaseCartItems = (cartItem) => { dispatch(addToCart(cartItem)); }
 
-  useEffect(() => { dispatch(getTotal()); }, [cart, dispatch])
-
+  // useEffect(() => { dispatch(getTotal()); }, [cart, dispatch])
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -44,16 +46,16 @@ const CartTable = () => {
           </tr>
         </thead>
         <tbody className="table-light " data-mdb-toggle="animation" data-mdb-animation-reset="true" data-mdb-animation="slide-out-pluse ">
-          {cart.cartItems?.map((cartItem) => (
-            <tr className="cart-item " key={cartItem.id}>
+          {cartItems?.map((cartItem) => (
+            <tr className="cart-item " key={cartItem.product.id}>
               <td className="cart-product col-4 pt-2">
                 <div className="row">
 
                   <div className="col-4 col-md-3">
-                    <NavLink to={`/products/${cartItem.id}`}>
+                    <NavLink to={`/product/${cartItem.product.id}`}>
                       <img
-                        src={cartItem.image}
-                        alt={cartItem.title}
+                        src={cartItem.product.image}
+                        alt={cartItem.product.name}
                         className="img-fluid"
                       />
                     </NavLink>
@@ -61,7 +63,7 @@ const CartTable = () => {
 
                   <div className="col-9 col-md-9">
                     <div className="cart-product-details">
-                      <p className="mb-0 fw-bold">{cartItem.title}</p>
+                      <p className="mb-0 fw-bold">{cartItem.product.name}</p>
                       <button
                         className="btn text-danger mt-3 fw-bold p-1"
                         onClick={() => handelRemoveFromCart(cartItem)}
@@ -74,7 +76,7 @@ const CartTable = () => {
               </td>
 
               <td className="cart-product-price col-3 fw-bold pt-5">
-                {FormatCurrency(cartItem.price)}
+                {FormatCurrency(cartItem.product.price)}
               </td>
 
               <td className="cart-product-quantity  col-3 text-center pt-5">
@@ -102,7 +104,7 @@ const CartTable = () => {
                     </svg>
                   </button>
                   <span className="mx-2 fw-bold">
-                    {cartItem.cartQuantity}
+                    {cartItem.quantity}
                   </span>
                   <button
                     type="button"
@@ -126,7 +128,7 @@ const CartTable = () => {
                 </div>
               </td>
               <td className="cart-product-total-price fw-bold col-2 pt-5">
-                {FormatCurrency(cartItem.price * cartItem.cartQuantity)}
+                {FormatCurrency(cartItem.product.price * cartItem.quantity)}
               </td>
             </tr>
           ))}

@@ -10,12 +10,15 @@ import Register from './components/client/Register/register';
 import Products from './components/products/products';
 import Product from './components/products/product';
 import Cart from './components/cart/Cart';
+import WishList from './components/WishList/WishList';
 import Payment from './components/payment/payment';
 import Order from './components/order/order';
 import UserProfile from './components/client/Profile/UserProfile'
 import Footer from './components/layout/footer';
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+
+
 function App() {
   const location = useLocation();
 
@@ -26,21 +29,26 @@ function App() {
     <ToastContainer/>
       <Navbar/>
       
-        <Routes>
 
-          <Route path="/" element={<Home/>}/>
-          {/* <Route path="/about-us" element={<About/>}/> */}
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
-          <Route path="/products" element={<Products/>}/>
-          <Route path="/products/:id" element={<Product/>}/>
-          <Route path="/cart" element={<Cart/>}/>
-          <Route path="/payment" element={<Payment/>}/>
-          <Route path="/order" element={<Order/>}/>
+      <Routes>
 
-        </Routes>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/about-us" element={<About />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={< UserProfile />} />
+        <Route path="/product" element={<Products />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/Payment" element={<Payment />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/WishList" element={<WishList/>} />
 
-      {isNavbarVisible && <Footer />}
+      </Routes>
+
+      <Footer />
+
+      {/* {isNavbarVisible && <Footer />} */}
     </Fragment>
   );
 };
