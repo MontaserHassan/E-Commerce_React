@@ -3,28 +3,51 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+
+
+
+
+
 export const fetchCartItems = createAsyncThunk(
   'cart/fetchCertItems',
   async (data) => {  
   let response = await axios.get(`http://127.0.0.1:8000/cart/getCartItemsByUserId/${data[0]}`);
-  console.log(response.data)
+  console.log("Check if Cart exist ",response.data)
+  console.log("Show function Data" ,data[1],data[0])
 
-  if (response.data === 'notfound'){
+  if (response.data == 'notfound'){
+    console.log("hello")
     response = await axios.post('http://127.0.0.1:8000/cart/addToCart',{user:data[0]}) 
-    console.log(response.data)
+    response = response.data
+    console.log("Check if Cart has been created ",response.data.id)
+    console.log("Show Cart Id" ,response.data.id)
   }
+  console.log("Show Cart Id" ,response.data.id)
+  console.log(`http://127.0.0.1:8000/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`)
   let res= await axios.get(`http://127.0.0.1:8000/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`);
-  if (res==='notfound'){
+  console.log("Check if this cart Item exists",res.data)
+  if (res.data === 'notfound'){
+
   const response2 = await axios.post('http://127.0.0.1:8000/cart/addToCartItems',
   {cart:response.data.id,product:data[1].id,quantity:1}) 
-  console.log(data[1].id,response2.data)
+  console.log("Check if cart Item Created" , data[1].id,response2.data)
+
+  toast.success(`Added  this product to cart`, {
+    position: 'bottom-left',
+  });
   }
   else{
-  
-    console.log("want to increase ");
-    toast.info(`want to increase  this product `, {
+    const quantity = res.data.quantity+1
+    if(data[1].stoke >= quantity){
+      const increase = await axios.put(`http://127.0.0.1:8000/cart/getCartItemsById/${res.data.id}`,{quantity:quantity})
+      console.log(increase.data.quantity)
+      ;toast.info(`want to increase  this product `, {
       position: 'bottom-left',
     });
+    }
+    
+    
+    
   }
 
   const productData = await Promise.all();
