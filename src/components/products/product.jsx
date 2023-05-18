@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import{useDispatch, useSelector} from "react-redux"
-import { addToCart } from '../../features/cartSlice';
+import { addToCart,fetchCartItems } from '../../features/cartSlice';
 import { addToWishList } from '../../features/wishlistSlice';
 import { FormatCurrency } from '../../features/FormatCurrency';
 
@@ -32,7 +32,9 @@ const Product = () => {
     const handleAddToCart = (product) => {
         const alreadyInCart = cartItems?.find((item) => item.id === product.id);
         if (!alreadyInCart) {
-            dispatch(addToCart(product));
+            console.log(product)
+            dispatch(fetchCartItems([userInfo.user_id,product]));
+            
             setIsInCart(true);
         }
     };
@@ -93,7 +95,7 @@ const Product = () => {
 
                 <div className="col-md-6">
 
-                    <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
+                    <h4 className="text-black-50 text-uppercase">{ product.categories}</h4>
                     <h3 className="display-6">Product Name: { product.name }</h3>
                     <h5 className="fw-bold my-4 display-6">Price: { FormatCurrency(product.price) }</h5>
                     <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stoke } piece</h5>

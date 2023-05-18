@@ -1,13 +1,29 @@
-import React from 'react'
 import "./style/Cart.css"
 import { NavLink } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { React, Fragment, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCartItems } from "../../features/cartSlice";
 import { FormatCurrency } from '../../features/FormatCurrency';
+
 const CartOperations = () => {
-// const cart = useSelector((state) => state.cart);
+
+const dispatch = useDispatch();
 const cartItems = useSelector(state => state.cart.cartItems);
-  return (
+const [ cartItem, setCartItem] = useState([]);
+const userLogin = useSelector((state) => state.userLogin);
+const { userInfo, loading, error } = userLogin
+
+
+useEffect(() => {
+  dispatch(fetchCartItems(userInfo.user_id))
+    .then((action) => {
+      console.log(action.payload)
+      setCartItem(action.payload); // Log the data returned by the async thunk
+    });
+}, [dispatch, userInfo.user_id,cartItems]);
+
+return (
     <div>
     <div className="opeartion row">
     <div className="col-md-4 pt-5">

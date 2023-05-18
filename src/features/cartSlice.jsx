@@ -1,9 +1,43 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+export const fetchCartItems = createAsyncThunk(
+  'cart/fetchCertItems',
+  async (data) => {  
+  let response = await axios.get(`http://127.0.0.1:8000/cart/getCartItemsByUserId/${data[0]}`);
+  console.log(response.data)
+
+  if (response.data === 'notfound'){
+    response = await axios.post('http://127.0.0.1:8000/cart/addToCart',{user:data[0]}) 
+    console.log(response.data)
+  }
+  let res= await axios.get(`http://127.0.0.1:8000/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`);
+  if (res==='notfound'){
+  const response2 = await axios.post('http://127.0.0.1:8000/cart/addToCartItems',
+  {cart:response.data.id,product:data[1].id,quantity:1}) 
+  console.log(data[1].id,response2.data)
+  toast.success(`Added  this product to cart`, {
+    position: 'bottom-left',
+  });
+  }
+  else{
+  
+    console.log("want to increase ");
+    toast.info(`want to increase  this product `, {
+      position: 'bottom-left',
+    });
+  }
+
+  const productData = await Promise.all();
+              console.log(productData)
+              return productData 
+  }
+  );
 
 const initialState = {
-  cartItems: sessionStorage.getItem('cartItems') ? JSON.parse(sessionStorage.getItem('cartItems')) : [],
+  WishListItems: fetchCartItems?fetchCartItems:[],
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
 };
@@ -14,44 +48,10 @@ const cartSlice = createSlice({
   reducers: {
   
     addToCart: (state, action) => {
-      const itemIndex = state.cartItems.findIndex((item) => item.id === action.payload.id);
-      if (itemIndex >= 0) {
-        const currentQuantity = state.cartItems[itemIndex].quantity;
-        if (currentQuantity >= action.payload.product.stoke) {
-          toast.error(`Sorry, there are only ${action.payload.product.stoke} available in stock.`, {
-            position: 'top-center',
-          });
-        } else {
-          const updatedCartItems = [...state.cartItems];
-          updatedCartItems[itemIndex] = { ...updatedCartItems[itemIndex], quantity: currentQuantity + 1 };
-          state.cartItems = updatedCartItems;
-          toast.info(`Increased ${updatedCartItems[itemIndex].product.name} quantity`, {
-            position: 'bottom-left',
-          });
-        }
-      } else {
-        axios.post('http://127.0.0.1:8000/cart/addToCartItems', { product_id: action.payload.id, quantity: 1 })
-          .then(response => {
-            state.cartItems.product.push(response.data);
-            toast.success(` ${action.payload.name} added to your cart`, {
-              position: 'bottom-left',
-            });
-          })
-          .catch(error => {
-            console.log(error);
-            toast.error(`An error occurred while adding the ${action.payload.name} to your cart.`, {
-              position: 'bottom-left',
-            });
-          });
-      }
-      // calculate total amount
-  // const cartTotalAmount = state.cartItems.reduce((total, item) => {
-  //   return total + (item.quantity * item.product.price);
-  // }, 0);
-
-  // // update state with new cart total amount
-  // state.cartTotalAmount = cartTotalAmount;
+   
     },
+
+
 
 
 
@@ -130,38 +130,28 @@ const cartSlice = createSlice({
     getCartItemsFailure: (state, action) => {
       console.log(action.payload);
     },
-    getTotal: (state, action) => {
-      let { total, quantity } = state.cartItems.reduce(
-        (cartTotal, cartItem) => {
-          const { price, cartQuantity } = cartItem.product;
-          const itemTotal = price * cartQuantity;
+    // getTotal: (state, action) => {
+    //   let { total, quantity } = state.cartItems.reduce(
+    //     (cartTotal, cartItem) => {
+    //       const { price, cartQuantity } = cartItem.product;
+    //       const itemTotal = price * cartQuantity;
 
-          cartTotal.total += itemTotal;
-          cartTotal.quantity += cartQuantity;
-          return cartTotal;
-        },
-        {
-          total: 0,
-          quantity: 0,
-        }
-      );
-      state.cartTotalQuantity = quantity;
-      state.cartTotalAmount = total;
-    },
+    //       cartTotal.total += itemTotal;
+    //       cartTotal.quantity += cartQuantity;
+    //       return cartTotal;
+    //     },
+    //     {
+    //       total: 0,
+    //       quantity: 0,
+    //     }
+    //   );
+    //   state.cartTotalQuantity = quantity;
+    //   state.cartTotalAmount = total;
+    // },
   },
 });
 
-// export const { addToCart, removeFromCart, decreaseCartItems, clearCart, getTotal } = cartSlice.actions;
-export const { addToCart, removeFromCart, decreaseCartItems, clearCart, getCartItemsSuccess, getCartItemsFailure,getTotal } = cartSlice.actions;
+export const { addToCart, removeFromCart, decreaseCartItems, clearCart, getCartItemsSuccess, getCartItemsFailure } = cartSlice.actions;
 
-export const fetchCartItems = () => (dispatch) => {
-  axios.get('http://127.0.0.1:8000/cart/CartItems')
-    .then(response => {
-      dispatch(getCartItemsSuccess(response.data));
-    })
-    .catch(error => {
-      console.log(error);
-      dispatch(getCartItemsFailure(error));
-    });
-};
+
 export default cartSlice.reducer;

@@ -9,16 +9,29 @@ import CartOperations from "./CartOperations";
 import { FormatCurrency } from '../../features/FormatCurrency';
 
 const CartTable = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart.cartItems);
-  // const cart = useSelector((state) => state.cart);
   const [showDecreaseModal, setShowDecreaseModal] = useState(false);
   const [itemToDecrease, setItemToDecrease] = useState(null);
+
+  const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cart.cartItems);
+  const [ cartItem, setCartItem] = useState([]);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo, loading, error } = userLogin
+
+
+  useEffect(() => {
+    dispatch(fetchCartItems(userInfo.user_id))
+      .then((action) => {
+        console.log(action.payload)
+        setCartItem(action.payload); // Log the data returned by the async thunk
+      });
+  }, [dispatch, userInfo.user_id,cartItems]);
 
   const handelRemoveFromCart = (cartItem) => {
     setShowDecreaseModal(true);
     setItemToDecrease(cartItem);
   }
+
   const handelDecreaseCartItems = (cartItem) => {
     if (cartItem.quantity === 1) {
       setShowDecreaseModal(true);
@@ -27,12 +40,11 @@ const CartTable = () => {
       dispatch(decreaseCartItems(cartItem));
     }
   };
+
   const handelIncreaseCartItems = (cartItem) => { dispatch(addToCart(cartItem)); }
 
-  // useEffect(() => { dispatch(getTotal()); }, [cart, dispatch])
-  useEffect(() => {
-    dispatch(fetchCartItems());
-  }, [dispatch]);
+ 
+
 
   return (
     <Fragment>

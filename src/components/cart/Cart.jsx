@@ -1,4 +1,4 @@
-import { React, Fragment,useEffect } from "react";
+import { React, Fragment,useEffect,useState } from "react";
 import { useSelector ,useDispatch} from "react-redux";
 import "./style/Cart.css"
 import {fetchCartItems  }from "../../features/cartSlice";
@@ -6,14 +6,21 @@ import CartTable from "./CartTable"
 import EmptyCart from "./EmptyCart"
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cart.cartItems);
+  const [ cartItem, setCartItem] = useState([]);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo, loading, error } = userLogin
 
-const dispatch = useDispatch();
-// const cart = useSelector((state) => state.cart);
-// useEffect(()=>{dispatch(getTotal());},[cart,dispatch])
-const cartItems = useSelector(state => state.cart.cartItems);
-useEffect(() => {
-  dispatch(fetchCartItems());
-}, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchCartItems(userInfo.user_id))
+      .then((action) => {
+        console.log(action.payload)
+        setCartItem(action.payload); // Log the data returned by the async thunk
+      });
+  }, [dispatch, userInfo.user_id,cartItems]);
+
   return (
     <Fragment>
       <div className="container">

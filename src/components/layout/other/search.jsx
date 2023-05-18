@@ -12,7 +12,7 @@ const Search = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:3030/products')
+        fetch('http://127.0.0.1:8000/product/')
             .then(response => response.json())
             .then(data => setProducts(data))
             .catch(error => console.log(error));
@@ -28,7 +28,7 @@ const Search = () => {
     const handleNavLinkClick = (productId) => {
         setInputValue('');
         setFilterData([]);
-        navigate(`/products/${productId}`);
+        navigate(`/product/${productId}`);
     }
 
     return (
@@ -49,7 +49,7 @@ const Search = () => {
                     <ul className="list-group position-absolute w-100 p-0 mb-1" style={{ top: '100%', zIndex: '1' }}>
 
                         {filterData.map(product => (
-                            <a href={`/products/${product.id}`} className="list-group-item list-group-item-action" key={product.id} onClick={() => handleNavLinkClick(product.id)}> {product.title.substring(0, 30)}... </a>
+                            <a href={`/product/${product.id}`} className="list-group-item list-group-item-action" key={product.id} onClick={() => handleNavLinkClick(product.id)}> {product.title.substring(0, 30)}... </a>
                         ))}
 
                     </ul>
