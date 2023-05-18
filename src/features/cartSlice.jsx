@@ -15,7 +15,7 @@ export const fetchCartItems = createAsyncThunk(
   console.log("Check if Cart exist ",response.data)
   console.log("Show function Data" ,data[1],data[0])
 
-  if (response.data == 'notfound'){
+  if (response.data === 'notfound'){
     console.log("hello")
     response = await axios.post('http://127.0.0.1:8000/cart/addToCart',{user:data[0]}) 
     response = response.data
