@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { React, Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCartItems } from "../../features/cartSlice";
+import { addToCart } from "../../features/cartSlice";
 import { FormatCurrency } from '../../features/FormatCurrency';
 
 const CartOperations = () => {
@@ -16,7 +16,7 @@ const { userInfo, loading, error } = userLogin
 
 
 useEffect(() => {
-  dispatch(fetchCartItems(userInfo.user_id))
+  dispatch(addToCart(userInfo.user_id))
     .then((action) => {
       console.log(action.payload)
       setCartItem(action.payload); // Log the data returned by the async thunk

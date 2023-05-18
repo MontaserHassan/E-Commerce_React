@@ -1,47 +1,54 @@
 import { React, Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { decreaseCartItems, removeFromCart, addToCart,fetchCartItems } from "../../features/cartSlice";
+import { decreaseCartItems, removeFromCart, addToCart ,fetchCartItems} from "../../features/cartSlice";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import "./style/Cart.css"
 import CartOperations from "./CartOperations";
 import { FormatCurrency } from '../../features/FormatCurrency';
-
 const CartTable = () => {
   const [showDecreaseModal, setShowDecreaseModal] = useState(false);
   const [itemToDecrease, setItemToDecrease] = useState(null);
 
   const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart.cartItems);
   const [ cartItem, setCartItem] = useState([]);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo, loading, error } = userLogin
+  const [fetchStatus, setFetchStatus] = useState("idle");
 
+  const cartItems = useSelector(state => state.cart.items);
+
+  const handelIncreaseCartItems = (product) => {
+          dispatch(addToCart([userInfo.user_id,product]));
+      
+  };
 
   useEffect(() => {
-    dispatch(fetchCartItems(userInfo.user_id))
-      .then((action) => {
-        console.log(action.payload)
-        setCartItem(action.payload); // Log the data returned by the async thunk
+    setFetchStatus("loading");
+    dispatch(fetchCartItems())
+      .then(() => {
+        setFetchStatus("succeeded");
+      })
+      .catch(() => {
+        setFetchStatus("failed");
       });
-  }, [dispatch, userInfo.user_id,cartItems]);
+  }, [dispatch]);
 
-  const handelRemoveFromCart = (cartItem) => {
+  const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);
-    setItemToDecrease(cartItem);
+    setItemToDecrease(product);
   }
 
-  const handelDecreaseCartItems = (cartItem) => {
-    if (cartItem.quantity === 1) {
+  const handelDecreaseCartItems = (product) => {
+    if (product.quantity === 1) {
       setShowDecreaseModal(true);
       setItemToDecrease(cartItem);
     } else {
-      dispatch(decreaseCartItems(cartItem));
+          dispatch(addToCart([userInfo.user_id,product]));
     }
   };
 
-  const handelIncreaseCartItems = (cartItem) => { dispatch(addToCart(cartItem)); }
 
  
 

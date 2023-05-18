@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import{useDispatch, useSelector} from "react-redux"
-import { addToCart,fetchCartItems } from '../../features/cartSlice';
+import { addToCart,decreaseCartItems } from '../../features/cartSlice';
 import { addToWishList } from '../../features/wishlistSlice';
 import { FormatCurrency } from '../../features/FormatCurrency';
 
@@ -17,9 +17,7 @@ const Product = () => {
     const { userInfo, loading, error } = userLogin
     
     const dispatch = useDispatch();
-    const handelAddToCart =(product)=>{
-        dispatch(addToCart(product))
-    }
+
     const handleAddToWishlist = (product,userId,useracess) => {
         dispatch(addToWishList([product.id,userId,useracess]))
       };
@@ -33,8 +31,7 @@ const Product = () => {
         const alreadyInCart = cartItems?.find((item) => item.id === product.id);
         if (!alreadyInCart) {
             console.log(product)
-            dispatch(fetchCartItems([userInfo.user_id,product]));
-            
+            dispatch(addToCart([userInfo.user_id,product]));
             setIsInCart(true);
         }
     };
