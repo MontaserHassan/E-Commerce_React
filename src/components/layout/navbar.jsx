@@ -33,7 +33,7 @@ const Navbar = () => {
         <Fragment>
             <div className="">
 
-                <nav className="navbar navbar-expand-lg  py-2 ">
+                <nav className="navbar bg-dark navbar-expand-lg  py-2 ">
 
                     <div className="container-fluid">
 
@@ -69,7 +69,7 @@ const Navbar = () => {
                                 </li>
 
 
-                        
+
                             </ul>
 
                             <Search />

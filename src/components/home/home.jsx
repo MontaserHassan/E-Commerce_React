@@ -8,9 +8,7 @@ const Home = () => {
     return (
 
         <Fragment>
-            <div className="main ">
-                <img src={main} className=" w-50 " title="Clothings" alt="Clothings" />
-            </div>
+
             <div className="container-fluid ">
 
                 <div className="row ">
