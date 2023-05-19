@@ -21,19 +21,17 @@ const CartTable = () => {
 
   const handelIncreaseCartItems = (product) => {
           dispatch(addToCart([userInfo.user_id,product]));
-      
-  };
+        
+  }
 
-  useEffect(() => {
-    setFetchStatus("loading");
-    dispatch(fetchCartItems())
-      .then(() => {
-        setFetchStatus("succeeded");
-      })
-      .catch(() => {
-        setFetchStatus("failed");
-      });
-  }, [dispatch]);
+  useEffect(
+    ()=>{dispatch(
+  fetchCartItems(userInfo.user_id))
+  .then((action) => {
+    
+    setCartItem(action.payload); 
+    console.log(cartItem[0])
+  });}, [dispatch]);
 
   const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);
@@ -55,7 +53,8 @@ const CartTable = () => {
 
   return (
     <Fragment>
-      <table className="table   w-100 m-auto  text-center text-black  mb-4 mt-4 table-spacing " >
+      <div>
+     <table className="table   w-100 m-auto  text-center text-black  mb-4 mt-4 table-spacing " >
         <thead>
           <tr >
             <th className="col-4 fw-bold ">Product</th>
@@ -65,16 +64,17 @@ const CartTable = () => {
           </tr>
         </thead>
         <tbody className="table-light " data-mdb-toggle="animation" data-mdb-animation-reset="true" data-mdb-animation="slide-out-pluse ">
-          {cartItems?.map((cartItem) => (
-            <tr className="cart-item " key={cartItem.product.id}>
-              <td className="cart-product col-4 pt-2">
+    
+      {cartItem?.map((item) =>( 
+       <tr className="cart-item " key={item.product.id}>
+       <td className="cart-product col-4 pt-2">
                 <div className="row">
 
                   <div className="col-4 col-md-3">
-                    <NavLink to={`/product/${cartItem.product.id}`}>
+                    <NavLink to={`/product/${item.product.id}`}>
                       <img
-                        src={cartItem.product.image}
-                        alt={cartItem.product.name}
+                        src={item.product.image}
+                        alt={item.product.name}
                         className="img-fluid"
                       />
                     </NavLink>
@@ -82,10 +82,10 @@ const CartTable = () => {
 
                   <div className="col-9 col-md-9">
                     <div className="cart-product-details">
-                      <p className="mb-0 fw-bold">{cartItem.product.name}</p>
+                      <p className="mb-0 fw-bold">{item.product.name}</p>
                       <button
                         className="btn text-danger mt-3 fw-bold p-1"
-                        onClick={() => handelRemoveFromCart(cartItem)}
+                        onClick={() => handelRemoveFromCart(item.product)}
                       >
                         Remove
                       </button>
@@ -93,9 +93,8 @@ const CartTable = () => {
                   </div>
                 </div>
               </td>
-
               <td className="cart-product-price col-3 fw-bold pt-5">
-                {FormatCurrency(cartItem.product.price)}
+                {FormatCurrency(item.product.price)}
               </td>
 
               <td className="cart-product-quantity  col-3 text-center pt-5">
@@ -106,7 +105,7 @@ const CartTable = () => {
                   <button
                     type="button"
                     className="btn  text-danger fw-bold"
-                    onClick={() => handelDecreaseCartItems(cartItem)}
+                    onClick={() => handelDecreaseCartItems(item.product)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -123,12 +122,17 @@ const CartTable = () => {
                     </svg>
                   </button>
                   <span className="mx-2 fw-bold">
-                    {cartItem.quantity}
+                    {item.quantity}
                   </span>
                   <button
                     type="button"
                     className="btn text-success fw-bold"
-                    onClick={() => handelIncreaseCartItems(cartItem)}
+                    onClick={() =>{handelIncreaseCartItems(item.product)
+                      dispatch(
+                        fetchCartItems(userInfo.user_id))
+                        .then((action) => {
+                        setCartItem(action.payload); 
+                        })} }
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -147,14 +151,34 @@ const CartTable = () => {
                 </div>
               </td>
               <td className="cart-product-total-price fw-bold col-2 pt-5">
-                {FormatCurrency(cartItem.product.price * cartItem.quantity)}
-              </td>
+                {FormatCurrency(item.product.price * item.quantity )}
+              </td>    
+         </tr>))}
+         </tbody>
+         </table>
+         </div>
+         </Fragment>
+  );
+}
+      
+       
+       
+        
+    
+      
+      {/*
+        
+           
+
+             
+
+             
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
 
-      <div className="container w-100 m-auto">
+      {/* <div className="container w-100 m-auto">
         <CartOperations />
       </div>
 
@@ -185,10 +209,8 @@ const CartTable = () => {
             Remove
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
 
-    </Fragment>
-  );
-}
+
 
 export default CartTable

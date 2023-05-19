@@ -9,20 +9,20 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cartItems);
   const [ cartItem, setCartItem] = useState([]);
+
+  const [fetchStatus, setFetchStatus] = useState("idle");
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo, loading, error } = userLogin
-  const [fetchStatus, setFetchStatus] = useState("idle");
-
   useEffect(() => {
     setFetchStatus("loading");
-    dispatch(fetchCartItems())
-      .then(() => {
+    dispatch(fetchCartItems(userInfo.user_id))
+      .then((data) => {
+       console.log(data.payload)
+        setCartItem(`${data.payload}`)
         setFetchStatus("succeeded");
       })
-      .catch(() => {
-        setFetchStatus("failed");
-      });
-  }, [dispatch]);
+      
+  }, [dispatch,cartItem]);
 
   return (
     <Fragment>
@@ -41,7 +41,7 @@ const Cart = () => {
           <div>Loading...</div>
         ) : fetchStatus === "failed" ? (
           <div>Error: Failed to fetch cart items.</div>
-        ) : (!cartItems || cartItems.length === 0) ?
+        ) : (!cartItem || cartItem.length === 0) ?
           ( <EmptyCart/> ): (<CartTable/> )}
       </div>
     </Fragment>
