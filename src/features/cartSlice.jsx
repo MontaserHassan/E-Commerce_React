@@ -94,24 +94,39 @@ export const deleteCartItems = createAsyncThunk(
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (cartdata) => {
+    
     let response = await axios.get(
-      `http://127.0.0.1:8000/cart/getCartItemsByUserId/${cartdata[0]}`
-    );
-    const data = await response.json();
-    const cartItems = data.map(async (item) => {
-      const productResponse = await fetch(
-        `http://127.0.0.1:8000/product/${item.product}/`
-      );
-      const productData = await productResponse.json();
-      console.log(productResponse);
-      return {
-        ...item,
-        product: productData,
-      };
+      `http://127.0.0.1:8000/cart/getCartItemsByUserId/${cartdata}` )
+       
+
+      if (response.data ==="notfound"){
+        console.log("not")
+         return [];
+     }else{
+
+      let cartItems = await axios.get(
+        `http://127.0.0.1:8000/cart/getCartItemsByCartId/${response.data.id}`    
+      )
+
+      console.log(cartItems.data)
+
+     const  cartItemsProducts = cartItems.data.map((item) => {
+      console.log(item.product)
+      return axios.get(`http://127.0.0.1:8000/product/${item.product}`)
     });
-    return Promise.all(cartItems);
-  }
-);
+
+
+    const productData = await Promise.all(cartItemsProducts);
+    const finalData = cartItems.data.map((item) => {
+    
+    item.product = productData[cartItems.data.indexOf(item)].data
+    return item
+
+    })
+    console.log(finalData)
+    return finalData;}}
+ ) 
+;
 
 const initialState = {
   cartItems: [],

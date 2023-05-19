@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import{useDispatch, useSelector} from "react-redux"
-import { addToCart,decreaseCartItems } from '../../features/cartSlice';
+import { addToCart,decreaseCartItems, fetchCartItems} from '../../features/cartSlice';
 import { addToWishList } from '../../features/wishlistSlice';
 import { FormatCurrency } from '../../features/FormatCurrency';
 
@@ -14,7 +14,7 @@ const Product = () => {
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo, loading, error } = userLogin
+    const { userInfo, loading, error , } = userLogin
     
     const dispatch = useDispatch();
 
@@ -113,9 +113,11 @@ const Product = () => {
                             {isInCart ? (
                                 <button className="btn btn-success px-4 py-2" disabled> In Cart </button>
                             ) : (
-                                <button className="btn btn-outline-success px-4 py-2" disabled={ isInCart } onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
+                                <button className="btn btn-outline-success px-4 py-2" disabled={ isInCart } 
+                                onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
                             )}
 
+                               <button className="btn btn-outline-success px-4 py-2" onClick={() => dispatch(fetchCartItems(userInfo.user_id))}> go to cart</button>
                             <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
 
                             {!isWishlists && (
