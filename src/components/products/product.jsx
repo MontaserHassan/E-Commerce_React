@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import{useDispatch, useSelector} from "react-redux"
-import { addToCart } from '../../features/cartSlice';
+import { addToCart,decreaseCartItems, fetchCartItems} from '../../features/cartSlice';
 import { addToWishList } from '../../features/wishlistSlice';
 import { FormatCurrency } from '../../features/FormatCurrency';
 
@@ -14,12 +14,10 @@ const Product = () => {
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo, loading, error } = userLogin
+    const { userInfo, loading, error , } = userLogin
     
     const dispatch = useDispatch();
-    // const handelAddToCart =(product)=>{
-    //     dispatch(addToCart(product))
-    // }
+
     const handleAddToWishlist = (product,userId,useracess) => {
         dispatch(addToWishList([product.id,userId,useracess]))
       };
@@ -32,7 +30,8 @@ const Product = () => {
     const handleAddToCart = (product) => {
         const alreadyInCart = cartItems?.find((item) => item.id === product.id);
         if (!alreadyInCart) {
-            dispatch(addToCart(product));
+            console.log(product)
+            dispatch(addToCart([userInfo.user_id,product]));
             setIsInCart(true);
         }
     };
@@ -93,7 +92,7 @@ const Product = () => {
 
                 <div className="col-md-6">
 
-                    <h4 className="text-black-50 text-uppercase">{ product.category }</h4>
+                    <h4 className="text-black-50 text-uppercase">{ product.categories}</h4>
                     <h3 className="display-6">Product Name: { product.name }</h3>
                     <h5 className="fw-bold my-4 display-6">Price: { FormatCurrency(product.price) }</h5>
                     <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stoke } piece</h5>
@@ -114,9 +113,11 @@ const Product = () => {
                             {isInCart ? (
                                 <button className="btn btn-success px-4 py-2" disabled> In Cart </button>
                             ) : (
-                                <button className="btn btn-outline-success px-4 py-2" disabled={ isInCart } onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
+                                <button className="btn btn-outline-success px-4 py-2" disabled={ isInCart } 
+                                onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
                             )}
 
+                               <button className="btn btn-outline-success px-4 py-2" onClick={() => dispatch(fetchCartItems(userInfo.user_id))}> go to cart</button>
                             <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
 
                             {!isWishlists && (

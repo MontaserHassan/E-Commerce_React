@@ -22,9 +22,7 @@ const store = configureStore({
     products:productsReducer,
     [productApi.reducerPath]:productApi.reducer,
     cart:cartReducer,
-    products: productsReducer,
-    [productApi.reducerPath]: productApi.reducer,
-    cart: cartReducer,
+   
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userReducer,
@@ -34,7 +32,7 @@ const store = configureStore({
 })
 
 store.dispatch(productsFetch());
-store.dispatch(getTotal());
+// store.dispatch(getTotal());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

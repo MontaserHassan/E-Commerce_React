@@ -7,7 +7,7 @@ const  initialState={
     error:null
 }
 export const productsFetch = createAsyncThunk(
-  "products/productsFetch",
+  "product/productsFetch",
   async(id=null, {rejectWithValue}) =>{
     try{
         const response=  await  axios.get("http://127.0.0.1:8000/product/")

@@ -21,7 +21,7 @@ const Products = () => {
     useEffect(() => {
         const getAllProducts = async () => {
             setIsLoading(true);
-            const response = await fetch('http://127.0.0.1:8000/product');
+            const response = await fetch('http://127.0.0.1:8000/product/');
             if(componentMounted){
                 setProducts(await response.clone().json());
                 setFilter(await response.json());
@@ -98,7 +98,7 @@ const Products = () => {
                                             <div className="card-body">
                                                 <h5 className="card-title  mb-0">{product.name.substring(0,12)}...</h5>
                                                 <p className="card-text lead fw-bold">{ FormatCurrency(product.price) }</p>
-                                                <NavLink to={`/products/${product.id}`} className="btn btn-outline-primary"> Details </NavLink>
+                                                <NavLink to={`/product/${product.id}`} className="btn btn-outline-primary"> Details </NavLink>
                                             </div>
                                             { product.stoke > 0 ? ( <p className="card-text text-success fw-bold"> In Stock </p> ) :
                                             ( <p className="card-text text-danger fw-bold"> Not Available </p> )}
