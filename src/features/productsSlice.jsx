@@ -10,7 +10,7 @@ export const productsFetch = createAsyncThunk(
   "product/productsFetch",
   async(id=null, {rejectWithValue}) =>{
     try{
-        const response=  await  axios.get("http://127.0.0.1:8000/product/")
+        const response=  await  axios.get("https://quick-buy-211i.onrender.com/product/")
         return response?.data 
     }catch(error){
         return rejectWithValue("an error occurred");

@@ -9,12 +9,12 @@ export const fetchWishListItems = createAsyncThunk(
   "wishList/fetchWishListItems",
   async (userId) => {
     const response = await axios.get(
-      `http://127.0.0.1:8000/wishList/getWishListByUserId/${userId}`
+      `https://quick-buy-211i.onrender.com/wishList/getWishListByUserId/${userId}`
     );
 
     const promises = response.data.map((item) => {
       return axios
-        .get(`http://127.0.0.1:8000/product/${item.product_id}/`)
+        .get(`https://quick-buy-211i.onrender.com/product/${item.product_id}/`)
         .then((response) => response.data);
     });
 
@@ -37,7 +37,7 @@ const wishListSlice = createSlice({
     addToWishList(state, action) {
       let found = [];
       fetch(
-        `http://127.0.0.1:8000/wishList/getWishListByProductId/${action.payload[0]}`,
+        `https://quick-buy-211i.onrender.com/wishList/getWishListByProductId/${action.payload[0]}`,
         {
           method: "GET",
           headers: {
@@ -62,7 +62,7 @@ const wishListSlice = createSlice({
         })
         .then((len) => {
           if (len === 0) {
-            fetch("http://127.0.0.1:8000/wishList/addwishListItem", {
+            fetch("https://quick-buy-211i.onrender.com/wishList/addwishListItem", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const wishListSlice = createSlice({
       console.log(action.payload);
 
       fetch(
-        `http://127.0.0.1:8000/wishList/getWishListByProductId/${action.payload[0]}`,
+        `https://quick-buy-211i.onrender.com/wishList/getWishListByProductId/${action.payload[0]}`,
         {
           method: "DELETE",
           headers: {
@@ -104,7 +104,7 @@ const wishListSlice = createSlice({
       console.log(action.payload);
 
       fetch(
-        `http://127.0.0.1:8000/wishList/getWishListByUserId/${action.payload[0]}`,
+        `https://quick-buy-211i.onrender.com/wishList/getWishListByUserId/${action.payload[0]}`,
         {
           method: "DELETE",
           headers: {

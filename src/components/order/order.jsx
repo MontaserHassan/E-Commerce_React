@@ -8,7 +8,7 @@ function Order() {
 
     useEffect(() => {
         async function fetchOrders() {
-            const response = await fetch('http://localhost:3030/orders');
+            const response = await fetch('https://quick-buy-211i.onrender.com/orders');
             const data = await response.json();
             setOrders(data);
         }

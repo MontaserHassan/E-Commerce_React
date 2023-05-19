@@ -12,7 +12,7 @@ const Search = () => {
 
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/product/')
+        fetch('https://quick-buy-211i.onrender.com/product/')
             .then(response => response.json())
             .then(data => setProducts(data))
             .catch(error => console.log(error));
