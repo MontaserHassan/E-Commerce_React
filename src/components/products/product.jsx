@@ -39,7 +39,7 @@ const Product = () => {
     useEffect(() => {
         const getProduct = async () => {
             setIsLoading(true);
-            const response = await fetch(`http://127.0.0.1:8000/product/${id}`);
+            const response = await fetch(`https://quick-buy-211i.onrender.com/product/${id}`);
             setProduct(await response.clone().json());
             setIsLoading(false);
         }

@@ -20,18 +20,18 @@ const CartTable = () => {
   const cartItems = useSelector(state => state.cart.items);
 
   const handelIncreaseCartItems = (product) => {
-          dispatch(addToCart([userInfo.user_id,product]));
-        
+          dispatch(addToCart([userInfo.user_id,product]));     
   }
-
   useEffect(
     ()=>{dispatch(
   fetchCartItems(userInfo.user_id))
-  .then((action) => {
+  // .then((action) => {
     
-    setCartItem(action.payload); 
+    // setCartItem(action.payload); 
     console.log(cartItem[0])
-  });}, [dispatch]);
+  // }
+  // )
+  ;}, [dispatch,userInfo.user_id]);
 
   const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);
@@ -127,12 +127,14 @@ const CartTable = () => {
                   <button
                     type="button"
                     className="btn text-success fw-bold"
-                    onClick={() =>{handelIncreaseCartItems(item.product)
-                      dispatch(
-                        fetchCartItems(userInfo.user_id))
-                        .then((action) => {
-                        setCartItem(action.payload); 
-                        })} }
+                    // onClick={() =>{handelIncreaseCartItems(item.product)}}
+                    onClick={() =>{handelIncreaseCartItems([item.product,userInfo.user_id])}}
+
+                      // dispatch(
+                      //   fetchCartItems(userInfo.user_id))
+                      //   .then((action) => {
+                      //   setCartItem(action.payload); 
+                      //   })} }
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

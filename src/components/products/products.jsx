@@ -21,7 +21,7 @@ const Products = () => {
     useEffect(() => {
         const getAllProducts = async () => {
             setIsLoading(true);
-            const response = await fetch('http://127.0.0.1:8000/product/');
+            const response = await fetch('https://quick-buy-211i.onrender.com/product/');
             if(componentMounted){
                 setProducts(await response.clone().json());
                 setFilter(await response.json());
