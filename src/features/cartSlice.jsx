@@ -7,6 +7,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
   let response = await axios.get(
     `http://127.0.0.1:8000/cart/getCartItemsByUserId/${data[0]}`
   );
+  console.log("this is cart items",response.data)
   if (response.data === "notfound") {
     response = await axios.post("http://127.0.0.1:8000/cart/addToCart", {
       user: data[0],
@@ -16,6 +17,8 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
   let res = await axios.get(
     `http://127.0.0.1:8000/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
   );
+  console.log("this is cart",res.data)
+
   if (res.data === "notfound") {
     await axios.post("http://127.0.0.1:8000/cart/addToCartItems", {
       cart: response.data.id,
@@ -91,6 +94,14 @@ export const deleteCartItems = createAsyncThunk(
   }
 );
 
+export const clearCartItems = createAsyncThunk(
+  "cart/clearCartItems",
+  async (data) => {
+
+  }
+);
+
+
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (cartdata) => {
@@ -123,65 +134,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // removeFromCart: (state, action) => {
-    //   const nextCartItem = state.cartItems.filter(
-    //     (cartItem) => cartItem.id !== action.payload.id
-    //   );
-    //   state.cartItems = nextCartItem;
-    //   axios
-    //     .delete(
-    //       `http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`
-    //     )
-    //     .then((response) => {
-    //       toast.error(` ${action.payload.name} removed from your cart`, {
-    //         position: "bottom-left",
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //       toast.error(
-    //         "An error occurred while removing the item from your cart.",
-    //         {
-    //           position: "bottom-left",
-    //         }
-    //       );
-    //     });
-    // },
-
-    // decreaseCartItems: (state, action) => {
-    //   const itemIndex = state.cartItems.findIndex((cartItem) => cartItem.id === action.payload.id);
-    //   if (state.cartItems[itemIndex].quantity > 1) {
-    //     const updatedCartItems = [...state.cartItems];
-    //     updatedCartItems[itemIndex] = { ...updatedCartItems[itemIndex], quantity: updatedCartItems[itemIndex].quantity - 1 };
-    //     state.cartItems = updatedCartItems;
-    //     toast.info(`Decreased ${updatedCartItems[itemIndex].product.name} quantity`, {
-    //       position: 'bottom-left',
-    //     });
-    //     axios.put(`http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`, { quantity: updatedCartItems[itemIndex].quantity })
-    //       .catch(error => {
-    //         console.log(error);
-    //         toast.error('An error occurred while updating the quantity of the item in your cart.', {
-    //           position: 'bottom-left',
-    //         });
-    //       });
-    //   } else if (state.cartItems[itemIndex].quantity === 1) {
-    //     const nextCartItem = state.cartItems.filter((cartItem) => cartItem.id !== action.payload.id);
-    //     state.cartItems = nextCartItem;
-    //     axios.delete(`http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`)
-    //       .then(response => {
-    //         toast.error(` ${action.payload.name} removed from your cart`, {
-    //           position: 'bottom-left',
-    //         });
-    //       })
-    //       .catch(error => {
-    //         console.log(error);
-    //         toast.error('An error occurred while removing the item from your cart.', {
-    //           position: 'bottom-left',
-    //         });
-    //       });
-    //   }
-    // },
-
+    
     clearCart: (state, action) => {
       state.cartItems = [];
       axios
