@@ -9,12 +9,12 @@ export const fetchWishListItems = createAsyncThunk(
   "wishList/fetchWishListItems",
   async (userId) => {
     const response = await axios.get(
-      `http://127.0.0.1:8000/wishList/getWishListByUserId/${userId}`
+      `https://quick-buy-211i.onrender.com/wishList/getWishListByUserId/${userId}`
     );
 
     const promises = response.data.map((item) => {
       return axios
-        .get(`http://127.0.0.1:8000/product/${item.product_id}/`)
+        .get(`https://quick-buy-211i.onrender.com/product/${item.product_id}/`)
         .then((response) => response.data);
     });
 
