@@ -16,6 +16,7 @@ const Product = () => {
     // const { userInfo,  } = userLogin
     
     const dispatch = useDispatch();
+    const [ cartItem, setCartItem] = useState([]);
 
     const handleAddToWishlist = (product,userId, useracess) => {
         dispatch(addToWishList([product.id,userId, useracess]))
@@ -26,11 +27,13 @@ const Product = () => {
     const cartItems = useSelector(state => state.cart.items);
 
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (product) => {
         const alreadyInCart = cartItems?.find((item) => item.id === product.id);
         if (!alreadyInCart) {
           dispatch(addToCart([userInfo.user_id, product])).then(() => {
-            dispatch(fetchCartItems());
+            dispatch(fetchCartItems(userInfo.user_id)).then((action) => {
+                setCartItem(action.payload);
+              });
           });
           setIsInCart(true);
         }
