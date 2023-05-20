@@ -10,7 +10,7 @@ export const fetchWishListItems = createAsyncThunk(
   async (userId) => {
     console.log(userId)
     const response = await axios.get(
-      `http://127.0.0.1:8000/wishLists/getWishListByUserId/${userId}`
+      `https://quick-buy-211i.onrender.com/wishLists/getWishListByUserId/${userId}`
     );
 
     console.log(response.data,userId)
@@ -18,7 +18,7 @@ export const fetchWishListItems = createAsyncThunk(
     const promises = response.data.map((item) => {
       console.log(item)
       return axios
-        .get(`http://127.0.0.1:8000/product/${item.product}`)
+        .get(`https://quick-buy-211i.onrender.com/product/${item.product}`)
         .then((response) => response.data);
     });
 
@@ -40,9 +40,9 @@ const wishListSlice = createSlice({
   reducers: {
     addToWishList(state, action) {
       console.log(action.payload)
-      let found = [];
+      
       fetch(
-        `http://127.0.0.1:8000/wishLists/getWishListByProductId/${action.payload[0]}`,
+        `https://quick-buy-211i.onrender.com/wishLists/getWishListByProductId/${action.payload[0]}`,
         {
           method: "GET",
           headers: {
@@ -55,11 +55,13 @@ const wishListSlice = createSlice({
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
+          console.log(response)
           return response.json();
         })
         .then((data) => {
+          console.log(data)
           if (data) {
-            found = data.filter((item) => {
+           let found = data.filter((item) => {
               
               return item.user === action.payload[1];
             });console.log(found.length)
@@ -69,7 +71,7 @@ const wishListSlice = createSlice({
         .then((len) => {
          
           if (len === 0) { console.log(action.payload)
-            fetch("http://127.0.0.1:8000/wishLists/addwishListItem", {
+            fetch("https://quick-buy-211i.onrender.com/wishLists/addwishListItem", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -94,7 +96,7 @@ const wishListSlice = createSlice({
       console.log(action.payload);
 
       fetch(
-        `http://127.0.0.1:8000/wishLists/getWishListByProductId/${action.payload[0]}`,
+        `https://quick-buy-211i.onrender.com/wishLists/getWishListByProductId/${action.payload[0]}`,
         {
           method: "DELETE",
           headers: {
@@ -111,7 +113,7 @@ const wishListSlice = createSlice({
       console.log(action.payload);
 
       fetch(
-        `http://127.0.0.1:8000/wishLists/getWishListByUserId/${action.payload[0]}`,
+        `https://quick-buy-211i.onrender.com/wishLists/getWishListByUserId/${action.payload[0]}`,
         {
           method: "DELETE",
           headers: {

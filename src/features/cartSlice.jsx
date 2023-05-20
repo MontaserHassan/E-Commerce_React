@@ -12,6 +12,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
   );
   console.log( `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`)
   console.log("this is cart user's id",response)
+  
   if (response.data === "notfound"||response.data.length===0) {
     response = await axios.post("https://quick-buy-211i.onrender.com/cart/addToCart", {
       user: data[0],

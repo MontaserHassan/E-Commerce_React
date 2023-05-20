@@ -32,6 +32,7 @@ const Register = () => {
             setInputError('Please fill in all the fields');
         }
         else {
+            
             setMassage('')
             setError('')
             dispatch(userRegisterRequest(email, username, Confirmpassword, password));
