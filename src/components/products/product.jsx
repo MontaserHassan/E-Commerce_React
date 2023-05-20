@@ -5,6 +5,8 @@ import{useDispatch, useSelector} from "react-redux"
 import { addToCart, fetchCartItems} from '../../features/cartSlice';
 import { addToWishList } from '../../features/wishlistSlice';
 import { FormatCurrency } from '../../features/FormatCurrency';
+import { NavLink } from 'react-router-dom';
+import { API } from "../../backend";
 
 
 const Product = () => {
@@ -13,9 +15,9 @@ const Product = () => {
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"))
-    // const { userInfo,  } = userLogin
     
     const dispatch = useDispatch();
+    const [ cartItem, setCartItem] = useState([]);
 
     const handleAddToWishlist = (product,userId, useracess) => {
         dispatch(addToWishList([product.id,userId, useracess]))
@@ -26,11 +28,13 @@ const Product = () => {
     const cartItems = useSelector(state => state.cart.items);
 
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (product) => {
         const alreadyInCart = cartItems?.find((item) => item.id === product.id);
         if (!alreadyInCart) {
           dispatch(addToCart([userInfo.user_id, product])).then(() => {
-            dispatch(fetchCartItems());
+            dispatch(fetchCartItems(userInfo.user_id)).then((action) => {
+                setCartItem(action.payload);
+              });
           });
           setIsInCart(true);
         }
@@ -40,7 +44,7 @@ const Product = () => {
     useEffect(() => {
         const getProduct = async () => {
             setIsLoading(true);
-            const response = await fetch(`https://quick-buy-211i.onrender.com/product/${id}`);
+            const response = await fetch(`${API}product/${id}`);
             setProduct(await response.clone().json());
             setIsLoading(false);
         }
@@ -121,8 +125,7 @@ const Product = () => {
                                 onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
                             )}
 
-                               <button className="btn btn-outline-secondary px-4 py-2" onClick={() => dispatch(fetchCartItems(userInfo.user_id))}> go to cart</button>
-                            {/* <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink> */}
+                            <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink> 
 
                             {!isWishlists && (
                                 <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={() =>

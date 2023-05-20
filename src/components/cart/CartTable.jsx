@@ -7,17 +7,14 @@ import Button from 'react-bootstrap/Button';
 import "./style/Cart.css"
 import CartOperations from "./CartOperations";
 import { FormatCurrency } from '../../features/FormatCurrency';
+
 const CartTable = () => {
+
   const [showDecreaseModal, setShowDecreaseModal] = useState(false);
   const [itemToDecrease, setItemToDecrease] = useState(null);
-
   const dispatch = useDispatch();
   const [cartItem, setCartItem] = useState([]);
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { userInfo, loading, error } = userLogin
-  ;
   const userInfo = JSON.parse(localStorage.getItem("userInfo"))
-
   const cartItems = useSelector(state => state.cart.items);
 
 
@@ -68,10 +65,6 @@ const CartTable = () => {
     })
 
   };
-
-
-
-
 
   return (
     <Fragment>
@@ -210,9 +203,5 @@ const CartTable = () => {
     </Fragment>
   );
 }
-
-
-
-
 
 export default CartTable

@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
 import { NavDropdown } from 'react-bootstrap';
 import { fetchCartItems } from "../../features/cartSlice";
-
-import './other/style/navbar.css'
-import { logout } from '../client/userAction'
+import './other/style/navbar.css';
+import { logout } from '../client/userAction';
 
 const Navbar = () => {
 

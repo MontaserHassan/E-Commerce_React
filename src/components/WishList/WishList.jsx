@@ -4,17 +4,12 @@ import { Link } from "react-router-dom";
 import "./WishList.css";
 import { removeFromWishList, clearWishList, fetchWishListItems } from '../../features/wishlistSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-// import { useState } from "react";
-import { addToCart, decreaseCartItems, fetchCartItems } from '../../features/cartSlice';
-
-
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { addToCart } from '../../features/cartSlice';
 
 const WishList = () => {
 
-
   const userInfo = JSON.parse(localStorage.getItem("userInfo"))
-
   const wishListItems = useSelector(state => state.wishlist)
   const dispatch = useDispatch()
   const [wishListItem, setWishListItem] = useState([]);
@@ -28,14 +23,14 @@ const WishList = () => {
           setWishListItem(action.payload); // Log the data returned by the async thunk
         });
     }
-  }, [dispatch, userInfo.user_id, wishListItems]);
+  }, [dispatch, userInfo.user_id, wishListItems]
+  );
 
   const handleAddToCart = (product) => {
     console.log(product)
     console.log(userInfo.access)
     dispatch(addToCart([userInfo.user_id, product]));
     dispatch(removeFromWishList([product.id, userInfo.access]))
-
   }
 
 
