@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import{useDispatch, useSelector} from "react-redux"
 import { addToCart, fetchCartItems} from '../../features/cartSlice';
@@ -18,12 +17,11 @@ const Product = () => {
     
     const dispatch = useDispatch();
 
-    const handleAddToWishlist = (product,userId,useracess) => {
-        dispatch(addToWishList([product.id,userId,useracess]))
+    const handleAddToWishlist = (product,userId, useracess) => {
+        dispatch(addToWishList([product.id,userId, useracess]))
       };
-    const [isWishlists, setIsWishlists] = useState(false);
+    const isWishlists = false;
     const [isInCart, setIsInCart] = useState(false);
-    const [wishlist, setWishlist] = useState([]);
 
     const cartItems = useSelector(state => state.cart.items);
 

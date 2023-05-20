@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect,useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
-import { NavDropdown, LinkContainer } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 import {fetchCartItems} from "../../features/cartSlice";
 
 import {
@@ -15,12 +14,10 @@ import { logout } from '../client/userAction'
 
 const Navbar = () => {
     const dispatch = useDispatch();
-    const cartItems = useSelector(state => state.cartItems);
     const [ cartItem, setCartItem] = useState([]);
   
     const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
-    // const { cartTotalQuantity } = useSelector(state => state.cart);
     useEffect(() => {
         const storedUserInfo = localStorage.getItem('userInfo');
         if (storedUserInfo) {
@@ -72,7 +69,7 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/WishList">My Wish List</NavLink>
                                 </li>
-
+                                ه
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/order">My Orders</NavLink>
                                 </li>
@@ -90,7 +87,7 @@ const Navbar = () => {
                             </ul>
 
                             <Search />
-
+                            
                             <div className="buttons me-5">
                                 {userInfo ? (
                                     <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
