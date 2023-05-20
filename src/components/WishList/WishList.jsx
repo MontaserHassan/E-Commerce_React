@@ -5,7 +5,7 @@ import "./WishList.css";
 import { removeFromWishList, clearWishList, fetchWishListItems } from '../../features/wishlistSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes ,faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useState } from "react";
+// import { useState } from "react";
 import { addToCart,decreaseCartItems, fetchCartItems} from '../../features/cartSlice';
    
    

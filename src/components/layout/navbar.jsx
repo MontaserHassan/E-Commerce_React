@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
 import { NavDropdown, LinkContainer } from 'react-bootstrap';
 import {fetchCartItems} from "../../features/cartSlice";
+// import { NavDropdown } from 'react-bootstrap';
 
 import {
     USER_LOGIN_SUCCESS,
@@ -15,9 +16,12 @@ import { logout } from '../client/userAction'
 
 const Navbar = () => {
     const dispatch = useDispatch();
-    const cartItems = useSelector(state => state.cartItems);
+
+    const navigate = useNavigate();
+      const cartItems = useSelector(state => state.cartItems);
     const [ cartItem, setCartItem] = useState([]);
-  
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
     const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
     // const { cartTotalQuantity } = useSelector(state => state.cart);
@@ -40,8 +44,14 @@ const Navbar = () => {
     const handleLogout = () => {
         dispatch(logout());
     }
+    const handelProfile = () => {
+        setDropdownOpen(false); // Close the dropdown
+        navigate('/profile'); // Navigate to the profile page
+    };
     const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
-  
+    useEffect(() => {
+        // Do something with the cartTotalQuantity value
+      }, [cartTotalQuantity]);
     return (
         <Fragment>
             <div className="">
