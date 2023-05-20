@@ -1,6 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import './style/search.css';
+
 
 
 const Search = () => {
@@ -40,7 +43,7 @@ const Search = () => {
                 <form className="d-flex me-4" role="search">
 
                     <input className="form-control" type="search" placeholder="Search" aria-label="Search" value={inputValue} onChange={handleFilterData} />
-                    <button className="btn btn-warning rounded-end" type="button"> <i className="fas fa-search"></i> </button>
+                    <button className="btn btn-warning rounded-end" type="button"> <FontAwesomeIcon icon={faSearch} /> </button>
 
                 </form>
 
