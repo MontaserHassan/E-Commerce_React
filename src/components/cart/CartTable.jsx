@@ -18,18 +18,31 @@ const CartTable = () => {
   const cartItems = useSelector(state => state.cart.items);
 
 
-  useEffect(
-    () => {
-      if (userInfo) {
-        dispatch(
-          fetchCartItems(userInfo.user_id))
-          .then((action) => {
+  // useEffect(
+  //   () => {
+  //     dispatch(
+  //       fetchCartItems(userInfo.user_id))
+  //       .then((action) => {
+  //         // console.log(userInfo);
+  //         const payload = action.payload
+  //         setCartItem(payload);
+  //         console.log("cartItem", cartItem)
+  //         console.log(action.payload)
+  //       });
+  //   }, [cartItem]);
+  useEffect(() => {
+    console.log("cartItem", cartItem);
+  }, [cartItem]);
 
-            setCartItem(action.payload);
-            console.log("cartItem[0]", cartItem[0])
-          });
-      }
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchCartItems(userInfo.user_id))
+      .then((action) => {
+        const payload = action.payload;
+        setCartItem(payload);
+      });
+  }, [dispatch, userInfo.user_id]);
+
+  console.log("tttttt", cartItem);
 
   const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);
@@ -73,8 +86,8 @@ const CartTable = () => {
       <table className="table   w-100 m-auto  text-center text-black  mb-4 mt-4 table-spacing " >
         <thead>
           <tr >
-            <th className="col-4 fw-bold ">Product</th>
-            <th className="col-2 fw-bold">Price</th>
+            <th className="col-3 fw-bold ">Product</th>
+            <th className="col-4 fw-bold">Price</th>
             <th className=" col-2 fw-bold">Quantity</th>
             <th className="col-3 fw-bold">Total</th>
           </tr>

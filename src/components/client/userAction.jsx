@@ -82,7 +82,8 @@ export const userRegisterRequest = (email, username, password, password_confirma
             type: USER_REGISTER_SUCCESS,
             payload: data,
         })
-
+    
+          
     } catch (error) {
         let errorMessage = 'An error occurred during Register.';
 

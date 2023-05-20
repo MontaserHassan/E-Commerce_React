@@ -1,13 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { API } from "../../backend";
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Card from '../ui/Card';
 import { FormatCurrency } from '../../features/FormatCurrency'
+import { fetchCartItems } from "../../features/cartSlice";
+
 
 
 const PaymentHelper = () => {
-    const state = useSelector(state => state.cart.cartItems);
-    const total = useSelector(state => state.cart.cartTotalAmount);
+    const dispatch = useDispatch();
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    const [cartItem, setCartItem] = useState([]);
+    useEffect(() => {
+        console.log("cartItem", cartItem);
+      }, [cartItem]);
+    
+      useEffect(() => {
+        dispatch(fetchCartItems(userInfo.user_id))
+          .then((action) => {
+            const payload = action.payload;
+            setCartItem(payload);
+          });
+      }, [dispatch, userInfo.user_id]);
+    console.log(cartItem);
     useEffect(() => {
         // Check to see if this is a redirect back from Checkout
         const query = new URLSearchParams(window.location.search);
@@ -27,18 +42,18 @@ const PaymentHelper = () => {
 
         <section>
             <div className="row">
-                {state.map((item) => (
+                {cartItem.map((item) => (
                     <div className="col-lg-4" key={item.id}>
                         <Card>
                             <div className="product" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                 <img
-                                    src={item.image}
-                                    alt={item.title}
+                                    src={item.product.image}
+                                    alt={item.product.title}
                                     style={{ width: '16rem', height: '20rem' }}
                                 />
                                 <div className="description" style={{ textAlign: 'center' }}>
                                     <h3>{item.title}</h3>
-                                    <h5>price: {FormatCurrency(item.price)}</h5>
+                                    <h5>price: {FormatCurrency(item.product.price)}</h5>
                                 </div>
                             </div>
                         </Card>
@@ -51,7 +66,7 @@ const PaymentHelper = () => {
                         <form action={`${API}payment/create-checkout-session`} method="POST">
                             <button type="submit" className="btn btn-primary btn-lg">
                                 Check Out<br></br>
-                                {FormatCurrency(total)}
+
                             </button>
                         </form>
                     </div>

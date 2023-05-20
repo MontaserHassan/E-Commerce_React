@@ -30,10 +30,13 @@ const Register = () => {
             setMassage('Passwords do not match');
         } else if (!email || !username || !password || !Confirmpassword) {
             setInputError('Please fill in all the fields');
-        } else {
-            setMassage('');
-            setError('');
+        }
+        else {
+
+            setMassage('')
+            setError('')
             dispatch(userRegisterRequest(email, username, Confirmpassword, password));
+
         }
     };
 
