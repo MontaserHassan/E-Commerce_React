@@ -14,6 +14,7 @@ import './other/style/navbar.css'
 import { logout } from '../client/userAction'
 
 const Navbar = () => {
+    
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
@@ -29,6 +30,8 @@ const Navbar = () => {
             dispatch({ type: USER_LOGIN_SUCCESS, payload: JSON.parse(storedUserInfo) });
         }
     }, [dispatch]);
+    
+    const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
 
     useEffect(
         ()=>{dispatch(
@@ -46,10 +49,7 @@ const Navbar = () => {
         setDropdownOpen(false); // Close the dropdown
         navigate('/profile'); // Navigate to the profile page
     };
-    const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
-    useEffect(() => {
-        // Do something with the cartTotalQuantity value
-      }, [cartTotalQuantity]);
+  
     return (
         <Fragment>
             <div className="">
