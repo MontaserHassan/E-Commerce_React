@@ -18,14 +18,14 @@ const WishList = () => {
     
     const wishListItems = useSelector(state => state.wishlist)
     const dispatch = useDispatch()
-    const [ wishListItem, setwishListItem] = useState([]);
+    const [ wishListItem, setWishListItem] = useState([]);
     useEffect(() => {
       console.log(userInfo)
       if(userInfo.user_id){
       dispatch(fetchWishListItems(userInfo.user_id))
         .then((action) => {
           console.log(action.payload)
-          setwishListItem(action.payload); // Log the data returned by the async thunk
+          setWishListItem(action.payload); // Log the data returned by the async thunk
         });
     }}, [dispatch, userInfo.user_id,wishListItems]);
 
@@ -48,7 +48,6 @@ const WishList = () => {
   }
 
   if (!userInfo) {
-    // Handle the case when userInfo is not available
     return <div>Loading...</div>;
   }
 
@@ -81,7 +80,7 @@ const WishList = () => {
                                                                                 dispatch(fetchWishListItems(userInfo.user_id))
                                                                                 .then((action) => {
                                                                                   console.log(action.payload)
-                                                                                  setwishListItem(action.payload); // Log the data returned by the async thunk
+                                                                                  setWishListItem(action.payload); // Log the data returned by the async thunk
                                                                                 }); }}>
               
           
@@ -96,7 +95,7 @@ const WishList = () => {
                                                                        dispatch(fetchWishListItems(userInfo.user_id))
                                                                        .then((action) => {
                                                             
-                                                                         setwishListItem(action.payload); // Log the data returned by the async thunk
+                                                                         setWishListItem(action.payload); // Log the data returned by the async thunk
                                                                        }); }}> add To Cart </button></td> 
                           
                 </tr>
@@ -109,7 +108,7 @@ const WishList = () => {
                 handleClearing(userInfo.user_id, userInfo.access);
                 dispatch(fetchWishListItems(userInfo.user_id))
                   .then((action) => {
-                    setwishListItem(action.payload); // Log the data returned by the async thunk
+                    setWishListItem(action.payload); // Log the data returned by the async thunk
                   });
               }}>Clear</button>
             </div>

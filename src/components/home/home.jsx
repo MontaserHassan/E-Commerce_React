@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import Carousel from './Carousel/Carousel';
 import HomeFooter from './home-footer';
-import main from '../images/main.png'
 import './style/home.css'
 const Home = () => {
 
