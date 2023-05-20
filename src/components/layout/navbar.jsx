@@ -1,54 +1,47 @@
-
-import React, { Fragment, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { Fragment, useEffect,useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
-import { NavDropdown } from 'react-bootstrap';
-import { fetchCartItems } from "../../features/cartSlice";
+import { NavDropdown, LinkContainer } from 'react-bootstrap';
+import {fetchCartItems} from "../../features/cartSlice";
 
 import {
     USER_LOGIN_SUCCESS,
-}
-    from '../client/userConst'
+} 
+from '../client/userConst'
 import './other/style/navbar.css'
 import { logout } from '../client/userAction'
 
 const Navbar = () => {
     const dispatch = useDispatch();
-
-    const navigate = useNavigate();
     const cartItems = useSelector(state => state.cartItems);
-    const [cartItem, setCartItem] = useState([]);
+    const [ cartItem, setCartItem] = useState([]);
+  
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const { cartTotalQuantity } = useSelector(state => state.cart);
-
+    // const { cartTotalQuantity } = useSelector(state => state.cart);
+    useEffect(() => {
+        const storedUserInfo = localStorage.getItem('userInfo');
+        if (storedUserInfo) {
+            dispatch({ type: USER_LOGIN_SUCCESS, payload: JSON.parse(storedUserInfo) });
+        }
+    }, [dispatch]);
 
     useEffect(
-        () => {
-            if (userInfo) {
-                dispatch(
-                    fetchCartItems(userInfo.user_id))
-                    .then((action) => {
-                        setCartItem(action.payload);
-                    })
-            }
-
-        }, [dispatch]);
-
+        ()=>{dispatch(
+      fetchCartItems(userInfo.user_id))
+      .then((action) => {
+        setCartItem(action.payload);   
+      });}, [dispatch]);
+     
 
 
     const handleLogout = () => {
         dispatch(logout());
     }
-    const handelProfile = () => {
-        setDropdownOpen(false); // Close the dropdown
-        navigate('/profile'); // Navigate to the profile page
-    };
-
+    const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
+  
     return (
         <Fragment>
             <div className="">

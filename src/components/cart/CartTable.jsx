@@ -13,8 +13,9 @@ const CartTable = () => {
 
   const dispatch = useDispatch();
   const [ cartItem, setCartItem] = useState([]);
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo, loading, error } = userLogin
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const { userInfo, loading, error } = userLogin
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
   const cartItems = useSelector(state => state.cart.items);
 
@@ -44,10 +45,14 @@ const CartTable = () => {
 
   const handelDecreaseCartItems = (product) => {
     cartItem.filter((item ) => {
-      if(item.product === product){
+      console.log(item)
+      if(item.product === product.product){
+        
+      
         if (item.quantity === 1) {
           setShowDecreaseModal(true);
-          setItemToDecrease(product);
+          setItemToDecrease(item);
+         
         } 
         else {
       dispatch(decreaseCartItems([userInfo.user_id, product])).then(() => {
@@ -98,7 +103,7 @@ const CartTable = () => {
                       <p className="mb-0 fw-bold">{item.product.name}</p>
                       <button
                         className="btn text-danger mt-3 fw-bold p-1"
-                        onClick={() => handelRemoveFromCart(item.product)}
+                        onClick={() => handelRemoveFromCart(item)}
                       >
                         Remove
                       </button>
@@ -118,7 +123,7 @@ const CartTable = () => {
                   <button
                     type="button"
                     className="btn  text-danger fw-bold"
-                    onClick={() => handelDecreaseCartItems(item.product)}
+                    onClick={() => handelDecreaseCartItems(item)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +193,10 @@ const CartTable = () => {
           <Button
             variant="danger"
             onClick={() => {
-              dispatch(removeFromCart(itemToDecrease));
+              dispatch(removeFromCart(itemToDecrease)).then( 
+                dispatch(fetchCartItems(userInfo.user_id)).then((action) => { 
+                  setCartItem(action.payload);
+              }));
               setShowDecreaseModal(false);
             }}
           >
@@ -199,6 +207,7 @@ const CartTable = () => {
      </Fragment>
   );
 }
+ 
 
 
 
