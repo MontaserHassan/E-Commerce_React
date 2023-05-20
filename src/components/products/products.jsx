@@ -52,7 +52,8 @@ const Products = () => {
 
     const filterProducts = (category) => {
         setActiveCategory(category);
-        const updatedList = products.filter( prod => prod.category === category );
+        const updatedList = products.filter( prod => prod.categories === category );
+        console.log(updatedList);
         setFilter(updatedList);
     };
 
@@ -88,20 +89,33 @@ const Products = () => {
                 
                     { currentProducts.map((product) => {
                             return(
+
                                 <Fragment>
 
                                     <div className="col-md-3 mb-4">
+                                        
                                         <div className="card text-center h-100 p-4" key={product.id}>
+                                            
                                             <div className="bg-image hover-overlay hover-zoom hover-shadow ripple">
-                                                <img className="card-img-top" src={product.image} name={product.name} alt={product.name} height="350px"/>
+                                            
+                                                <img className="card-img-top" src={product.image} title={product.name} name={product.name} alt={product.name} height="350px" />
+                                            
                                             </div>
+
                                             <div className="card-body">
-                                                <h5 className="card-title  mb-0">{product.name.substring(0,12)}...</h5>
-                                                <p className="card-text lead fw-bold">{ FormatCurrency(product.price) }</p>
+                                        
+                                                <h5 title={product.name} className="card-title mb-0">{product.name.substring(0,12)}...</h5>
+                                                <p className="card-text m-auto w-50 lead fw-bold">{ FormatCurrency(product.price) }</p>
                                                 <NavLink to={`/product/${product.id}`} className="btn btn-outline-primary"> Details </NavLink>
+                                        
                                             </div>
-                                            { product.stoke > 0 ? ( <p className="card-text text-success fw-bold"> In Stock </p> ) :
-                                            ( <p className="card-text text-danger fw-bold"> Not Available </p> )}
+                                        
+                                            { product.stoke > 0 ? ( 
+                                                <p className="card-text m-auto w-50 text-success fw-bold"> In Stock </p> 
+                                            ) :( 
+                                                <p className="card-text text-danger m-auto w-50 fw-bold"> Not Available </p> )
+                                            }
+                                            
                                         </div>
                                     </div>
                                 

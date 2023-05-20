@@ -84,19 +84,22 @@ const Product = () => {
         }
 
         return (
+
             <Fragment>
                 
-                <div className="col-md-6">
-                    <img src={product.image} alt={product.name} height="400px" width="400px"/>
+                <div className="col-md-4 me-5">
+                
+                    <img src={product.image} title={product.name} className='rounded-5 me-5' alt={product.title} height="400px" width="400px"/>
+                
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6 ms-5">
 
                     <h4 className="text-black-50 text-uppercase">{ product.categories}</h4>
-                    <h3 className="display-6">Product Name: { product.name }</h3>
-                    <h5 className="fw-bold my-4 display-6">Price: { FormatCurrency(product.price) }</h5>
-                    <h5 className={`lead fw-bold my-4 ${stockColor}`}>Available Stock: { product.stoke } piece</h5>
-                    <p className="lead">Description: { product.description }</p>
+                    <h3 className="display-6 mt-3"><span className="fw-bold"> Product Name:</span> { product.name }</h3>
+                    <h5 className="my-4 display-6"><span className="fw-bold"> Price:</span> { FormatCurrency(product.price) }</h5>
+                    <h5 className={`lead my-4 ${stockColor}`}><span className="fw-bold"> Available Stock:</span> { product.stoke } piece</h5>
+                    <p className="lead"><span className="fw-bold"> Description:</span> { product.description }</p>
 
                     {product.stoke === 0 ? (
                         
@@ -117,8 +120,8 @@ const Product = () => {
                                 onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
                             )}
 
-                               <button className="btn btn-outline-success px-4 py-2" onClick={() => dispatch(fetchCartItems(userInfo.user_id))}> go to cart</button>
-                            <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink>
+                               <button className="btn btn-outline-secondary px-4 py-2" onClick={() => dispatch(fetchCartItems(userInfo.user_id))}> go to cart</button>
+                            {/* <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink> */}
 
                             {!isWishlists && (
                                 <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={() =>
@@ -134,8 +137,11 @@ const Product = () => {
 
                 </div>
 
+
             </Fragment>
+
         );
+
     };
 
 
@@ -147,7 +153,9 @@ const Product = () => {
             <div className="container py-5">
 
                 <div className="row py-5">
+
                     {isLoading ? <Loading/> : <ShowProduct/> }
+                
                 </div>
             
             </div> 
