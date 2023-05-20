@@ -31,7 +31,6 @@ const Navbar = () => {
         }
     }, [dispatch]);
     
-    const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
 
     useEffect(
         ()=>{dispatch(
@@ -49,7 +48,8 @@ const Navbar = () => {
         setDropdownOpen(false); // Close the dropdown
         navigate('/profile'); // Navigate to the profile page
     };
-  
+    const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
+
     return (
         <Fragment>
             <div className="">
@@ -80,7 +80,7 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/WishList">My Wish List</NavLink>
                                 </li>
-                                ه
+                            
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/order">My Orders</NavLink>
                                 </li>

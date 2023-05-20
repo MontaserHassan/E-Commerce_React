@@ -30,6 +30,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
       product: data[1].id,
       quantity: 1,
     })
+    
     toast.success(`Added   ${data[1].name} to cart`, {
       position: "bottom-left",
     });
@@ -50,6 +51,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
       });
     }
   }
+  
 });
 
 
