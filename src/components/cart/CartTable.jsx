@@ -18,16 +18,31 @@ const CartTable = () => {
   const cartItems = useSelector(state => state.cart.items);
 
 
-  useEffect(
-    () => {
-      dispatch(
-        fetchCartItems(userInfo.user_id))
-        .then((action) => {
+  // useEffect(
+  //   () => {
+  //     dispatch(
+  //       fetchCartItems(userInfo.user_id))
+  //       .then((action) => {
+  //         // console.log(userInfo);
+  //         const payload = action.payload
+  //         setCartItem(payload);
+  //         console.log("cartItem", cartItem)
+  //         console.log(action.payload)
+  //       });
+  //   }, [cartItem]);
+  useEffect(() => {
+    console.log("cartItem", cartItem);
+  }, [cartItem]);
 
-          setCartItem(action.payload);
-          console.log("cartItem[0]", cartItem[0])
-        });
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchCartItems(userInfo.user_id))
+      .then((action) => {
+        const payload = action.payload;
+        setCartItem(payload);
+      });
+  }, [dispatch, userInfo.user_id]);
+
+  console.log("tttttt",cartItem);
 
   const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);

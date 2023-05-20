@@ -128,11 +128,11 @@ export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (cartdata,{ getState, dispatch }) => {
 
-   
+    console.log('cartdata',cartdata);
     let response = await axios.get(
       `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${cartdata}` )
      
- 
+      console.log(response);
       if (response.data ==="notfound"){
          return [];
      }else{
