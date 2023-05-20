@@ -41,6 +41,7 @@ const Products = () => {
 
                 <div className="col-md-3">
                     
+                    {/* <h4>Loading...</h4> */}
                     <Skeleton animation="wave" width={210} height={350}/>
 
                 </div>
