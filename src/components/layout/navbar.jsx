@@ -1,45 +1,41 @@
-import React, { Fragment, useEffect,useState } from 'react';
-import { NavLink ,useNavigate} from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
 import { NavDropdown } from 'react-bootstrap';
-import {fetchCartItems} from "../../features/cartSlice";
+import { fetchCartItems } from "../../features/cartSlice";
 // import { NavDropdown } from 'react-bootstrap';
 
 import {
     USER_LOGIN_SUCCESS,
-} 
-from '../client/userConst'
+}
+    from '../client/userConst'
 import './other/style/navbar.css'
 import { logout } from '../client/userAction'
 
 const Navbar = () => {
-    
+
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
-      const cartItems = useSelector(state => state.cartItems);
-    const [ cartItem, setCartItem] = useState([]);
+    const cartItems = useSelector(state => state.cartItems);
+    const [cartItem, setCartItem] = useState([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
-    useEffect(() => {
-        const storedUserInfo = localStorage.getItem('userInfo');
-        if (storedUserInfo) {
-            dispatch({ type: USER_LOGIN_SUCCESS, payload: JSON.parse(storedUserInfo) });
-        }
-    }, [dispatch]);
-    
+
     const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
 
     useEffect(
-        ()=>{dispatch(
-      fetchCartItems(userInfo.user_id))
-      .then((action) => {
-        setCartItem(action.payload);   
-      });}, [dispatch]);
-     
+        () => {
+            dispatch(
+                fetchCartItems(userInfo.user_id))
+                .then((action) => {
+                    setCartItem(action.payload);
+                });
+        }, [dispatch]);
+
 
 
     const handleLogout = () => {
@@ -49,7 +45,7 @@ const Navbar = () => {
         setDropdownOpen(false); // Close the dropdown
         navigate('/profile'); // Navigate to the profile page
     };
-  
+
     return (
         <Fragment>
             <div className="">
@@ -80,7 +76,7 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/WishList">My Wish List</NavLink>
                                 </li>
-                                ه
+
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/order">My Orders</NavLink>
                                 </li>
@@ -98,7 +94,7 @@ const Navbar = () => {
                             </ul>
 
                             <Search />
-                            
+
                             <div className="buttons me-5">
                                 {userInfo ? (
                                     <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
