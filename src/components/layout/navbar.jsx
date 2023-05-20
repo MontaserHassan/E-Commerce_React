@@ -1,23 +1,26 @@
-
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect,useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
 import { NavDropdown, LinkContainer } from 'react-bootstrap';
+import {fetchCartItems} from "../../features/cartSlice";
+
 import {
     USER_LOGIN_SUCCESS,
-} from '../client/userConst'
+} 
+from '../client/userConst'
 import './other/style/navbar.css'
 import { logout } from '../client/userAction'
 
 const Navbar = () => {
     const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cartItems);
+    const [ cartItem, setCartItem] = useState([]);
+  
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
-    const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
-
-    const { cartTotalQuantity } = useSelector(state => state.cart);
+    // const { cartTotalQuantity } = useSelector(state => state.cart);
     useEffect(() => {
         const storedUserInfo = localStorage.getItem('userInfo');
         if (storedUserInfo) {
@@ -25,10 +28,20 @@ const Navbar = () => {
         }
     }, [dispatch]);
 
+    useEffect(
+        ()=>{dispatch(
+      fetchCartItems(userInfo.user_id))
+      .then((action) => {
+        setCartItem(action.payload);   
+      });}, [dispatch]);
+     
+
+
     const handleLogout = () => {
         dispatch(logout());
     }
-
+    const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
+  
     return (
         <Fragment>
             <div className="">

@@ -6,21 +6,37 @@ import { removeFromWishList , clearWishList ,fetchWishListItems} from '../../fea
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes ,faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
-
+import { addToCart,decreaseCartItems, fetchCartItems} from '../../features/cartSlice';
+   
+   
 
 const WishList = () => { 
-    const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo, loading, error } = userLogin
+    //const userLogin = useSelector((state) => state.userLogin);
+    //const { userInfo, loading, error } = userLogin
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo")) 
+    
     const wishListItems = useSelector(state => state.wishlist)
     const dispatch = useDispatch()
     const [ wishListItem, setwishListItem] = useState([]);
     useEffect(() => {
+      console.log(userInfo)
+      if(userInfo.user_id){
       dispatch(fetchWishListItems(userInfo.user_id))
         .then((action) => {
           console.log(action.payload)
           setwishListItem(action.payload); // Log the data returned by the async thunk
         });
-    }, [dispatch, userInfo.user_id,wishListItems]);
+    }}, [dispatch, userInfo.user_id,wishListItems]);
+
+    const handleAddToCart = (product) => {
+        console.log(product)
+        console.log(userInfo.access)
+      dispatch(addToCart([userInfo.user_id,product]));
+      dispatch(removeFromWishList([product.id,userInfo.access]))
+     
+  }
+
     const handleRemoving=(wishlistitem,access)=>{
          dispatch(removeFromWishList([wishlistitem,access]))
     }
@@ -34,7 +50,7 @@ const WishList = () => {
     
   return (
     <div className="wishListContainer">
-        {wishListItem.length === 0 ?(
+        {!wishListItem || wishListItem.length === 0 || !userInfo ?(
 <div class="empty"> 
 <div className="text">wishList is empty</div>
 <div className="n"><img src="https://www.elitejewelryhouse.com/assets/images/empty-wishlist.png" alt="empty wishList" className="img-fluid" />
@@ -50,6 +66,7 @@ const WishList = () => {
               <th scope="col">Img</th>
               <th scope="col">Name</th>
               <th scope="col">Price</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -71,6 +88,13 @@ const WishList = () => {
               <td key={item.id} ><img src={item.image} alt={item.title} className="img-fluid" /></td>
               <td ><div className="title">{item.name}</div></td>
               <td ><div className="price">{item.price} $</div></td>
+              <td><button className="btn btn-primary px-4 py-2"  onClick={()=>{handleAddToCart(item)
+                                                                       dispatch(fetchWishListItems(userInfo.user_id))
+                                                                       .then((action) => {
+                                                            
+                                                                         setwishListItem(action.payload); // Log the data returned by the async thunk
+                                                                       }); }}> add To Cart </button></td> 
+                          
                 </tr>
                 )}
              

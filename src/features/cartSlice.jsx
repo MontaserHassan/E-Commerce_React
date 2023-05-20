@@ -4,27 +4,32 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
+
+  console.log(data[0])
   let response = await axios.get(
     `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
   );
-  console.log("this is cart items",response.data)
+  console.log("this is cart user's id",response.data)
   if (response.data === "notfound") {
     response = await axios.post("https://quick-buy-211i.onrender.com/cart/addToCart", {
       user: data[0],
     });
     response = response.data;
+    console.log("this user id",data[0])
   }
+
   let res = await axios.get(
-    `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
+    `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data[0].id}/`
   );
-  console.log("this is cart",res.data)
+  console.log("this is cart",res)
 
   if (res.data === "notfound") {
+    console.log(response.data[0].id, data[1].id)
     await axios.post("https://quick-buy-211i.onrender.com/cart/addToCartItems", {
-      cart: response.data.id,
+      cart: response.data[0].id,
       product: data[1].id,
       quantity: 1,
-    });
+    })
     toast.success(`Added   ${data[1].name} to cart`, {
       position: "bottom-left",
     });
@@ -50,24 +55,28 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
 export const decreaseCartItems = createAsyncThunk(
   "cart/decreaseCartItems",
   async (data) => {
-    let response = await axios.get(
-      `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
-    );
-    let res = await axios.get(
-      `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
-    );
-    const quantity = res.data.quantity - 1;
-    if (1 < quantity) {
-      await axios.put(
-        `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`,
+    
+    
+    let quantity = data[1].quantity
+
+    if (1< quantity) {
+      console.log(`${data[1].cart}`)
+        quantity--
+       
+
+
+     const items = await axios.put(`https://quick-buy-211i.onrender.com/cart/getCartItemsById/${data[1].id}`,
         { quantity: quantity }
       );
-      toast.info(`decreasing  ${data[1].name} Quantity `, {
+
+      console.log(items)
+      toast.info(`decreasing  ${data[1].title} Quantity `, {
         position: "bottom-left",
       });
     } else if (1 === quantity) {
+      console.log()
       await axios.delete(
-        `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`
+        `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${data[1].cart}`
       );
       toast.error(`deleted  ${data[1].name} from cart `, {
         position: "bottom-left",
@@ -76,17 +85,13 @@ export const decreaseCartItems = createAsyncThunk(
   }
 );
 
-export const deleteCartItems = createAsyncThunk(
-  "cart/deleteCartItems",
+export const removeFromCart = createAsyncThunk(
+  "cart/removeFromCart",
   async (data) => {
-    let response = await axios.get(
-      `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
-    );
-    let res = await axios.get(
-      `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
-    );
+  console.log(data)
+  console.log( `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${data.id}`)
     await axios.delete(
-      `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${data.id}`
     );
     toast.error(`deleted  ${data[1].name} from cart `, {
       position: "bottom-left",
@@ -104,25 +109,22 @@ export const clearCartItems = createAsyncThunk(
 
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
-  async (cartdata) => {
-    
+  async (cartdata,{ getState, dispatch }) => {
+
+   
     let response = await axios.get(
       `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${cartdata}` )
-       
-
+     
+ 
       if (response.data ==="notfound"){
-        console.log("not")
          return [];
      }else{
-
+     
       let cartItems = await axios.get(
-        `https://quick-buy-211i.onrender.com/cart/getCartItemsByCartId/${response.data.id}`    
+        `https://quick-buy-211i.onrender.com/cart/getCartItemsByCartId/${response.data[0].id}`    
       )
 
-      console.log(cartItems.data)
-
      const  cartItemsProducts = cartItems.data.map((item) => {
-      console.log(item.product)
       return axios.get(`https://quick-buy-211i.onrender.com/product/${item.product}`)
     });
 
@@ -133,12 +135,34 @@ export const fetchCartItems = createAsyncThunk(
     item.product = productData[cartItems.data.indexOf(item)].data
     return item
 
-    })
-    console.log(finalData)
-    return finalData;}}
- ) 
-;
+    });
+          // calculate total quantity and amount
+          const cartTotalQuantity = finalData.reduce(
+            (total, item) => total + item.quantity,
+            0
+          );
+          const cartTotalAmount = finalData.reduce(
+            (total, item) => total + item.quantity * item.product.price,
+            0
+          );
+               // dispatch action to update state with cart totals
+      dispatch(setCartTotals(cartTotalQuantity, cartTotalAmount));
+    finalData.sort((a, b) => {
+      return a.id - b.id; 
+    });
+    return finalData;
+  }}
+ );
 
+ export const setCartTotals = (quantity, amount) => {
+  return {
+    type: "cart/setCartTotals",
+    payload: {
+      cartTotalQuantity: quantity,
+      cartTotalAmount: amount,
+    },
+  };
+};
 const initialState = {
   cartItems: [],
   cartTotalQuantity: 0,
@@ -149,7 +173,10 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    
+    setCartTotals: (state, action) => {
+      state.cartTotalQuantity = action.payload.cartTotalQuantity;
+      state.cartTotalAmount = action.payload.cartTotalAmount;
+    },
     clearCart: (state, action) => {
       state.cartItems = [];
       axios
@@ -173,29 +200,12 @@ const cartSlice = createSlice({
     getCartItemsFailure: (state, action) => {
       console.log(action.payload);
     },
-    // getTotal: (state, action) => {
-    //   let { total, quantity } = state.cartItems.reduce(
-    //     (cartTotal, cartItem) => {
-    //       const { price, cartQuantity } = cartItem.product;
-    //       const itemTotal = price * cartQuantity;
 
-    //       cartTotal.total += itemTotal;
-    //       cartTotal.quantity += cartQuantity;
-    //       return cartTotal;
-    //     },
-    //     {
-    //       total: 0,
-    //       quantity: 0,
-    //     }
-    //   );
-    //   state.cartTotalQuantity = quantity;
-    //   state.cartTotalAmount = total;
-    // },
   },
 });
 
 export const {
-  removeFromCart,
+  // removeFromCart,
   clearCart,
   getCartItemsSuccess,
   getCartItemsFailure,

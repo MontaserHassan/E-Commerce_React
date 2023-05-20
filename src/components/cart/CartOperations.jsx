@@ -11,8 +11,8 @@ const CartOperations = () => {
 const dispatch = useDispatch();
 const cartItems = useSelector(state => state.cart.cartItems);
 const [ cartItem, setCartItem] = useState([]);
-const userLogin = useSelector((state) => state.userLogin);
-const { userInfo, loading, error } = userLogin
+const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+
 
 
 useEffect(() => {
@@ -22,6 +22,7 @@ useEffect(() => {
       setCartItem(action.payload); // Log the data returned by the async thunk
     });
 }, [dispatch, userInfo.user_id,cartItems]);
+const cartTotalAmount = useSelector((state) => state.cart.cartTotalAmount);
 
 return (
     <div>
@@ -59,7 +60,7 @@ return (
             </div>
             <div className="col-auto">
               <span className="amount text-center fw-bold">
-                {FormatCurrency(cartItems.cartTotalAmount)}
+                {FormatCurrency(cartTotalAmount)}
               </span>
             </div>
           </div>

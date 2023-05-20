@@ -8,13 +8,17 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchWishListItems = createAsyncThunk(
   "wishList/fetchWishListItems",
   async (userId) => {
+    console.log(userId)
     const response = await axios.get(
-      `https://quick-buy-211i.onrender.com/wishList/getWishListByUserId/${userId}`
+      `http://127.0.0.1:8000/wishLists/getWishListByUserId/${userId}`
     );
 
+    console.log(response.data,userId)
+    
     const promises = response.data.map((item) => {
+      console.log(item)
       return axios
-        .get(`https://quick-buy-211i.onrender.com/product/${item.product_id}/`)
+        .get(`http://127.0.0.1:8000/product/${item.product}`)
         .then((response) => response.data);
     });
 
@@ -35,9 +39,10 @@ const wishListSlice = createSlice({
   initialState,
   reducers: {
     addToWishList(state, action) {
+      console.log(action.payload)
       let found = [];
       fetch(
-        `https://quick-buy-211i.onrender.com/wishList/getWishListByProductId/${action.payload[0]}`,
+        `http://127.0.0.1:8000/wishLists/getWishListByProductId/${action.payload[0]}`,
         {
           method: "GET",
           headers: {
@@ -55,22 +60,24 @@ const wishListSlice = createSlice({
         .then((data) => {
           if (data) {
             found = data.filter((item) => {
-              return item.user_id === action.payload[1];
-            });
+              
+              return item.user === action.payload[1];
+            });console.log(found.length)
             return found.length;
           }
         })
         .then((len) => {
-          if (len === 0) {
-            fetch("https://quick-buy-211i.onrender.com/wishList/addwishListItem", {
+         
+          if (len === 0) { console.log(action.payload)
+            fetch("http://127.0.0.1:8000/wishLists/addwishListItem", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: action.payload[2],
               },
               body: JSON.stringify({
-                user_id: action.payload[1],
-                product_id: action.payload[0],
+                user: action.payload[1],
+                product: action.payload[0],
               }),
             })
               .then((response) => response.json())
@@ -87,7 +94,7 @@ const wishListSlice = createSlice({
       console.log(action.payload);
 
       fetch(
-        `https://quick-buy-211i.onrender.com/wishList/getWishListByProductId/${action.payload[0]}`,
+        `http://127.0.0.1:8000/wishLists/getWishListByProductId/${action.payload[0]}`,
         {
           method: "DELETE",
           headers: {
@@ -104,7 +111,7 @@ const wishListSlice = createSlice({
       console.log(action.payload);
 
       fetch(
-        `https://quick-buy-211i.onrender.com/wishList/getWishListByUserId/${action.payload[0]}`,
+        `http://127.0.0.1:8000/wishLists/getWishListByUserId/${action.payload[0]}`,
         {
           method: "DELETE",
           headers: {

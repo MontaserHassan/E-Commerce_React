@@ -11,8 +11,8 @@ const Cart = () => {
   const [ cartItem, setCartItem] = useState([]);
 
   const [fetchStatus, setFetchStatus] = useState("idle");
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo, loading, error } = userLogin
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+
   useEffect(() => {
     setFetchStatus("loading");
     dispatch(fetchCartItems(userInfo.user_id))
@@ -28,7 +28,7 @@ const Cart = () => {
     <Fragment>
       <div className="container">
       <h2 className="my-5 
-      text-center animate__animated animate__bounce
+      text-center animate_animated animate_bounce
        animate__infinite" 
        style={{
         animation:
