@@ -1,7 +1,7 @@
 import { React, Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
-import { decreaseCartItems, removeFromCart, addToCart ,fetchCartItems} from "../../features/cartSlice";
+import { decreaseCartItems, removeFromCart, addToCart, fetchCartItems } from "../../features/cartSlice";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import "./style/Cart.css"
@@ -12,23 +12,25 @@ const CartTable = () => {
   const [itemToDecrease, setItemToDecrease] = useState(null);
 
   const dispatch = useDispatch();
-  const [ cartItem, setCartItem] = useState([]);
+  const [cartItem, setCartItem] = useState([]);
   // const userLogin = useSelector((state) => state.userLogin);
   // const { userInfo, loading, error } = userLogin
+  ;
   const userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
   const cartItems = useSelector(state => state.cart.items);
 
 
-
   useEffect(
-    ()=>{dispatch(
-  fetchCartItems(userInfo.user_id))
-  .then((action) => {
- 
-    setCartItem(action.payload);   
-    console.log("cartItem[0]",cartItem[0])
-  });}, [dispatch]);
+    () => {
+      dispatch(
+        fetchCartItems(userInfo.user_id))
+        .then((action) => {
+
+          setCartItem(action.payload);
+          console.log("cartItem[0]", cartItem[0])
+        });
+    }, [dispatch]);
 
   const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);
@@ -44,35 +46,36 @@ const CartTable = () => {
   };
 
   const handelDecreaseCartItems = (product) => {
-    cartItem.filter((item ) => {
+
+    cartItem.filter((item) => {
       console.log(item)
-      if(item.product === product.product){
-        
-      
+      if (item.product === product.product) {
+
+
         if (item.quantity === 1) {
           setShowDecreaseModal(true);
           setItemToDecrease(item);
-         
-        } 
+
+        }
         else {
-      dispatch(decreaseCartItems([userInfo.user_id, product])).then(() => {
-          dispatch(fetchCartItems(userInfo.user_id)).then((action) => {
-            setCartItem(action.payload);
+          dispatch(decreaseCartItems([userInfo.user_id, product])).then(() => {
+            dispatch(fetchCartItems(userInfo.user_id)).then((action) => {
+              setCartItem(action.payload);
+            });
           });
-        });  
+        }
       }
-      } 
     })
 
   };
 
 
- 
+
 
 
   return (
     <Fragment>
-     <table className="table   w-100 m-auto  text-center text-black  mb-4 mt-4 table-spacing " >
+      <table className="table   w-100 m-auto  text-center text-black  mb-4 mt-4 table-spacing " >
         <thead>
           <tr >
             <th className="col-4 fw-bold ">Product</th>
@@ -82,10 +85,10 @@ const CartTable = () => {
           </tr>
         </thead>
         <tbody className="table-light " data-mdb-toggle="animation" data-mdb-animation-reset="true" data-mdb-animation="slide-out-pluse ">
-    
-      {[...cartItem]?.map((item) =>( 
-       <tr className="cart-item " key={item.product.id}>
-       <td className="cart-product col-4 pt-2">
+
+          {[...cartItem]?.map((item) => (
+            <tr className="cart-item " key={item.product.id}>
+              <td className="cart-product col-4 pt-2">
                 <div className="row">
 
                   <div className="col-4 col-md-3">
@@ -145,7 +148,7 @@ const CartTable = () => {
                   <button
                     type="button"
                     className="btn text-success fw-bold"
-                    onClick={() => { handelIncreaseCartItems(item.product);  }}>
+                    onClick={() => { handelIncreaseCartItems(item.product); }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -163,13 +166,13 @@ const CartTable = () => {
                 </div>
               </td>
               <td className="cart-product-total-price fw-bold col-2 pt-5">
-                {FormatCurrency(item.product.price * item.quantity )}
-              </td>    
-         </tr>))}
-         </tbody>
-         </table>
+                {FormatCurrency(item.product.price * item.quantity)}
+              </td>
+            </tr>))}
+        </tbody>
+      </table>
 
-         <div className="container w-100 m-auto">
+      <div className="container w-100 m-auto">
         <CartOperations />
       </div>
 
@@ -193,10 +196,10 @@ const CartTable = () => {
           <Button
             variant="danger"
             onClick={() => {
-              dispatch(removeFromCart(itemToDecrease)).then( 
-                dispatch(fetchCartItems(userInfo.user_id)).then((action) => { 
+              dispatch(removeFromCart(itemToDecrease)).then(
+                dispatch(fetchCartItems(userInfo.user_id)).then((action) => {
                   setCartItem(action.payload);
-              }));
+                }));
               setShowDecreaseModal(false);
             }}
           >
@@ -204,10 +207,10 @@ const CartTable = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-     </Fragment>
+    </Fragment>
   );
 }
- 
+
 
 
 

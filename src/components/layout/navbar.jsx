@@ -5,10 +5,6 @@ import Search from './other/search';
 import { NavDropdown } from 'react-bootstrap';
 import { fetchCartItems } from "../../features/cartSlice";
 
-import {
-    USER_LOGIN_SUCCESS,
-}
-    from '../client/userConst'
 import './other/style/navbar.css'
 import { logout } from '../client/userAction'
 
@@ -18,27 +14,34 @@ const Navbar = () => {
 
     const navigate = useNavigate();
     const cartItems = useSelector(state => state.cartItems);
+
     const [cartItem, setCartItem] = useState([]);
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
 
     const cartTotalQuantity = useSelector((state) => state.cart.cartTotalQuantity);
 
     useEffect(
+
         () => {
-            dispatch(
-                fetchCartItems(userInfo.user_id))
-                .then((action) => {
-                    setCartItem(action.payload);
-                });
+            if (userInfo) {
+                dispatch(
+                    fetchCartItems(userInfo.user_id))
+                    .then((action) => {
+                        setCartItem(action.payload);
+                    });
+            }
         }, [dispatch]);
 
 
 
     const handleLogout = () => {
+        setDropdownOpen(false);
         dispatch(logout());
+        navigate('/');
     }
     const handelProfile = () => {
         setDropdownOpen(false);
@@ -97,24 +100,18 @@ const Navbar = () => {
                             <Search />
 
                             <div className="buttons me-5">
-
                                 {userInfo ? (
-
                                     <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
-
                                         <button className="btn btn-outline-dark " onClick={() => handelProfile()}>
-
-                                            <i className="fas fa-sign-in-alt me-1"></i>Profile
-
+                                            <i className="fas fa-sign-in-alt me-1"></i>
+                                            Profile
                                         </button>
-
                                         <button className="btn btn-outline-dark " onClick={handleLogout}>
-
-                                            <i className="fas fa-sign-in-alt me-1"></i> &nbsp; Logout
-
+                                            <i className="fas fa-sign-in-alt me-1"></i>
+                                            &nbsp; Logout
                                         </button>
-
                                     </NavDropdown>
+
 
                                 ) : (
                                     <NavLink className="btn btn-outline-light" to="/login">
@@ -122,23 +119,16 @@ const Navbar = () => {
                                         &nbsp; Login
                                     </NavLink>
                                 )}
-
                                 {!userInfo && (
-
                                     <NavLink className="btn btn-outline-light ms-2" to="/register">
-
-                                        <i className="fa fa-user-plus"></i> &nbsp; Register
-
+                                        <i className="fa fa-user-plus"></i>
+                                        &nbsp; Register
                                     </NavLink>
-
                                 )}
-
                                 <NavLink className="btn btn-outline-light ms-2" to="/cart">
-
-                                    <i className="fa fa-shopping-cart"></i> &nbsp; Cart &nbsp;<span>{cartTotalQuantity}</span>
-
+                                    <i className="fa fa-shopping-cart"></i>
+                                    &nbsp; Cart &nbsp; <span>{cartTotalQuantity}</span>
                                 </NavLink>
-
                             </div>
 
                         </div>
