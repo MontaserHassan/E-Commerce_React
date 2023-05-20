@@ -73,7 +73,16 @@ export const userRegisterRequest = (email, username, password, password_confirma
             }
         }
 
-        const { data } = await axios.post(`${API}/user/register/`, { 'email': email, 'username': username, 'password': password, 'password_confirmation': password_confirmation }, config)
+        const { data } = await axios.post(`${API}user/register/`, { 'email': email, 'username': username, 'password': password, 'password_confirmation': password_confirmation }, config)
+        console.log(data);
+        // if (data) {
+        //     const response = await axios.post("https://quick-buy-211i.onrender.com/cart/addToCart", {
+        //         user: ,
+        //     });
+        //     response = response.data;
+        //     console.log("this user id", data[0])
+        // }
+
 
         dispatch({
             type: USER_REGISTER_SUCCESS,

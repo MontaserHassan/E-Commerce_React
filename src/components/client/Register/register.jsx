@@ -3,7 +3,7 @@ import { userRegisterRequest } from '../userAction';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import '../login.css';
-import auth from '../../images/auth.mp4'
+import auth from '../../images/28124.jpg'
 import './register.css'
 import { setAppElement } from 'react-modal';
 import PasswordChecklist from "react-password-checklist"
@@ -51,13 +51,13 @@ const Register = () => {
 
     return (
 
-        <section className="vh-200" style={{ backgroundColor: 'rgb(252, 247, 224)' }}>
+        <section className="vh-200" style={{ backgroundColor: '#fff' }}>
 
             <div className="container h-100">
 
                 <div className="row d-flex justify-content-center align-items-center h-100 " >
                     <div className="col-lg-12 col-xl-11"  >
-                        <div style={{ backgroundColor: 'rgb(252, 247, 224)' }}>
+                        <div style={{ backgroundColor: '#fff' }}>
                             <div className="card-body p-md-5" >
                                 <div className="row justify-content-center">
                                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
@@ -161,10 +161,10 @@ const Register = () => {
 
                                         <div className='video-container' >
 
-                                            <video autoPlay loop muted className="video-fluid">
-                                                <source src={auth} type="video/mp4" />
-                                                Your browser does not support the video tag.
-                                            </video></div>
+                                            <div className="img-fluid">
+                                                <img src={auth} type="video/mp4" />
+
+                                            </div></div>
                                     </div>
                                 </div>
                             </div>

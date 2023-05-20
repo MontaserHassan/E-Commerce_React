@@ -80,10 +80,10 @@ const Navbar = () => {
                                 </li>
 
                                 <li className="nav-item">
-                                    <NavLink className="nav-link text-light ms-2" to="/WishList">My Wish List</NavLink>
+                                    <NavLink className="nav-link text-light ms-2" to="/WishList"> Wish List</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link text-light ms-2" to="/order">My Orders</NavLink>
+                                    <NavLink className="nav-link text-light ms-2" to="/order"> Orders</NavLink>
                                 </li>
 
                                 <li className="nav-item">

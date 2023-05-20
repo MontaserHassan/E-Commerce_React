@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./WishList.css";
 import { removeFromWishList, clearWishList, fetchWishListItems } from '../../features/wishlistSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,26 +11,32 @@ const WishList = () => {
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"))
   const wishListItems = useSelector(state => state.wishlist)
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const [wishListItem, setWishListItem] = useState([]);
 
   useEffect(() => {
     console.log(userInfo)
-    if (userInfo.user_id) {
+    if (userInfo) {
       dispatch(fetchWishListItems(userInfo.user_id))
         .then((action) => {
           console.log(action.payload)
           setWishListItem(action.payload); // Log the data returned by the async thunk
         });
     }
-  }, [dispatch, userInfo.user_id, wishListItems]
+    else {
+      navigate('/login')
+    }
+  }, [dispatch, wishListItems]
   );
 
   const handleAddToCart = (product) => {
     console.log(product)
     console.log(userInfo.access)
-    dispatch(addToCart([userInfo.user_id, product]));
-    dispatch(removeFromWishList([product.id, userInfo.access]))
+    if (userInfo) {
+      dispatch(addToCart([userInfo.user_id, product]));
+      dispatch(removeFromWishList([product.id, userInfo.access]))
+    }
   }
 
 
@@ -40,7 +46,10 @@ const WishList = () => {
   }
 
   const handleClearing = (userId, access) => {
-    dispatch(clearWishList([userId, access]));
+    if (userInfo) {
+      dispatch(clearWishList([userId, access]));
+    }
+
   }
 
   if (!userInfo) {

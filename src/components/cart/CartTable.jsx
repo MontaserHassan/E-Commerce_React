@@ -20,13 +20,15 @@ const CartTable = () => {
 
   useEffect(
     () => {
-      dispatch(
-        fetchCartItems(userInfo.user_id))
-        .then((action) => {
+      if (userInfo) {
+        dispatch(
+          fetchCartItems(userInfo.user_id))
+          .then((action) => {
 
-          setCartItem(action.payload);
-          console.log("cartItem[0]", cartItem[0])
-        });
+            setCartItem(action.payload);
+            console.log("cartItem[0]", cartItem[0])
+          });
+      }
     }, [dispatch]);
 
   const handelRemoveFromCart = (product) => {

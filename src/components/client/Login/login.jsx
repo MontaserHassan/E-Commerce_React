@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLoginRequest } from '../userAction';
 import '../login.css';
-import webm from '../../images/1.webm'
+import webm from '../../images/Premium Vector _ Online shopping illustration concept.png'
 
 const Login = () => {
 
@@ -27,16 +27,16 @@ const Login = () => {
     }, [userInfo, navigate]);
 
     return (
-        <section className="vh-200" style={{ backgroundColor: 'rgb(252, 247, 224)' }}>
+        <section className="vh-200" style={{ backgroundColor: '#fff' }}>
 
             <div className="container h-100">
 
                 <div className="row d-flex justify-content-center align-items-center h-100 " >
                     <div className="col-lg-12 col-xl-11"  >
-                        <div style={{ backgroundColor: 'rgb(252, 247, 224)' }}>
+                        <div style={{ backgroundColor: '#fff' }}>
                             <div className="card-body p-md-5" >
                                 <div className="row justify-content-center">
-                                    <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                    <div className="form-login col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1 ">
 
                                         <h1 className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">LOGIN</h1>
 
@@ -82,10 +82,10 @@ const Login = () => {
 
                                         <div className='video-container' >
 
-                                            <video autoPlay loop muted className="video-fluid">
-                                                <source src={webm} type="video/mp4" />
-                                                Your browser does not support the video tag.
-                                            </video></div>
+                                            <div className="img-fluid">
+                                                <img src={webm} type="video/mp4" />
+
+                                            </div></div>
                                     </div>
                                 </div>
                             </div>

@@ -24,15 +24,15 @@ import ProtectedRoute from './ProtectedRoute';
 function App() {
   const location = useLocation();
 
-  const isNavbarVisible = !["/register", 'login'].includes(location.pathname);
+  const isNavbarVisible = !["/register", '/login'].includes(location.pathname);
 
   return (
 
     <Fragment>
-      
+
       <ToastContainer />
 
-      <Navbar />
+      {isNavbarVisible && <Navbar />}
 
 
       <Routes>
@@ -46,7 +46,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<ProtectedRoute path="/Payment" element={<Payment />} />} />
         <Route path="/order" element={<ProtectedRoute path="/order" element={<Order />} />} />
-        <Route path="/WishList" element={<WishList />} />
+        <Route path="/WishList" element={<ProtectedRoute path="/WishList" element={<WishList />} />} />
         <Route path="/*" element={<NotFound />} />
 
       </Routes>
@@ -56,7 +56,7 @@ function App() {
       {isNavbarVisible && <Footer />}
 
     </Fragment>
-    
+
   );
 };
 
