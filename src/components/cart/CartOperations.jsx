@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { React, Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart  } from "../../features/cartSlice";
+import { addToCart } from "../../features/cartSlice";
 import { FormatCurrency } from '../../features/FormatCurrency';
 
 const CartOperations = () => {

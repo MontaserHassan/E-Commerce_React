@@ -5,19 +5,23 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
   let response = await axios.get(
-    `http://127.0.0.1:8000/cart/getCartItemsByUserId/${data[0]}`
+    `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
   );
+  console.log("this is cart user's id",response.data.user)
   if (response.data === "notfound") {
-    response = await axios.post("http://127.0.0.1:8000/cart/addToCart", {
+    response = await axios.post("https://quick-buy-211i.onrender.com/cart/addToCart", {
       user: data[0],
     });
     response = response.data;
+    console.log("this user id",data[0])
   }
   let res = await axios.get(
-    `http://127.0.0.1:8000/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
+    `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
   );
+  console.log("this is cart",res.data)
+
   if (res.data === "notfound") {
-    await axios.post("http://127.0.0.1:8000/cart/addToCartItems", {
+    await axios.post("https://quick-buy-211i.onrender.com/cart/addToCartItems", {
       cart: response.data.id,
       product: data[1].id,
       quantity: 1,
@@ -29,7 +33,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
     const quantity = res.data.quantity + 1;
     if (data[1].stoke >= quantity) {
       await axios.put(
-        `http://127.0.0.1:8000/cart/getCartItemsById/${res.data.id}`,
+        `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`,
         { quantity: quantity }
       );
       toast.info(`increasing  ${data[1].name} Quantity `, {
@@ -48,15 +52,17 @@ export const decreaseCartItems = createAsyncThunk(
   "cart/decreaseCartItems",
   async (data) => {
     let response = await axios.get(
-      `http://127.0.0.1:8000/cart/getCartItemsByUserId/${data[0]}`
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
     );
     let res = await axios.get(
-      `http://127.0.0.1:8000/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
     );
-    const quantity = res.data.quantity - 1;
-    if (1 < quantity) {
+    let quantity = res.data.quantity 
+    if (1< quantity) {
+        quantity --
+
       await axios.put(
-        `http://127.0.0.1:8000/cart/getCartItemsById/${res.data.id}`,
+        `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`,
         { quantity: quantity }
       );
       toast.info(`decreasing  ${data[1].name} Quantity `, {
@@ -64,7 +70,7 @@ export const decreaseCartItems = createAsyncThunk(
       });
     } else if (1 === quantity) {
       await axios.delete(
-        `http://127.0.0.1:8000/cart/getCartItemsById/${res.data.id}`
+        `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`
       );
       toast.error(`deleted  ${data[1].name} from cart `, {
         position: "bottom-left",
@@ -77,13 +83,13 @@ export const deleteCartItems = createAsyncThunk(
   "cart/deleteCartItems",
   async (data) => {
     let response = await axios.get(
-      `http://127.0.0.1:8000/cart/getCartItemsByUserId/${data[0]}`
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
     );
     let res = await axios.get(
-      `http://127.0.0.1:8000/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
     );
     await axios.delete(
-      `http://127.0.0.1:8000/cart/getCartItemsById/${res.data.id}`
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`
     );
     toast.error(`deleted  ${data[1].name} from cart `, {
       position: "bottom-left",
@@ -91,28 +97,37 @@ export const deleteCartItems = createAsyncThunk(
   }
 );
 
+export const clearCartItems = createAsyncThunk(
+  "cart/clearCartItems",
+  async (data) => {
+
+  }
+);
+
+
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async (cartdata) => {
     
     let response = await axios.get(
-      `http://127.0.0.1:8000/cart/getCartItemsByUserId/${cartdata}` )
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${cartdata}` )
        
-
+ 
       if (response.data ==="notfound"){
         console.log("not")
          return [];
      }else{
 
       let cartItems = await axios.get(
-        `http://127.0.0.1:8000/cart/getCartItemsByCartId/${response.data.id}`    
+        `https://quick-buy-211i.onrender.com/cart/getCartItemsByCartId/${response.data.id}`    
       )
 
-      console.log(cartItems.data)
+      console.log("cart items",cartItems.data)
+      console.log(response.data)
 
      const  cartItemsProducts = cartItems.data.map((item) => {
       console.log(item.product)
-      return axios.get(`http://127.0.0.1:8000/product/${item.product}`)
+      return axios.get(`https://quick-buy-211i.onrender.com/product/${item.product}`)
     });
 
 
@@ -123,10 +138,13 @@ export const fetchCartItems = createAsyncThunk(
     return item
 
     })
-    console.log(finalData)
-    return finalData;}}
- ) 
-;
+    console.log("finalData",finalData)
+    finalData.sort((a, b) => {
+      return a.id - b.id; 
+    });
+    return finalData;
+  }}
+ );
 
 const initialState = {
   cartItems: [],
@@ -138,69 +156,11 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // removeFromCart: (state, action) => {
-    //   const nextCartItem = state.cartItems.filter(
-    //     (cartItem) => cartItem.id !== action.payload.id
-    //   );
-    //   state.cartItems = nextCartItem;
-    //   axios
-    //     .delete(
-    //       `http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`
-    //     )
-    //     .then((response) => {
-    //       toast.error(` ${action.payload.name} removed from your cart`, {
-    //         position: "bottom-left",
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //       toast.error(
-    //         "An error occurred while removing the item from your cart.",
-    //         {
-    //           position: "bottom-left",
-    //         }
-    //       );
-    //     });
-    // },
-
-    // decreaseCartItems: (state, action) => {
-    //   const itemIndex = state.cartItems.findIndex((cartItem) => cartItem.id === action.payload.id);
-    //   if (state.cartItems[itemIndex].quantity > 1) {
-    //     const updatedCartItems = [...state.cartItems];
-    //     updatedCartItems[itemIndex] = { ...updatedCartItems[itemIndex], quantity: updatedCartItems[itemIndex].quantity - 1 };
-    //     state.cartItems = updatedCartItems;
-    //     toast.info(`Decreased ${updatedCartItems[itemIndex].product.name} quantity`, {
-    //       position: 'bottom-left',
-    //     });
-    //     axios.put(`http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`, { quantity: updatedCartItems[itemIndex].quantity })
-    //       .catch(error => {
-    //         console.log(error);
-    //         toast.error('An error occurred while updating the quantity of the item in your cart.', {
-    //           position: 'bottom-left',
-    //         });
-    //       });
-    //   } else if (state.cartItems[itemIndex].quantity === 1) {
-    //     const nextCartItem = state.cartItems.filter((cartItem) => cartItem.id !== action.payload.id);
-    //     state.cartItems = nextCartItem;
-    //     axios.delete(`http://127.0.0.1:8000/cart/getCartItemsById/${action.payload.id}/`)
-    //       .then(response => {
-    //         toast.error(` ${action.payload.name} removed from your cart`, {
-    //           position: 'bottom-left',
-    //         });
-    //       })
-    //       .catch(error => {
-    //         console.log(error);
-    //         toast.error('An error occurred while removing the item from your cart.', {
-    //           position: 'bottom-left',
-    //         });
-    //       });
-    //   }
-    // },
-
+    
     clearCart: (state, action) => {
       state.cartItems = [];
       axios
-        .delete("http://127.0.0.1:8000/cart/CartItems")
+        .delete("https://quick-buy-211i.onrender.com/cart/CartItems")
         .then((response) => {
           toast.success("Your cart has been cleared", {
             position: "bottom-left",

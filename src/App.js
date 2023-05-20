@@ -1,5 +1,6 @@
 import './App.css';
 import "react-toastify/dist/ReactToastify.css";
+import '@fortawesome/fontawesome-free/css/all.css';
 import { React, Fragment } from 'react';
 import { useLocation } from "react-router-dom";
 import Navbar from './components/layout/navbar';

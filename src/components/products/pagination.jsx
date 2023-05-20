@@ -1,5 +1,7 @@
 import{ React,Fragment }from 'react';
 import "./style/pagination.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const Pagination = ({ pages, currentPage, setCurrentPage }) => {
 
@@ -17,7 +19,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
                 disabled={currentPage===1}
                 onClick={() => setCurrentPage(currentPage - 1)}
                 className="btn btn-secondary me-1">
-                    <i className="fas fa-angle-left"></i>
+                    <FontAwesomeIcon icon={faAngleLeft} />
                 </button>
 
                 {allPages.map(page =>
@@ -35,7 +37,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }) => {
                 disabled={currentPage === pages}
                 onClick={() => setCurrentPage(currentPage + 1)}
                 className="btn btn-secondary ms-1">
-                    <i className="fas fa-angle-right"></i>
+                    <FontAwesomeIcon icon={faAngleRight} />
                 </button>
 
             </div>
