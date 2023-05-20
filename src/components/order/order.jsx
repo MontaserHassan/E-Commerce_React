@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API } from "../../backend";
 
 function Order() {
 
@@ -6,7 +7,7 @@ function Order() {
 
     useEffect(() => {
         async function fetchOrders() {
-            const response = await fetch('https://quick-buy-211i.onrender.com/order');
+            const response = await fetch(`${API}order`);
             const data = await response.json();
             setOrders(data);
         }

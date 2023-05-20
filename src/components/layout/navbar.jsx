@@ -4,13 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
 import { NavDropdown } from 'react-bootstrap';
 import { fetchCartItems } from "../../features/cartSlice";
-
-import {
-    USER_LOGIN_SUCCESS,
-}
-    from '../client/userConst'
-import './other/style/navbar.css'
-import { logout } from '../client/userAction'
+import './other/style/navbar.css';
+import { logout } from '../client/userAction';
 
 const Navbar = () => {
 
@@ -28,11 +23,13 @@ const Navbar = () => {
 
     useEffect(
         () => {
-            dispatch(
-                fetchCartItems(userInfo.user_id))
-                .then((action) => {
-                    setCartItem(action.payload);
+            if(userInfo){
+                dispatch(
+                    fetchCartItems(userInfo.user_id))
+                    .then((action) => {
+                        setCartItem(action.payload);
                 });
+            }
         }, [dispatch]);
 
 
