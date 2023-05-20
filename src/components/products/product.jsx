@@ -25,14 +25,17 @@ const Product = () => {
 
     const cartItems = useSelector(state => state.cart.items);
 
-    const handleAddToCart = (product) => {
+
+    const handleAddToCart = () => {
         const alreadyInCart = cartItems?.find((item) => item.id === product.id);
         if (!alreadyInCart) {
-            console.log(product)
-            dispatch(addToCart([userInfo.user_id,product]));
-            setIsInCart(true);
+          dispatch(addToCart([userInfo.user_id, product])).then(() => {
+            dispatch(fetchCartItems());
+          });
+          setIsInCart(true);
         }
-    };
+      };
+    
 
     useEffect(() => {
         const getProduct = async () => {

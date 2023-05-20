@@ -33,6 +33,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
     toast.success(`Added   ${data[1].name} to cart`, {
       position: "bottom-left",
     });
+    
   } else {
     const quantity = res.data.quantity + 1;
     if (data[1].stoke >= quantity) {
@@ -70,7 +71,7 @@ export const decreaseCartItems = createAsyncThunk(
       );
 
       console.log(items)
-      toast.info(`decreasing  ${data[1].title} Quantity `, {
+      toast.info(`decreasing  ${data[1].name} Quantity `, {
         position: "bottom-left",
       });
     } else if (1 === quantity) {
