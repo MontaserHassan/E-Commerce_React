@@ -2,24 +2,31 @@ import React, { Fragment } from 'react';
 import './style/Carousel.css'
 import main from '../../images/main.png'
 import { Link } from 'react-router-dom';
+
 const Carousel = () => {
+
     return (
+
         <Fragment>
+
             <div className="main">
+            
                 <img src={main} className="w-50" title="Clothings" alt="Clothings" />
+            
                 <div className="content">
+            
                     <h1 className='font-link'>All your Needs in One Place</h1>
                     <div className="centered">
+            
                         <p>We ship over a million products around the world Discover Our Products</p>
                         <p >
-                            <Link to='/product'><button className='btn btn-dark'>Discover  </button>
-                            </Link>
-
+                            <Link to='/product'><button className='btn btn-dark'>Discover  </button></Link>
                         </p>
+
                     </div>
 
-
                 </div>
+
             </div>
 
             <div id="carouselExampleIndicators" className="rounded-3 carousel carousel-home slide m-auto mt-4 " data-bs-ride="carousel">
@@ -70,6 +77,9 @@ const Carousel = () => {
 
         </Fragment >
 
+
     );
-}
+
+};
+
 export default Carousel;

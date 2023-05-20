@@ -1,1 +1,1 @@
-export const API = process.env.REACT_APP_BACKEND || 'https://quick-buy-211i.onrender.com/'
+export const API = 'https://quick-buy-211i.onrender.com/'

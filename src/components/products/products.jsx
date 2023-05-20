@@ -5,10 +5,10 @@ import Pagination from './pagination';
 import classNames from 'classnames';
 import './style/products.css';
 import { FormatCurrency } from '../../features/FormatCurrency';
+import { API } from "../../backend.js";
+
 
 const Products = () => {
-    // const {items,status}=useSelector(state => state.products)
-    // const {data,error,isLoading}=useGetAllProductsQuery();
       
     const [ products, setProducts ] = useState([]);
     const [ filter, setFilter ] = useState(products);
@@ -21,7 +21,7 @@ const Products = () => {
     useEffect(() => {
         const getAllProducts = async () => {
             setIsLoading(true);
-            const response = await fetch('https://quick-buy-211i.onrender.com/product/');
+            const response = await fetch(`${API}product/`);
             if(componentMounted){
                 setProducts(await response.clone().json());
                 setFilter(await response.json());

@@ -5,7 +5,8 @@ import{useDispatch, useSelector} from "react-redux"
 import { addToCart, fetchCartItems} from '../../features/cartSlice';
 import { addToWishList } from '../../features/wishlistSlice';
 import { FormatCurrency } from '../../features/FormatCurrency';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { API } from "../../backend";
 
 
 const Product = () => {
@@ -14,7 +15,6 @@ const Product = () => {
     const [product, setProduct] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"))
-    // const { userInfo,  } = userLogin
     
     const dispatch = useDispatch();
     const [ cartItem, setCartItem] = useState([]);
@@ -44,7 +44,7 @@ const Product = () => {
     useEffect(() => {
         const getProduct = async () => {
             setIsLoading(true);
-            const response = await fetch(`https://quick-buy-211i.onrender.com/product/${id}`);
+            const response = await fetch(`${API}product/${id}`);
             setProduct(await response.clone().json());
             setIsLoading(false);
         }

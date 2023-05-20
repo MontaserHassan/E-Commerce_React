@@ -11,6 +11,7 @@ import {
     USER_DETAILS_FAIL,
 } from './userConst.jsx'
 import axios from 'axios'
+import { API } from "../../backend.js";
 
 export const userLoginRequest = (email, password) => async (dispatch) => {
     try {
@@ -23,7 +24,9 @@ export const userLoginRequest = (email, password) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('http://localhost:8000/user/login/', { 'email': email, 'password': password }, config)
+        const { data } = await axios.post(`${API}user/login/`, { 'email': email, 'password': password }, config)
+        // const { data } = await axios.post(`https://quick-buy-211i.onrender.com/user/login/`, { 'email': email, 'password': password }, config)
+
 
         dispatch({
             type: USER_LOGIN_SUCCESS,
@@ -72,9 +75,9 @@ export const userRegisterRequest = (email, username, password, password_confirma
             }
         }
 
-        const { data } = await axios.post('http://localhost:8000/user/register/', { 'email': email, 'username': username, 'password': password, 'password_confirmation': password_confirmation }, config)
-        console.log(data)
-       
+        const { data } = await axios.post(`${API}user/register/`, { 'email': email, 'username': username, 'password': password, 'password_confirmation': password_confirmation }, config)
+        // const { data } = await axios.post(`https://quick-buy-211i.onrender.com/user/register/`, { 'email': email, 'username': username, 'password': password, 'password_confirmation': password_confirmation }, config)
+
         dispatch({
             type: USER_REGISTER_SUCCESS,
             payload: data,
@@ -118,7 +121,7 @@ export const UpdateUserInfo = (userId, userData, token) => async (dispatch, getS
         };
 
         const response = await axios.put(
-            `http://localhost:8000/user/update/${userId}`,
+            `${API}user/update/${userId}`,
             userData,
             config
         );
