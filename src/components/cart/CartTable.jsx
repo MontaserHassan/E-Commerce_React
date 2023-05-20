@@ -15,36 +15,50 @@ const CartTable = () => {
   const [ cartItem, setCartItem] = useState([]);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo, loading, error } = userLogin
-  const [fetchStatus, setFetchStatus] = useState("idle");
 
   const cartItems = useSelector(state => state.cart.items);
 
-  const handelIncreaseCartItems = (product) => {
-          dispatch(addToCart([userInfo.user_id,product]));     
-  }
+
+
   useEffect(
     ()=>{dispatch(
   fetchCartItems(userInfo.user_id))
-  // .then((action) => {
-    
-    // setCartItem(action.payload); 
-    console.log(cartItem[0])
-  // }
-  // )
-  ;}, [dispatch,userInfo.user_id]);
+  .then((action) => {
+ 
+    setCartItem(action.payload);   
+    console.log("cartItem[0]",cartItem[0])
+  });}, [dispatch]);
 
   const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);
     setItemToDecrease(product);
   }
 
+  const handelIncreaseCartItems = (product) => {
+    dispatch(addToCart([userInfo.user_id, product])).then(() => {
+      dispatch(fetchCartItems(userInfo.user_id)).then((action) => {
+        setCartItem(action.payload);
+      });
+    });
+  };
+
   const handelDecreaseCartItems = (product) => {
-    if (product.quantity === 1) {
-      setShowDecreaseModal(true);
-      setItemToDecrease(cartItem);
-    } else {
-          dispatch(addToCart([userInfo.user_id,product]));
-    }
+    cartItem.filter((item ) => {
+      if(item.product === product){
+        if (item.quantity === 1) {
+          setShowDecreaseModal(true);
+          setItemToDecrease(product);
+        } 
+        else {
+      dispatch(decreaseCartItems([userInfo.user_id, product])).then(() => {
+          dispatch(fetchCartItems(userInfo.user_id)).then((action) => {
+            setCartItem(action.payload);
+          });
+        });  
+      }
+      } 
+    })
+
   };
 
 
@@ -53,7 +67,6 @@ const CartTable = () => {
 
   return (
     <Fragment>
-      <div>
      <table className="table   w-100 m-auto  text-center text-black  mb-4 mt-4 table-spacing " >
         <thead>
           <tr >
@@ -65,7 +78,7 @@ const CartTable = () => {
         </thead>
         <tbody className="table-light " data-mdb-toggle="animation" data-mdb-animation-reset="true" data-mdb-animation="slide-out-pluse ">
     
-      {cartItem?.map((item) =>( 
+      {[...cartItem]?.map((item) =>( 
        <tr className="cart-item " key={item.product.id}>
        <td className="cart-product col-4 pt-2">
                 <div className="row">
@@ -127,15 +140,7 @@ const CartTable = () => {
                   <button
                     type="button"
                     className="btn text-success fw-bold"
-                    // onClick={() =>{handelIncreaseCartItems(item.product)}}
-                    onClick={() =>{handelIncreaseCartItems([item.product,userInfo.user_id])}}
-
-                      // dispatch(
-                      //   fetchCartItems(userInfo.user_id))
-                      //   .then((action) => {
-                      //   setCartItem(action.payload); 
-                      //   })} }
-                  >
+                    onClick={() => { handelIncreaseCartItems(item.product);  }}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -158,29 +163,8 @@ const CartTable = () => {
          </tr>))}
          </tbody>
          </table>
-         </div>
-         </Fragment>
-  );
-}
-      
-       
-       
-        
-    
-      
-      {/*
-        
-           
 
-             
-
-             
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-
-      {/* <div className="container w-100 m-auto">
+         <div className="container w-100 m-auto">
         <CartOperations />
       </div>
 
@@ -211,7 +195,11 @@ const CartTable = () => {
             Remove
           </Button>
         </Modal.Footer>
-      </Modal> */}
+      </Modal>
+     </Fragment>
+  );
+}
+
 
 
 

@@ -7,12 +7,13 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
   let response = await axios.get(
     `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
   );
-  console.log("this is cart items",response.data)
+  console.log("this is cart user's id",response.data.user)
   if (response.data === "notfound") {
     response = await axios.post("https://quick-buy-211i.onrender.com/cart/addToCart", {
       user: data[0],
     });
     response = response.data;
+    console.log("this user id",data[0])
   }
   let res = await axios.get(
     `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
@@ -56,8 +57,10 @@ export const decreaseCartItems = createAsyncThunk(
     let res = await axios.get(
       `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
     );
-    const quantity = res.data.quantity - 1;
-    if (1 < quantity) {
+    let quantity = res.data.quantity 
+    if (1< quantity) {
+        quantity --
+
       await axios.put(
         `https://quick-buy-211i.onrender.com/cart/getCartItemsById/${res.data.id}`,
         { quantity: quantity }
@@ -109,7 +112,7 @@ export const fetchCartItems = createAsyncThunk(
     let response = await axios.get(
       `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${cartdata}` )
        
-
+ 
       if (response.data ==="notfound"){
         console.log("not")
          return [];
@@ -119,7 +122,8 @@ export const fetchCartItems = createAsyncThunk(
         `https://quick-buy-211i.onrender.com/cart/getCartItemsByCartId/${response.data.id}`    
       )
 
-      console.log(cartItems.data)
+      console.log("cart items",cartItems.data)
+      console.log(response.data)
 
      const  cartItemsProducts = cartItems.data.map((item) => {
       console.log(item.product)
@@ -134,10 +138,13 @@ export const fetchCartItems = createAsyncThunk(
     return item
 
     })
-    console.log(finalData)
-    return finalData;}}
- ) 
-;
+    console.log("finalData",finalData)
+    finalData.sort((a, b) => {
+      return a.id - b.id; 
+    });
+    return finalData;
+  }}
+ );
 
 const initialState = {
   cartItems: [],
