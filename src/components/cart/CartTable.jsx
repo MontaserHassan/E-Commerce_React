@@ -75,8 +75,8 @@ const CartTable = () => {
      <table className="table   w-100 m-auto  text-center text-black  mb-4 mt-4 table-spacing " >
         <thead>
           <tr >
-            <th className="col-4 fw-bold ">Product</th>
-            <th className="col-2 fw-bold">Price</th>
+            <th className="col-3 fw-bold ">Product</th>
+            <th className="col-4 fw-bold">Price</th>
             <th className=" col-2 fw-bold">Quantity</th>
             <th className="col-3 fw-bold">Total</th>
           </tr>

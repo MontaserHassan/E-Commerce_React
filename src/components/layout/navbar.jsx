@@ -28,11 +28,13 @@ const Navbar = () => {
 
     useEffect(
         () => {
-            dispatch(
-                fetchCartItems(userInfo.user_id))
-                .then((action) => {
-                    setCartItem(action.payload);
-                });
+            if (userInfo) {
+                dispatch(
+                    fetchCartItems(userInfo.user_id))
+                    .then((action) => {
+                        setCartItem(action.payload);
+                    });
+            }
         }, [dispatch]);
 
 

@@ -26,7 +26,7 @@ const Register = () => {
 
     const submitHandler = e => {
         e.preventDefault();
-        if (password != Confirmpassword) {
+        if (password !== Confirmpassword) {
             setMassage('Passwords do not match');
         } else if (!email || !username || !password || !Confirmpassword) {
             setInputError('Please fill in all the fields');
@@ -35,6 +35,7 @@ const Register = () => {
             setMassage('')
             setError('')
             dispatch(userRegisterRequest(email, username, Confirmpassword, password));
+            
         }
 
     };

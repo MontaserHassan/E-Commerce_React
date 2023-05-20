@@ -73,12 +73,14 @@ export const userRegisterRequest = (email, username, password, password_confirma
         }
 
         const { data } = await axios.post('http://localhost:8000/user/register/', { 'email': email, 'username': username, 'password': password, 'password_confirmation': password_confirmation }, config)
-
+        console.log(data)
+       
         dispatch({
             type: USER_REGISTER_SUCCESS,
             payload: data,
         })
-
+    
+          
     } catch (error) {
         let errorMessage = 'An error occurred during Register.';
 

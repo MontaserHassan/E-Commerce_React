@@ -4,24 +4,38 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const addToCart = createAsyncThunk("cart/addToCart", async (data) => {
-
+  let res ='';
   console.log(data[0])
   let response = await axios.get(
     `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`
+    
   );
-  console.log("this is cart user's id",response.data)
-  if (response.data === "notfound") {
+  console.log( `https://quick-buy-211i.onrender.com/cart/getCartItemsByUserId/${data[0]}`)
+  console.log("this is cart user's id",response)
+  if (response.data === "notfound"||response.data.length===0) {
     response = await axios.post("https://quick-buy-211i.onrender.com/cart/addToCart", {
       user: data[0],
     });
     response = response.data;
-    console.log("this user id",data[0])
-  }
+    res = await axios.get(
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data.id}/`
+    );
+    console.log("this user id",response.data)
+    console.log("hello")
 
-  let res = await axios.get(
-    `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data[0].id}/`
-  );
+  }
+  else{
+     res = await axios.get(
+      `https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data[0].id}/`
+    );
+  
+  }
   console.log("this is cart",res)
+  console.log(response.data.id,data[1].id)
+
+  console.log(`https://quick-buy-211i.onrender.com/cart/getCartItemsByProductId/${data[1].id}/${response.data[0].id}`)
+
+  
 
   if (res.data === "notfound") {
     console.log(response.data[0].id, data[1].id)
