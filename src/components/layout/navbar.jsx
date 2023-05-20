@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
 import { NavDropdown } from 'react-bootstrap';
 import { fetchCartItems } from "../../features/cartSlice";
-// import { NavDropdown } from 'react-bootstrap';
 
 import {
     USER_LOGIN_SUCCESS,
@@ -42,12 +41,15 @@ const Navbar = () => {
         dispatch(logout());
     }
     const handelProfile = () => {
-        setDropdownOpen(false); // Close the dropdown
-        navigate('/profile'); // Navigate to the profile page
+        setDropdownOpen(false);
+        navigate('/profile');
     };
 
+
     return (
+
         <Fragment>
+
             <div className="">
 
                 <nav className="navbar bg-dark navbar-expand-lg  py-2 ">
@@ -58,7 +60,9 @@ const Navbar = () => {
                             <img src="/assets/images/nav-icon.png" alt="" width="40" height="40" className="d-inline-block align-text-top" /> QUICK BUY </NavLink>
 
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
                             <span className="navbar-toggler-icon"></span>
+
                         </button>
 
                         <div className="collapse navbar-collapse ms-5" id="navbarSupportedContent">
@@ -76,7 +80,6 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/WishList">My Wish List</NavLink>
                                 </li>
-
                                 <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" to="/order">My Orders</NavLink>
                                 </li>
@@ -89,25 +92,29 @@ const Navbar = () => {
                                     <NavLink className="nav-link text-light ms-2" to="/contact-us">Contact-Us</NavLink>
                                 </li>
 
-
-
                             </ul>
 
                             <Search />
 
                             <div className="buttons me-5">
-                                {userInfo ? (
-                                    <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
-                                        <button className="btn btn-outline-dark " onClick={() => handelProfile()}>
-                                            <i className="fas fa-sign-in-alt me-1"></i>
-                                            Profile
-                                        </button>
-                                        <button className="btn btn-outline-dark " onClick={handleLogout}>
-                                            <i className="fas fa-sign-in-alt me-1"></i>
-                                            &nbsp;  Logout
-                                        </button>
-                                    </NavDropdown>
 
+                                {userInfo ? (
+
+                                    <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
+
+                                        <button className="btn btn-outline-dark " onClick={() => handelProfile()}>
+
+                                            <i className="fas fa-sign-in-alt me-1"></i>Profile
+
+                                        </button>
+
+                                        <button className="btn btn-outline-dark " onClick={handleLogout}>
+
+                                            <i className="fas fa-sign-in-alt me-1"></i> &nbsp; Logout
+
+                                        </button>
+
+                                    </NavDropdown>
 
                                 ) : (
                                     <NavLink className="btn btn-outline-light" to="/login">
@@ -115,16 +122,23 @@ const Navbar = () => {
                                         &nbsp; Login
                                     </NavLink>
                                 )}
+
                                 {!userInfo && (
+
                                     <NavLink className="btn btn-outline-light ms-2" to="/register">
-                                        <i className="fa fa-user-plus"></i>
-                                        &nbsp; Register
+
+                                        <i className="fa fa-user-plus"></i> &nbsp; Register
+
                                     </NavLink>
+
                                 )}
+
                                 <NavLink className="btn btn-outline-light ms-2" to="/cart">
-                                    <i className="fa fa-shopping-cart"></i>
-                                    &nbsp; Cart &nbsp; <span>{cartTotalQuantity}</span>
+
+                                    <i className="fa fa-shopping-cart"></i> &nbsp; Cart &nbsp;<span>{cartTotalQuantity}</span>
+
                                 </NavLink>
+
                             </div>
 
                         </div>
