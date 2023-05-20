@@ -32,7 +32,7 @@ function App() {
 
       <ToastContainer />
 
-      {isNavbarVisible && <Navbar />}
+      <Navbar />
 
 
       <Routes>
@@ -46,7 +46,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/Payment" element={<ProtectedRoute path="/Payment" element={<Payment />} />} />
         <Route path="/order" element={<ProtectedRoute path="/order" element={<Order />} />} />
-        <Route path="/WishList" element={<ProtectedRoute path="/WishList" element={<WishList />} />} />
+        <Route path="/WishList" element={<WishList />} />
         <Route path="/*" element={<NotFound />} />
 
       </Routes>
