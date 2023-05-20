@@ -12,9 +12,8 @@ function UserProfile() {
     const [editMode, setEditMode] = useState(false);
 
     const dispatch = useDispatch();
-    const userLogin = useSelector((state) => state.userLogin);
-    console.log(userLogin);
-    const { userInfo, loading, error } = userLogin;
+
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
     console.log(userInfo);
     const handleCancel = () => {
@@ -39,13 +38,12 @@ function UserProfile() {
                 dispatch(UpdateUserInfo(userInfo.user_id, updatedData, userInfo.access));
                 const updatedUserInfo = { ...userInfo, ...updatedData };
 
-                // Clear the existing user information from local storage
+
                 localStorage.removeItem('userInfo');
 
-                // Set the updated user information in local storage
                 localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
 
-                // Update the Redux store with the new user information
+
                 dispatch({ type: 'USER_DETAILS_SUCCESS', payload: updatedUserInfo });
 
                 window.location.reload();
@@ -62,86 +60,83 @@ function UserProfile() {
             <Col >
 
                 <form onSubmit={submitHandler} className='form'>
-                    {loading ? (
-                        <p>Loading user information...</p>
-                    ) : error ? (
-                        <p>Error: {error}</p>
-                    ) : userInfo ? (
-                        <>
-                            {!editMode ? (
-                                <>
+                    {
+                        userInfo ? (
+                            <>
+                                {!editMode ? (
+                                    <>
 
-                                    <h1 className='text-left'> {userInfo.username}</h1>
-                                    <div className='accountName'>Account Holder</div>
-                                    <div className='mb-3'>
-                                        <label htmlFor='exampleInputEmail1' className='form-label'>
-                                            Email address
-                                        </label>
-                                        <input
-                                            type='email'
-                                            className='form-control'
-                                            id='exampleInputEmail1'
-                                            aria-describedby='emailHelp'
-                                            value={userInfo.email}
-                                            readOnly
-                                        />
-                                    </div>
-                                    <div className='mb-3'>
-                                        <label htmlFor='UserName' className='form-label'>
-                                            Username
-                                        </label>
-                                        <input
-                                            type='text'
-                                            className='form-control'
-                                            id='UserName'
-                                            aria-describedby='username'
-                                            value={userInfo.username}
-                                            readOnly
-                                        />
-                                    </div>
-                                    <div className="text-left mb-4">
-                                        <button type="button" className="btn btn-dark" onClick={() => setEditMode(true)}>Edit</button>
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <h1 className='text-center'>Hello {userInfo.username}</h1>
-                                    <div className='mb-3'>
-                                        <label htmlFor='exampleInputEmail1' className='form-label'>
-                                            Email address
-                                        </label>
-                                        <input
-                                            type='email'
-                                            className='form-control'
-                                            id='exampleInputEmail1'
-                                            aria-describedby='emailHelp'
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                    <div className='mb-3'>
-                                        <label htmlFor='UserName' className='form-label'>
-                                            Username
-                                        </label>
-                                        <input
-                                            type='text'
-                                            className='form-control'
-                                            id='UserName'
-                                            aria-describedby='username'
-                                            value={username}
-                                            onChange={(e) => setusername(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="text-center mb-4">
-                                        <button type="submit" className="btn btn-dark">Update</button>
-                                        <button type="button" className="btn btn-warning ml-2 cancel" onClick={handleCancel}> Cancel</button>
-                                    </div>
-                                </>
-                            )}
-                        </>
-                    ) : null}
+                                        <h1 className='text-left'> {userInfo.username}</h1>
+                                        <div className='accountName'>Account Holder</div>
+                                        <div className='mb-3'>
+                                            <label htmlFor='exampleInputEmail1' className='form-label'>
+                                                Email address
+                                            </label>
+                                            <input
+                                                type='email'
+                                                className='form-control'
+                                                id='exampleInputEmail1'
+                                                aria-describedby='emailHelp'
+                                                value={userInfo.email}
+                                                readOnly
+                                            />
+                                        </div>
+                                        <div className='mb-3'>
+                                            <label htmlFor='UserName' className='form-label'>
+                                                Username
+                                            </label>
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='UserName'
+                                                aria-describedby='username'
+                                                value={userInfo.username}
+                                                readOnly
+                                            />
+                                        </div>
+                                        <div className="text-left mb-4">
+                                            <button type="button" className="btn btn-dark" onClick={() => setEditMode(true)}>Edit</button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h1 className='text-center'>Hello {userInfo.username}</h1>
+                                        <div className='mb-3'>
+                                            <label htmlFor='exampleInputEmail1' className='form-label'>
+                                                Email address
+                                            </label>
+                                            <input
+                                                type='email'
+                                                className='form-control'
+                                                id='exampleInputEmail1'
+                                                aria-describedby='emailHelp'
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <div className='mb-3'>
+                                            <label htmlFor='UserName' className='form-label'>
+                                                Username
+                                            </label>
+                                            <input
+                                                type='text'
+                                                className='form-control'
+                                                id='UserName'
+                                                aria-describedby='username'
+                                                value={username}
+                                                onChange={(e) => setusername(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="text-center mb-4">
+                                            <button type="submit" className="btn btn-dark">Update</button>
+                                            <button type="button" className="btn btn-warning ml-2 cancel" onClick={handleCancel}> Cancel</button>
+                                        </div>
+                                    </>
+                                )}
+                            </>
+                        ) : null}
 
                 </form>
             </Col>

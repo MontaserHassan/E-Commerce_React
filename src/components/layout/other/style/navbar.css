@@ -1,3 +1,10 @@
 /* nav {
     background-color: rgb(52, 2, 66);
 } */
+button:not(:disabled) {
+    border: none;
+}
+
+Link {
+    text-decoration: none;
+}
