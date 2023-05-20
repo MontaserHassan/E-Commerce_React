@@ -4,7 +4,44 @@
 
 .carousel-item img {
     background-size: cover;
-    background-position: center;
-    height: 600px;
+    background-position: left;
+    height: 400px;
     /* width: 100%; */
+}
+
+.carousel-inner {
+    margin-top: 20vh;
+
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.content {
+    margin-left: 20px;
+    margin-top: 4rem;
+}
+
+.font-link {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 60px;
+    font-weight: 10px;
+}
+
+p {
+    padding: 10px;
+    font-size: 20px;
+    font-family: 'Source Serif Pro', serif;
+    width: 450px;
+
+
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

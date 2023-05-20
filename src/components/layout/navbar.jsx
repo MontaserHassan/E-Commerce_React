@@ -46,7 +46,7 @@ const Navbar = () => {
         <Fragment>
             <div className="">
 
-                <nav className="navbar navbar-expand-lg  py-2 ">
+                <nav className="navbar bg-dark navbar-expand-lg  py-2 ">
 
                     <div className="container-fluid">
 
@@ -74,6 +74,10 @@ const Navbar = () => {
                                 </li>
 
                                 <li className="nav-item">
+                                    <NavLink className="nav-link text-light ms-2" to="/order">My Orders</NavLink>
+                                </li>
+
+                                <li className="nav-item">
                                     <NavLink className="nav-link text-light ms-2" aria-current="page" to="/about-us">About-Us</NavLink>
                                 </li>
 
@@ -82,7 +86,7 @@ const Navbar = () => {
                                 </li>
 
 
-                        
+
                             </ul>
 
                             <Search />
@@ -90,11 +94,11 @@ const Navbar = () => {
                             <div className="buttons me-5">
                                 {userInfo ? (
                                     <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
-                                        <NavLink className="dropdown-item text-center" to="/profile">
+                                        <button className="btn btn-outline-dark " onClick={() => handelProfile()}>
                                             <i className="fas fa-sign-in-alt me-1"></i>
-                                            <Link to='/profile'>Profile</Link>
-                                        </NavLink>
-                                        <button className="btn btn-outline-dark" onClick={handleLogout}>
+                                            Profile
+                                        </button>
+                                        <button className="btn btn-outline-dark " onClick={handleLogout}>
                                             <i className="fas fa-sign-in-alt me-1"></i>
                                             &nbsp;  Logout
                                         </button>
@@ -125,9 +129,9 @@ const Navbar = () => {
 
                 </nav>
 
-            </div>
+            </div >
 
-        </Fragment>
+        </Fragment >
 
     );
 };

@@ -1,8 +1,8 @@
-import { React, Fragment,useEffect } from "react";
-import { useSelector ,useDispatch} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import "./WishList.css"
-import { removeFromWishList , clearWishList ,fetchWishListItems} from '../../features/wishlistSlice';
+import "./WishList.css";
+import { removeFromWishList, clearWishList, fetchWishListItems } from '../../features/wishlistSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes ,faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
@@ -37,17 +37,21 @@ const WishList = () => {
      
   }
 
-    const handleRemoving=(wishlistitem,access)=>{
-         dispatch(removeFromWishList([wishlistitem,access]))
-    }
+   
 
-    
+  const handleRemoving = (wishlistitem, access) => {
+    dispatch(removeFromWishList([wishlistitem, access]));
+  }
 
-    const handleClearing=
-    (userId,access)=>{
-      dispatch(clearWishList([userId,access]))
- }
-    
+  const handleClearing = (userId, access) => {
+    dispatch(clearWishList([userId, access]));
+  }
+
+  if (!userInfo) {
+    // Handle the case when userInfo is not available
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="wishListContainer">
         {!wishListItem || wishListItem.length === 0 || !userInfo ?(
@@ -96,27 +100,27 @@ const WishList = () => {
                                                                        }); }}> add To Cart </button></td> 
                           
                 </tr>
-                )}
-             
-           
-           
-          </tbody>
-        </table>
-       <div className="links" >
-<div class="col-6"><button class="btn btn-light my-5 mx-5" onClick={()=>{handleClearing(userInfo.user_id,userInfo.access)
-                                                                       dispatch(fetchWishListItems(userInfo.user_id))
-                                                                       .then((action) => {
-                                                            
-                                                                         setwishListItem(action.payload); // Log the data returned by the async thunk
-                                                                       }); }}>clear</button></div>
-<div className="home my-5 mx-5"><Link to ="/" className="text-decoration-none on-hover linklist" > go to Shopping </Link></div>
-</div></div>
-       
-        )
-        }
-
+              )}
+            </tbody>
+          </table>
+          <div className="links">
+            <div className="col-6">
+              <button className="btn btn-light my-5 mx-5" onClick={() => {
+                handleClearing(userInfo.user_id, userInfo.access);
+                dispatch(fetchWishListItems(userInfo.user_id))
+                  .then((action) => {
+                    setwishListItem(action.payload); // Log the data returned by the async thunk
+                  });
+              }}>Clear</button>
+            </div>
+            <div className="home my-5 mx-5">
+              <Link to="/" className="text-decoration-none on-hover linklist">Go to Shopping</Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default WishList
+export default WishList;

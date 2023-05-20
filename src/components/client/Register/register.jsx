@@ -17,6 +17,7 @@ const Register = () => {
     const [massage, setMassage] = useState('');
     const [inputError, setInputError] = useState('');
     const [Error, setError] = useState('');
+    const [passwordFocused, setPasswordFocused] = useState(false);
     const passwordInstructions = 'Password should contain at least one uppercase letter, one lowercase letter, one number, and one special character';
     const navigate = useNavigate();
     const userRegister = useSelector(state => state.userRegister);
@@ -40,7 +41,7 @@ const Register = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate('/');
+            navigate('/login');
         }
         if (error) {
             setError(error)
@@ -51,7 +52,7 @@ const Register = () => {
     return (
 
         <section className="vh-200" style={{ backgroundColor: 'rgb(252, 247, 224)' }}>
-            <h3 className='text-left p-3'>  <img src="/assets/images/nav-icon.png" alt="" width="40" height="40" className="d-inline-block align-text-top" />QUICK BUY</h3>
+
             <div className="container h-100">
 
                 <div className="row d-flex justify-content-center align-items-center h-100 " >
@@ -105,21 +106,24 @@ const Register = () => {
                                                         className="form-control"
                                                         id="exampleInputPassword1"
                                                         value={password}
+                                                        onFocus={() => setPasswordFocused(true)}
+                                                        onBlur={() => setPasswordFocused(false)}
                                                         onChange={e => {
                                                             setPassword(e.target.value);
-
                                                         }}
+
                                                         required
                                                     />
                                                 </div>
                                             </div>
-                                            <PasswordChecklist
-                                                rules={["minLength", "specialChar", "number", "capital", "match"]}
+                                            {passwordFocused && <PasswordChecklist
+                                                rules={["minLength", "specialChar", "number", "capital"]}
                                                 minLength={5}
                                                 value={password}
                                                 valueAgain={Confirmpassword}
 
-                                            />
+                                            />}
+
 
                                             {inputError && !password && <div className="error-message">Please enter your password</div>}
 

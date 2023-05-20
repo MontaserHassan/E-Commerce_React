@@ -1,5 +1,6 @@
 import './App.css';
 import "react-toastify/dist/ReactToastify.css";
+import '@fortawesome/fontawesome-free/css/all.css';
 import { React, Fragment } from 'react';
 import { useLocation } from "react-router-dom";
 import Navbar from './components/layout/navbar';
@@ -15,20 +16,22 @@ import Payment from './components/payment/payment';
 import Order from './components/order/order';
 import UserProfile from './components/client/Profile/UserProfile'
 import Footer from './components/layout/footer';
+import NotFound from './NotFound/NotFound';
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from './ProtectedRoute';
 
 
 function App() {
   const location = useLocation();
 
-  const isNavbarVisible = !["/register"].includes(location.pathname);
+  const isNavbarVisible = !["/register", 'login'].includes(location.pathname);
 
   return (
     <Fragment>
-    <ToastContainer/>
-      <Navbar/>
-      
+      <ToastContainer />
+      <Navbar />
+
 
       <Routes>
 
@@ -40,15 +43,15 @@ function App() {
         <Route path="/product" element={<Products />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/Payment" element={<Payment />} />
-        <Route path="/order" element={<Order />} />
-        <Route path="/WishList" element={<WishList/>} />
-
+        <Route path="/Payment" element={<ProtectedRoute path="/Payment" element={<Payment />} />} />
+        <Route path="/order" element={<ProtectedRoute path="/order" element={<Order />} />} />
+        <Route path="/WishList" element={<WishList />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
 
-      <Footer />
+      {/* <Footer /> */}
 
-      {/* {isNavbarVisible && <Footer />} */}
+      {isNavbarVisible && <Footer />}
     </Fragment>
   );
 };
