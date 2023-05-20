@@ -5,6 +5,7 @@ import{useDispatch, useSelector} from "react-redux"
 import { addToCart, fetchCartItems} from '../../features/cartSlice';
 import { addToWishList } from '../../features/wishlistSlice';
 import { FormatCurrency } from '../../features/FormatCurrency';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 
 const Product = () => {
@@ -124,8 +125,7 @@ const Product = () => {
                                 onClick={() => !isInCart && handleAddToCart(product)}> Add To Cart </button>
                             )}
 
-                               <button className="btn btn-outline-secondary px-4 py-2" onClick={() => dispatch(fetchCartItems(userInfo.user_id))}> go to cart</button>
-                            {/* <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink> */}
+                            <NavLink to="/cart" className="btn btn-outline-secondary px-4 py-2 ms-3">Go To Cart</NavLink> 
 
                             {!isWishlists && (
                                 <button className="btn btn-outline-primary px-4 py-2 ms-3" onClick={() =>
