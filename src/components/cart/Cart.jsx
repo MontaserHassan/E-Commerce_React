@@ -4,7 +4,7 @@ import "./style/Cart.css"
 import { addToCart, fetchCartItems } from "../../features/cartSlice";
 import CartTable from "./CartTable"
 import EmptyCart from "./EmptyCart"
-
+import Loader from "../layout/other/Loader";
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cartItems);
@@ -38,7 +38,8 @@ const Cart = () => {
           Shopping Cart
         </h2>
         {fetchStatus === "loading" ? (
-          <div>Loading...</div>
+          // <div>Loading...</div>
+          <Loader/>
         ) : fetchStatus === "failed" ? (
           <div>Error: Failed to fetch cart items.</div>
         ) : (!cartItem || cartItem.length === 0) ?
