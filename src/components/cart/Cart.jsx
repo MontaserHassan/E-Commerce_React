@@ -1,14 +1,14 @@
-import { React, Fragment,useEffect,useState } from "react";
-import { useSelector ,useDispatch} from "react-redux";
+import { React, Fragment, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./style/Cart.css"
-import {addToCart,fetchCartItems  }from "../../features/cartSlice";
+import { addToCart, fetchCartItems } from "../../features/cartSlice";
 import CartTable from "./CartTable"
 import EmptyCart from "./EmptyCart"
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cartItems);
-  const [ cartItem, setCartItem] = useState([]);
+  const [cartItem, setCartItem] = useState([]);
 
   const [fetchStatus, setFetchStatus] = useState("idle");
   const userLogin = useSelector((state) => state.userLogin);
@@ -17,32 +17,32 @@ const Cart = () => {
     setFetchStatus("loading");
     dispatch(fetchCartItems(userInfo.user_id))
       .then((data) => {
-       console.log(data.payload)
+        console.log(data.payload)
         setCartItem(`${data.payload}`)
         setFetchStatus("succeeded");
       })
-      
-  }, [dispatch,cartItem]);
+
+  }, [dispatch, cartItem]);
 
   return (
     <Fragment>
       <div className="container">
-      <h2 className="my-5 
+        <h2 className="my-5
       text-center animate__animated animate__bounce
-       animate__infinite" 
-       style={{
-        animation:
-         "color-change 2s alternate , move-text 2s ease-in-out 0s "
-        }}
+       animate__infinite"
+          style={{
+            animation:
+              "color-change 2s alternate , move-text 2s ease-in-out 0s "
+          }}
         >
-        Shopping Cart
+          Shopping Cart
         </h2>
         {fetchStatus === "loading" ? (
           <div>Loading...</div>
         ) : fetchStatus === "failed" ? (
           <div>Error: Failed to fetch cart items.</div>
         ) : (!cartItem || cartItem.length === 0) ?
-          ( <EmptyCart/> ): (<CartTable/> )}
+          (<EmptyCart />) : (<CartTable />)}
       </div>
     </Fragment>
   );

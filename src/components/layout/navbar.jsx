@@ -1,53 +1,59 @@
 
-import React, { Fragment, useEffect,useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Search from './other/search';
-import { NavDropdown, LinkContainer } from 'react-bootstrap';
-import {fetchCartItems} from "../../features/cartSlice";
+import { NavDropdown } from 'react-bootstrap';
+import { fetchCartItems } from "../../features/cartSlice";
 
 import {
     USER_LOGIN_SUCCESS,
-} 
-from '../client/userConst'
+}
+    from '../client/userConst'
 import './other/style/navbar.css'
 import { logout } from '../client/userAction'
 
 const Navbar = () => {
     const dispatch = useDispatch();
-    const cartItems = useSelector(state => state.cartItems);
-    const [ cartItem, setCartItem] = useState([]);
-  
-    const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
 
+    const navigate = useNavigate();
+    const cartItems = useSelector(state => state.cartItems);
+    const [cartItem, setCartItem] = useState([]);
+
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const { cartTotalQuantity } = useSelector(state => state.cart);
-    useEffect(() => {
-        const storedUserInfo = localStorage.getItem('userInfo');
-        if (storedUserInfo) {
-            dispatch({ type: USER_LOGIN_SUCCESS, payload: JSON.parse(storedUserInfo) });
-        }
-    }, [dispatch]);
+
 
     useEffect(
-        ()=>{dispatch(
-      fetchCartItems(userInfo.user_id))
-      .then((action) => {
-        setCartItem(action.payload);   
-      });}, [dispatch]);
-     
+        () => {
+            if (userInfo) {
+                dispatch(
+                    fetchCartItems(userInfo.user_id))
+                    .then((action) => {
+                        setCartItem(action.payload);
+                    })
+            }
+
+        }, [dispatch]);
+
 
 
     const handleLogout = () => {
         dispatch(logout());
     }
+    const handelProfile = () => {
+        setDropdownOpen(false); // Close the dropdown
+        navigate('/profile'); // Navigate to the profile page
+    };
 
     return (
         <Fragment>
             <div className="">
 
-                <nav className="navbar navbar-expand-lg  py-2 ">
+                <nav className="navbar bg-dark navbar-expand-lg  py-2 ">
 
                     <div className="container-fluid">
 
@@ -87,7 +93,7 @@ const Navbar = () => {
                                 </li>
 
 
-                        
+
                             </ul>
 
                             <Search />
@@ -95,11 +101,11 @@ const Navbar = () => {
                             <div className="buttons me-5">
                                 {userInfo ? (
                                     <NavDropdown className="btn btn-outline-light" title={userInfo.username} id='username'>
-                                        <NavLink className="dropdown-item text-center" to="/profile">
+                                        <button className="btn btn-outline-dark " onClick={() => handelProfile()}>
                                             <i className="fas fa-sign-in-alt me-1"></i>
-                                            <Link to='/profile'>Profile</Link>
-                                        </NavLink>
-                                        <button className="btn btn-outline-dark" onClick={handleLogout}>
+                                            Profile
+                                        </button>
+                                        <button className="btn btn-outline-dark " onClick={handleLogout}>
                                             <i className="fas fa-sign-in-alt me-1"></i>
                                             &nbsp;  Logout
                                         </button>
@@ -130,9 +136,9 @@ const Navbar = () => {
 
                 </nav>
 
-            </div>
+            </div >
 
-        </Fragment>
+        </Fragment >
 
     );
 };

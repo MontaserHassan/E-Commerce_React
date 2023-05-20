@@ -8,8 +8,10 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
     const userLogin = useSelector(state => state.userLogin);
     const { loading, userInfo, error } = userLogin;
+
     const dispatch = useDispatch();
 
     const submitHandler = e => {
@@ -53,7 +55,7 @@ const Login = () => {
                                                 </div>
                                             </div>
                                             <div className="d-flex flex-row align-items-center mb-4">
-                                                <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                                <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                                 <div className=" flex-fill mb-0">
                                                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
 

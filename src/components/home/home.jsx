@@ -1,16 +1,20 @@
 import React, { Fragment } from 'react';
 import Carousel from './Carousel/Carousel';
 import HomeFooter from './home-footer';
-
-
+import main from '../images/main.png'
+import './style/home.css'
 const Home = () => {
-  
+
     return (
 
         <Fragment>
+
             <div className="container-fluid ">
+
                 <div className="row ">
+
                     <div className="hero  mt-1 text-center ">
+
                         <Carousel />
                     </div>
                 </div>
