@@ -17,30 +17,32 @@ const Cart = () => {
 
   useEffect(() => {
     setFetchStatus("loading");
-    dispatch(fetchCartItems(userInfo.user_id))
+    if (userInfo) {
+      dispatch(fetchCartItems(userInfo.user_id))
       .then((data) => {
         console.log(data.payload)
         setCartItem(`${data.payload}`)
         setFetchStatus("succeeded");
       })
+    }
 
   }, [dispatch, cartItem]);
 
   return (
     <Fragment>
       <div className="container">
-      <h2 className="my-5 
+        <h2 className="my-5 
       text-center animate_animated animate_bounce
-       animate__infinite" 
-       style={{
-        animation:
-         "color-change 2s alternate , move-text 2s ease-in-out 0s "
-        }}
+       animate__infinite"
+          style={{
+            animation:
+              "color-change 2s alternate , move-text 2s ease-in-out 0s "
+          }}
         >
           Shopping Cart
         </h2>
         {fetchStatus === "loading" ? (
-          <Loader/>
+          <Loader />
         ) : fetchStatus === "failed" ? (
           <div>Error: Failed to fetch cart items.</div>
         ) : (!cartItem || cartItem.length === 0) ?

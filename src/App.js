@@ -24,12 +24,12 @@ import ProtectedRoute from './ProtectedRoute';
 function App() {
   const location = useLocation();
 
-  const isNavbarVisible = !["/register", 'login'].includes(location.pathname);
+  const isNavbarVisible = !["/register", '/login'].includes(location.pathname);
 
   return (
 
     <Fragment>
-      
+
       <ToastContainer />
 
       <Navbar />
@@ -56,7 +56,7 @@ function App() {
       {isNavbarVisible && <Footer />}
 
     </Fragment>
-    
+
   );
 };
 

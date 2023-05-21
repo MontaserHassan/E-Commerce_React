@@ -42,7 +42,7 @@ const CartTable = () => {
       });
   }, [dispatch, userInfo.user_id]);
 
-  console.log("tttttt",cartItem);
+  console.log("tttttt", cartItem);
 
   const handelRemoveFromCart = (product) => {
     setShowDecreaseModal(true);

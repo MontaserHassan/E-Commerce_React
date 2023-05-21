@@ -13,8 +13,8 @@ export const fetchWishListItems = createAsyncThunk(
       `https://quick-buy-211i.onrender.com/wishLists/getWishListByUserId/${userId}`
     );
 
-    console.log(response.data,userId)
-    
+    console.log(response.data, userId)
+
     const promises = response.data.map((item) => {
       console.log(item)
       return axios
@@ -40,7 +40,7 @@ const wishListSlice = createSlice({
   reducers: {
     addToWishList(state, action) {
       console.log(action.payload)
-      
+
       fetch(
         `https://quick-buy-211i.onrender.com/wishLists/getWishListByProductId/${action.payload[0]}`,
         {
@@ -61,16 +61,17 @@ const wishListSlice = createSlice({
         .then((data) => {
           console.log(data)
           if (data) {
-           let found = data.filter((item) => {
-              
+            let found = data.filter((item) => {
+
               return item.user === action.payload[1];
-            });console.log(found.length)
+            }); console.log(found.length)
             return found.length;
           }
         })
         .then((len) => {
-         
-          if (len === 0) { console.log(action.payload)
+
+          if (len === 0) {
+            console.log(action.payload)
             fetch("https://quick-buy-211i.onrender.com/wishLists/addwishListItem", {
               method: "POST",
               headers: {
