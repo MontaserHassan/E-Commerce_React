@@ -5,9 +5,15 @@ function Order() {
 
     const [orders, setOrders] = useState([]);
 
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
     useEffect(() => {
         async function fetchOrders() {
-            const response = await fetch(`${API}order`);
+            const response = await fetch(`${API}order/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${userInfo.access}`,
+                    },
+                });
             const data = await response.json();
             setOrders(data);
         }
@@ -16,88 +22,49 @@ function Order() {
     }, []);
 
     return (
-
         <div className="justify-content-center mb-3 mt-4 bg-light m-auto rounded-3 w-75 align-content-center">
-
             <h2 className="text-dark mt-4 text-center fw-bold display-6">My Orders</h2>
             <hr />
 
-            <table className="table table-bordered m-auto mb-5 rounded-3">
-
-                <thead>
-
+            <table className="table table-bordered table-hover m-auto mb-5">
+                <thead className="table-light">
                     <tr>
-
-                        <th className="fw-bold">Transaction ID</th>
-                        <th className="fw-bold">Address</th>
-                        <th className="fw-bold">Status</th>
-                        <th className="fw-bold">Total Price</th>
-                        <th className="fw-bold">Delivery Date</th>
-
+                        <th className="border-0 fw-bold">Transaction ID</th>
+                        <th className="border-0 fw-bold">Status</th>
+                        <th className="border-0 fw-bold">Total Price</th>
+                        <th className="border-0 fw-bold">Delivery Date</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
-
                     {orders.map((order) => (
-                        
                         <tr key={order.id}>
-                            
-                            <td>
-                            
-                                <div className="d-flex align-items-center">
+                            <td className="align-middle">{order.transaction_id}</td>
 
-                                    <div className="ms-3">
-                            
-                                        <p className="fw-bold mb-1">{order.transaction_id}</p>
-                            
-                                    </div>
-                            
-                                </div>
-                            
-                            </td>
-                            
-                            <td>
-                           
-                                <p className="fw-normal mb-1">Street: {order.shipping_address.street}</p>
-                                <p className="text-muted mb-0">City: {order.shipping_address.city}</p>
-
-                            </td>
-                           
-                            <td>
-    
-                                <span className="badge badge-warning text-dark rounded-pill d-inline"> {order.status}
-                                    {order.status === 'shipped' && <span className="badge badge-warning text-dark rounded-pill fw-bold d-inline display-6"> <i className="fas fa-motorcycle"></i> </span>}
-                                    {order.status === 'delivered' && <span className="badge badge-warning text-dark rounded-pill fw-bold d-inline display-6"> <i className="fas fa-user"></i> </span>}
-                                    {order.status === 'pending' && <span className="badge badge-warning text-dark rounded-pill d-inline fw-bold display-6"> <i className="fas fa-box"></i> </span>}
+                            <td className="align-middle">
+                                <span className={`badge badge-warning text-dark rounded-pill ${order.shipping === 'shipped' ? 'fw-bold display-6' : ''}`}>
+                                    {order.shipping}
+                                    {order.shipping === 'shipped' && <i className="fas fa-motorcycle ms-1"></i>}
+                                    {order.shipping === 'delivered' && <i className="fasfa-user ms-1"></i>}
+                                    {order.shipping === 'pending' && <i className="fas fa-box ms-1"></i>}
                                 </span>
-
                             </td>
 
-
-                            <td>
-                           
-                                <span className="badge badge-warning text-dark rounded-pill d-inline"> {order.total} </span>
-                           
+                            <td className="align-middle">
+                                <span className="badge badge-warning text-dark rounded-pill">{order.total_price}</span>
                             </td>
 
-                            <td>
-                           
-                                <p className="text-muted mb-0">{order.delivery_date}</p>
-                           
+                            <td className="align-middle">
+                                <p className="text-muted mb-0">{order.delivered_date}</p>
                             </td>
-                        
                         </tr>
-                    
                     ))}
-
                 </tbody>
-
             </table>
-
         </div>
     );
+
+
 
 }
 

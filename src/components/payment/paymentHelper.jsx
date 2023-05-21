@@ -39,7 +39,6 @@ const PaymentHelper = () => {
     }, []);
 
     return (
-
         <section>
             <div className="row">
                 {cartItem.map((item) => (
@@ -63,10 +62,9 @@ const PaymentHelper = () => {
             <div className="row" style={{ width: '100%' }} >
                 <div className="row justify-content-center">
                     <div className="col-6 text-center">
-                        <form action={`${API}payment/create-checkout-session`} method="POST">
+                        <form action={`${API}payment/create-checkout-session?user=${userInfo.user_id}`} method="POST">
                             <button type="submit" className="btn btn-primary btn-lg">
-                                Check Out<br></br>
-
+                                Check Out
                             </button>
                         </form>
                     </div>
